@@ -1,0 +1,128 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "6d0e57a9aeb918e47abe88e20eefebd2",
+    "packages": [
+        {
+            "name": "naka1205/phpkoa",
+            "version": "v1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/naka1205/phpkoa.git",
+                "reference": "9755589b430067e41addd784d63eb4199904ab30"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/naka1205/phpkoa/zipball/9755589b430067e41addd784d63eb4199904ab30",
+                "reference": "9755589b430067e41addd784d63eb4199904ab30",
+                "shasum": ""
+            },
+            "require": {
+                "naka1205/phpkoa_static": "^1.2",
+                "naka1205/phpsocket": "^1.9",
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Naka507\\Koa\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "naka507",
+                    "email": "171453643@qq.com"
+                }
+            ],
+            "description": "php koa",
+            "time": "2019-01-15T07:11:53+00:00"
+        },
+        {
+            "name": "naka1205/phpkoa_static",
+            "version": "v1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/naka1205/phpkoa_static.git",
+                "reference": "2161da140545f7b5ff08186ed40162c976eb900c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/naka1205/phpkoa_static/zipball/2161da140545f7b5ff08186ed40162c976eb900c",
+                "reference": "2161da140545f7b5ff08186ed40162c976eb900c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Naka507\\Koa\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "naka507",
+                    "email": "171453643@qq.com"
+                }
+            ],
+            "description": "phpkoa static",
+            "time": "2019-01-15T04:44:51+00:00"
+        },
+        {
+            "name": "naka1205/phpsocket",
+            "version": "v1.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/naka1205/phpsocket.git",
+                "reference": "85ae6dbea0a8b189ac4b39eb9a3cfab08af0eae0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/naka1205/phpsocket/zipball/85ae6dbea0a8b189ac4b39eb9a3cfab08af0eae0",
+                "reference": "85ae6dbea0a8b189ac4b39eb9a3cfab08af0eae0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Naka507\\Socket\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "naka507",
+                    "email": "171453643@qq.com"
+                }
+            ],
+            "description": "php socket",
+            "time": "2019-01-02T09:59:18+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
