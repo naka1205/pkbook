@@ -1,6 +1,7 @@
 <?php
 namespace Controllers;
 use Naka507\Koa\Context;
+use Models\Posts;
 class Admin
 {
 
@@ -25,31 +26,15 @@ class Admin
     }
 
     public static function posts(Context $ctx, $next){
+        $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
 
-        $paginationData = [
-            'className' => '',
-            'theme' => 'default',
-            'options' => [
-                'select' => ''
-            ],
-            'content' => [
-                'prevTitle' => '上一页',
-                'prevLink' => '#',
-                'firstTitle' => '第一页',
-                'firstLink' => '#',
-                'nextTitle' => '下一页',
-                'nextLink' => '#',
-                'lastTitle' => '最末页',
-                'lastLink' => '#',
-                'total' => '15',
-                'page' => [
-                    ['title'=> '1',"link"=>  "#","className"=> ""],
-                    ['title'=> '2',"link"=>  "#","className"=> ""],
-                    ['title'=> '3',"link"=>  "#","className"=> ""]
-                ]
-            ],
-        ];
-        $ctx->state["paginationData"] = json_encode($paginationData);
+        $postsData = Posts::select($page,2);
+        foreach ($postsData['data'] as $key => &$value) {
+            unset($value['content']);
+        }
+        $ctx->state["data"] = $postsData['data'];
+        $ctx->state["pagination"] = json_encode ($postsData['pagination']);
+        
         $ctx->status = 200;
         yield $ctx->render(VIEW_PATH . "/posts.html");
     }
