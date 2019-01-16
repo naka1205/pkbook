@@ -58,7 +58,6 @@ $(function() {
     $form.validator({
       submit: function() {
         var formValidity = this.isFormValid();
-        console.log('submit',formValidity)
         if( formValidity == false ){
             return false;
         }
@@ -73,10 +72,8 @@ $(function() {
 
           },
           success: function(res){
-              if ( res.code != 200 || res.data == '') {
-                  
-              }else{
-                  $.AMUI.utils.cookie.set('token',res.data)
+              if ( res.code == 200 && res.data != '') {
+                  // location.href = '/admin/index';
               }
           }
         });
