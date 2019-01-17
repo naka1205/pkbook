@@ -3,6 +3,12 @@ namespace Models;
 class Posts extends Common
 {
 
+    public function __construct($_id)
+    {
+        $data = Posts::data($_id);
+        $this->data = $data;
+    }
+
     public static function select($page,$num=10){
         $data = Posts::data();
         $count = count($data);
@@ -82,8 +88,19 @@ class Posts extends Common
         return $paginationData;
     }
 
-    public static function get($id){
+    public static function save($data,$_id = ''){
 
+        $md = "---\n";
+        $md .= "title: " . $data['title'] . "\n";
+        $md .= "date: " . $data['date'] . "\n";
+        $md .= "tags: [" . $data['tags'] . "]\n";
+        $md .= "categories: " . $data['categories'] . "\n";
+        $md = "---\n";
+        $md = $data['content'];
+
+        $file = DS . "_posts" . DS . $data['filename'] . '.md';
+        $source = $configs['dir']['source'] . $file;
+        return file_put_contents ( $source ,  $md ) === false ? false : true ;
     }
 
     public static function update(){
@@ -96,9 +113,10 @@ class Posts extends Common
             if ( !$file ) {
                 continue;
             }
-            $_id = md5($value);
+            $_id = md5(str_replace($configs['dir']['source'],'',$value));
             $arr = explode('---',$file);
             $info = explode("\n",$arr[1]);
+            $detail = [];
             foreach ($info as $k => $v) {
                 $v = trim($v);
                 if (!$v || empty($v) ) {
@@ -107,20 +125,30 @@ class Posts extends Common
                 $temp = explode(': ',$v);
                 $data[$_id][$temp[0]] = $temp[1];
             }
+            $data[$_id]['_id'] = $_id;
+            $data[$_id]['id'] = $key + 1;
             $data[$_id]['content'] = $arr[2];
         }
         file_put_contents ( DB_FILE ,  json_encode($data) );
         return $data;
     }
 
-    public static function data(){
+    public static function data($_id = ''){
         if ( is_file(DB_FILE) ) {
             $db_file = file_get_contents(DB_FILE);
             if ( $db_file ) {
-                return json_decode($db_file,true);
+                if ( empty($_id) ) {
+                    return json_decode($db_file,true);
+                }
+                $db = json_decode($db_file,true);
+                return isset($db[$_id]) ? $db[$_id] : false;
             }
         }
-        return Posts::update();
+        if ( empty($_id) ) {
+            return Posts::update();
+        }
+        $db = Posts::update();
+        return isset($db[$_id]) ? $db[$_id] : false;
     }
 
 }

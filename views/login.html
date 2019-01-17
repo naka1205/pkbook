@@ -69,11 +69,12 @@ $(function() {
           dataType: "json",
           data:{email:email,password:password},
           beforeSend:function(){
-
+              $.AMUI.progress.start();
           },
           success: function(res){
+              $.AMUI.progress.done();
               if ( res.code == 200 && res.data != '') {
-                  // location.href = '/admin/index';
+                  location.reload()
               }
           }
         });

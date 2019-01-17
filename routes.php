@@ -21,7 +21,7 @@ $router->mount('/admin', function() use ($router) {
 $router->mount('/posts', function() use ($router) {
 
     $router->get('/add', ['Controllers\Posts', 'add']);
-    $router->get('/edit', ['Controllers\Posts', 'edit']);
+    $router->get('/edit/(\w+)', ['Controllers\Posts', 'edit']);
 
 });
 

@@ -25,8 +25,8 @@
       
         <div class="am-cf am-padding am-padding-bottom-0">
           <div class="am-fl am-cf">
-            <strong class="am-text-primary am-text-lg">添加</strong> /
-            <small>add</small>
+            <strong class="am-text-primary am-text-lg">编辑</strong> /
+            <small>edit</small>
           </div>
         </div>
 
@@ -129,7 +129,7 @@
                     文章标题
                   </div>
                   <div class="am-u-sm-8 am-u-md-4">
-                    <input type="text" class="am-input-sm">
+                    <input type="text" class="am-input-sm" value="{posts->title}">
                   </div>
                   <div class="am-hide-sm-only am-u-md-6">*必填，不可重复</div>
                 </div>
@@ -139,7 +139,7 @@
                     文章作者
                   </div>
                   <div class="am-u-sm-8 am-u-md-4 am-u-end col-end">
-                    <input type="text" class="am-input-sm">
+                    <input type="text" class="am-input-sm" value="{posts->date}">
                   </div>
                 </div>
 
@@ -148,9 +148,9 @@
                     信息来源
                   </div>
                   <div class="am-u-sm-8 am-u-md-4">
-                    <input type="text" class="am-input-sm">
+                    <input type="text" class="am-input-sm" value="{posts->categories}">
                   </div>
-                  <div class="am-hide-sm-only am-u-md-6">选填</div>
+                  <div class="am-hide-sm-only am-u-md-6" >选填</div>
                 </div>
 
                 <div class="am-g am-margin-top">
@@ -158,7 +158,7 @@
                     内容摘要
                   </div>
                   <div class="am-u-sm-8 am-u-md-4">
-                    <input type="text" class="am-input-sm">
+                    <input type="text" class="am-input-sm" value="{posts->tags}">
                   </div>
                   <div class="am-u-sm-12 am-u-md-6">不填写则自动截取内容前255字符</div>
                 </div>
@@ -168,7 +168,7 @@
                     内容描述
                   </div>
                   <div class="am-u-sm-12 am-u-md-10">
-                    <textarea rows="10" placeholder="请使用富文本编辑插件"></textarea>
+                    <textarea rows="10" placeholder="请使用富文本编辑插件">{posts->content}</textarea>
                   </div>
                 </div>
 
@@ -227,4 +227,8 @@
 <!--<![endif]-->
 <script src="/js/amazeui.min.js"></script>
 </body>
+<script>
+var _id = '{posts->_id}';
+var id = '{posts->id}';
+</script>
 </html>

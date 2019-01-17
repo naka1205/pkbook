@@ -1,7 +1,7 @@
 <?php
 namespace Controllers;
 use Naka507\Koa\Context;
-use Models\Posts;
+use Models\Posts as Post;
 class Admin
 {
 
@@ -28,7 +28,7 @@ class Admin
     public static function posts(Context $ctx, $next){
         $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
 
-        $postsData = Posts::select($page,2);
+        $postsData = Post::select($page,2);
         foreach ($postsData['data'] as $key => &$value) {
             unset($value['content']);
         }

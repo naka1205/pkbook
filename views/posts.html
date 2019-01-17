@@ -81,7 +81,7 @@
               <!-- BEGIN DATA -->
               <tr>
                 <td><input type="checkbox" /></td>
-                <td>1</td>
+                <td>{id}</td>
                 <td><a href="#">{title}</a></td>
                 <td>{categories}</td>
                 <td class="am-hide-sm-only">{tags}</td>
@@ -89,7 +89,7 @@
                 <td>
                   <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-xs">
-                      <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
+                      <a class="am-btn am-btn-default am-btn-xs am-text-secondary btn-edit" href="/posts/edit/{_id}" ><span class="am-icon-pencil-square-o"></span> 编辑</a>
                       <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only"><span class="am-icon-copy"></span> 复制</button>
                       <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
                     </div>
@@ -130,8 +130,16 @@ var html = template(paginationData);
 $('#pagination').append(html);
 
 $("#add").click(function(){
+  parent.iframeProgress(true); 
   location.href = '/posts/add'
 })
+
+$(".btn-edit").click(function(){
+  parent.iframeProgress(true); 
+  var _id = $(this).data("_id");
+  location.href = '/posts/edit/' + _id;
+})
+
 </script>
 </body>
 </html>

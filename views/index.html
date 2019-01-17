@@ -90,8 +90,11 @@
 <script src="/js/amazeui.min.js"></script>
 <script src="/js/app.js"></script>
 <script>
+  
   $(document).ready(function(){
+      iframeProgress(true) 
       $('.link').click(function(e){
+          iframeProgress(true) 
           $("#iframe-main").attr("src", $(this).attr('link'));
           $(".link").parent('li').removeClass('am-cf');
           $(this).parent('li').addClass('am-cf');
@@ -100,6 +103,11 @@
 
   window.onload = function () {
     init();
+    iframeProgress(false)
+  }
+
+  $('#iframe-main')[0].onload = function(){
+    iframeProgress(false)
   }
 
   $(function() {
@@ -109,13 +117,23 @@
     });
   });
       
-  function init() {   
-    console.log('init')    
+  function init() {     
     $("body").height($(window).height());
     $("#iframe-main").height($(window).height());
+    
+  }
+  
+  function iframeProgress(bool){
+      if ( bool ) {
+          $.AMUI.progress.start();
+          return;
+      }
+      $.AMUI.progress.done();
+      return;
   }
 
-  function goPage(newURL) {                       
+  function goPage(newURL) {
+                     
     if (newURL != "") {
       if (newURL == "-") {
         resetMenu();
@@ -128,9 +146,6 @@
   function resetMenu() {
     document.gomenu.selector.selectedIndex = 2;
   }
-
-  // uniform使用示例：
-  // $.uniform.update($(this).attr("checked", true));
 
 </script>
 </body>
