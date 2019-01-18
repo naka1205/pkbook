@@ -25,6 +25,11 @@ class Admin
         yield $ctx->render(VIEW_PATH . "/info.html");
     }
 
+    public static function pages(Context $ctx, $next){
+        $ctx->status = 200;
+        yield $ctx->render(VIEW_PATH . "/pages.html");
+    }
+
     public static function posts(Context $ctx, $next){
         $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
 
@@ -49,5 +54,5 @@ class Admin
         $ctx->status = 200;
         yield $ctx->render(VIEW_PATH . "/logs.html");
     }
-
+    
 }
