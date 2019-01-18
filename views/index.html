@@ -92,39 +92,37 @@
 <script>
   
   $(document).ready(function(){
-      iframeProgress(true) 
+      iframeProgress(true)
       $('.link').click(function(e){
-          iframeProgress(true) 
           $("#iframe-main").attr("src", $(this).attr('link'));
           $(".link").parent('li').removeClass('am-cf');
           $(this).parent('li').addClass('am-cf');
       });
   });
 
-  window.onload = function () {
-    init();
-    iframeProgress(false)
-  }
+  $(window).load(function(){
+      init();
+      iframeProgress(false)
+  })
 
   $('#iframe-main')[0].onload = function(){
-    iframeProgress(false)
+    
   }
 
   $(function() {
-    init();
-    $(window).resize(function() {
       init();
-    });
+      $(window).resize(function() {
+          init();
+      });
   });
       
   function init() {     
-    $("body").height($(window).height());
-    $("#iframe-main").height($(window).height());
-    
+      $("body").height($(window).height());
+      $("#iframe-main").height($(window).height());
   }
   
   function iframeProgress(bool){
-      if ( bool ) {
+      if ( bool == true ) {
           $.AMUI.progress.start();
           return;
       }

@@ -1,7 +1,7 @@
 <?php
 namespace Controllers;
 use Naka507\Koa\Context;
-use Models\Posts as Post;
+use Models\Post;
 
 class Posts
 {
@@ -17,5 +17,8 @@ class Posts
         $ctx->state["posts"] = $data;
         yield $ctx->render(VIEW_PATH . "/posts/edit.html");
     }
+
+
+
 
 }

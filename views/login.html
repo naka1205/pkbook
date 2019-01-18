@@ -32,13 +32,23 @@
       <input type="password" id="password" placeholder="输入密码" required>
       <br>
       <div class="am-cf">
-          <button class="am-btn am-btn-secondary" type="submit">提交</button>
+          <button class="am-btn am-btn-secondary" type="submit" data-am-modal="{target: '#loading-modal'}">提交</button>
       </div>
     </form>
     <hr>
     <p>© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
   </div>
 </div>
+
+<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="loading-modal">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">正在载入...</div>
+    <div class="am-modal-bd">
+      <span class="am-icon-spinner am-icon-spin"></span>
+    </div>
+  </div>
+</div>
+
 <!--[if lt IE 9]>
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
@@ -54,30 +64,37 @@
 <script>
 
 $(function() {
+  
     var $form = $('#login-form');
+    var $modal = $('#loading-modal');
+
     $form.validator({
       submit: function() {
         var formValidity = this.isFormValid();
         if( formValidity == false ){
+            $modal.modal('close');
             return false;
         }
         var email = $('#email').val();
         var password = $('#password').val();
+
         $.ajax({
           type: "POST",
           url: "/api/login",
           dataType: "json",
           data:{email:email,password:password},
           beforeSend:function(){
-              $.AMUI.progress.start();
+
           },
           success: function(res){
-              $.AMUI.progress.done();
               if ( res.code == 200 && res.data != '') {
                   location.reload()
+              }else{
+                  $modal.modal('close');
               }
           }
         });
+        
         return false;
       }
     });

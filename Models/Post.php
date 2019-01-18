@@ -1,21 +1,21 @@
 <?php
 namespace Models;
-class Posts extends Common
+class Post extends Common
 {
 
     public function __construct($_id)
     {
-        $data = Posts::data($_id);
+        $data = self::data($_id);
         $this->data = $data;
     }
 
     public static function select($page,$num=10){
-        $data = Posts::data();
+        $data = self::data();
         $count = count($data);
         $num = $count < $num ? $count : $num;
         $end = $page * $num;
 
-        $pagination = Posts::pagination($page,$num,$count);
+        $pagination = self::pagination($page,$num,$count);
 
         return ['data' => array_slice ( $data , $end - $num , $num ) , 'count' => $count ,'pagination' => $pagination];
     }
@@ -90,30 +90,63 @@ class Posts extends Common
 
     public static function save($data,$_id = ''){
 
+        if ( !isset( $data['filename'] ) || empty($data['filename']) ) {
+            return false;
+        }
+
+        global $configs;
         $md = "---\n";
         $md .= "title: " . $data['title'] . "\n";
         $md .= "date: " . $data['date'] . "\n";
         $md .= "tags: [" . $data['tags'] . "]\n";
         $md .= "categories: " . $data['categories'] . "\n";
-        $md = "---\n";
-        $md = $data['content'];
+        $md .= "---\n";
+        $md .= $data['content'];
 
         $file = DS . "_posts" . DS . $data['filename'] . '.md';
         $source = $configs['dir']['source'] . $file;
+
+        if ( is_file(DB_FILE) ) {
+            $db_file = file_get_contents(DB_FILE);
+            $db = json_decode($db_file,true);
+            $md5 = md5($data['filename']);
+            if ( !empty($_id) && isset($db[$_id]) && $_id !== $md5 ) {
+                $data['id'] = $db[$_id]['id'];
+                self::del($db[$_id]);
+                unset($db[$_id]);
+            }
+            $data['_id'] = $md5;
+            $db[$md5] = $data;    
+            array_multisort(array_column($db,'id'),SORT_DESC,$db);
+            file_put_contents ( DB_FILE ,  json_encode($db) );
+        }
+
         return file_put_contents ( $source ,  $md ) === false ? false : true ;
     }
 
-    public static function update(){
+    public function del($data){
+        global $configs;
+        $file = DS . "_posts" . DS . $data['filename'] . '.md';
+        $source = $configs['dir']['source'] . $file;
+        if ( is_file($source) ) {
+            unlink($source);
+        }
+    }
+
+    public static function update($_id=''){
         global $configs;
         $source = $configs['dir']['source'] . DS . "_posts" . DS;
         $files = glob ( $source . "*.md" );
-        $data = [];
+        $db = [];
         foreach ($files as $key => $value) {
             $file = file_get_contents($value);
             if ( !$file ) {
                 continue;
             }
-            $_id = md5(str_replace($configs['dir']['source'],'',$value));
+            $filename = str_replace($source,'',$value);
+            $filename = str_replace('.md','',$filename);
+
+            $_id = md5($filename);
             $arr = explode('---',$file);
             $info = explode("\n",$arr[1]);
             $detail = [];
@@ -123,14 +156,20 @@ class Posts extends Common
                     continue;
                 }
                 $temp = explode(': ',$v);
-                $data[$_id][$temp[0]] = $temp[1];
+                if ( $temp[0] == 'tags' ) {
+                    $temp[1] = str_replace ('[','',$temp[1]);
+                    $temp[1] = str_replace (']','',$temp[1]);
+                }
+                $db[$_id][$temp[0]] = $temp[1];
             }
-            $data[$_id]['_id'] = $_id;
-            $data[$_id]['id'] = $key + 1;
-            $data[$_id]['content'] = $arr[2];
+            $db[$_id]['_id'] = $_id;
+            $db[$_id]['id'] = $key + 1;
+            $db[$_id]['content'] = $arr[2];
+            $db[$_id]['filename'] = $filename;
         }
-        file_put_contents ( DB_FILE ,  json_encode($data) );
-        return $data;
+        array_multisort(array_column($db,'id'),SORT_DESC,$db);
+        file_put_contents ( DB_FILE ,  json_encode($db) );
+        return $db;
     }
 
     public static function data($_id = ''){
@@ -145,9 +184,9 @@ class Posts extends Common
             }
         }
         if ( empty($_id) ) {
-            return Posts::update();
+            return self::update();
         }
-        $db = Posts::update();
+        $db = self::update();
         return isset($db[$_id]) ? $db[$_id] : false;
     }
 

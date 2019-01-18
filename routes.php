@@ -6,6 +6,7 @@ $router = new Router();
 $router->get('/login',['Controllers\Main', 'login']); 
 
 $router->before('GET|POST', '/admin/.*',['Controllers\Admin', 'base']);
+$router->before('GET|POST', '/ajax/.*',['Controllers\Ajax', 'base']);
 
 $router->mount('/admin', function() use ($router) {
 
@@ -28,6 +29,14 @@ $router->mount('/posts', function() use ($router) {
 $router->mount('/api', function() use ($router) {
 
     $router->post('/login', ['Controllers\Api', 'login']);
+
+});
+
+$router->mount('/ajax', function() use ($router) {
+
+    $router->post('/update', ['Controllers\Ajax', 'update']);
+    $router->post('/posts', ['Controllers\Ajax', 'posts']);
+    $router->post('/posts/(\w+)', ['Controllers\Ajax', 'posts']);
 
 });
 

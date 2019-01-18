@@ -35,8 +35,8 @@
             <div class="am-btn-group am-btn-group-xs">
               <button type="button" id="add" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</button>
               <button type="button" id="save" class="am-btn am-btn-default"><span class="am-icon-save"></span> 保存</button>
-              <button type="button" id="check" class="am-btn am-btn-default"><span class="am-icon-archive"></span> 审核</button>
               <button type="button" id="dels" class="am-btn am-btn-default"><span class="am-icon-trash-o"></span> 删除</button>
+              <button type="button" id="update" class="am-btn am-btn-default" data-am-modal="{target: '#loading-modal'}"><span class="am-icon-archive"></span> 更新</button>
             </div>
           </div>
         </div>
@@ -110,6 +110,16 @@
       </div>
     </div>
 
+
+    <div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="loading-modal">
+      <div class="am-modal-dialog">
+        <div class="am-modal-hd">正在载入...</div>
+        <div class="am-modal-bd">
+          <span class="am-icon-spinner am-icon-spin"></span>
+        </div>
+      </div>
+    </div>
+
 <!--[if lt IE 9]>
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
@@ -122,7 +132,10 @@
 <script src="/js/amazeui.min.js"></script>
 <script src="/js/handlebars.min.js"></script>
 <script src="/js/amazeui.widgets.helper.js"></script>
+<script src="/js/main.js"></script>
 <script>
+
+var $modal = $('#loading-modal');
 var paginationData = {pagination};
 
 var template = Handlebars.compile('{{>pagination}}')
@@ -130,12 +143,31 @@ var html = template(paginationData);
 $('#pagination').append(html);
 
 $("#add").click(function(){
-  parent.iframeProgress(true); 
   location.href = '/posts/add'
 })
 
+$("#update").click(function(){
+  $modal.modal('open');
+  $.ajax({
+    type: "POST",
+    url: "/ajax/update",
+    dataType: "json",
+    data:{},
+    beforeSend:function(){
+
+    },
+    success: function(res){
+        if ( res.code == 200 ) {
+            location.reload()
+        }else{
+            $modal.modal('close');
+        }
+    }
+  });
+
+})
+
 $(".btn-edit").click(function(){
-  parent.iframeProgress(true); 
   var _id = $(this).data("_id");
   location.href = '/posts/edit/' + _id;
 })

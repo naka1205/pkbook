@@ -1,7 +1,7 @@
 <?php
 namespace Controllers;
 use Naka507\Koa\Context;
-use Models\Posts as Post;
+use Models\Post;
 class Admin
 {
 
@@ -30,6 +30,7 @@ class Admin
 
         $postsData = Post::select($page,2);
         foreach ($postsData['data'] as $key => &$value) {
+            unset($value['filename']);
             unset($value['content']);
         }
         $ctx->state["data"] = $postsData['data'];
