@@ -5,6 +5,7 @@ define('DS', DIRECTORY_SEPARATOR);
 define('IS_CLI', PHP_SAPI == 'cli' ? true : false);
 define('IS_WIN', strpos(PHP_OS, 'WIN') !== false);
 define('VIEW_PATH', __DIR__ . DS . 'views');
+define('THEME_PATH', __DIR__ . DS . 'themes');
 define('STATIC_PATH', __DIR__ . DS . 'static');
 define('DB_FILE', __DIR__ . DS . 'db.json');
 
@@ -19,7 +20,6 @@ use Naka507\Koa\Context;
 use Naka507\Koa\Error;
 use Naka507\Koa\Timeout;
 use Naka507\Koa\NotFound;
-
 use Naka507\Koa\StaticFiles; 
 
 $app = new Application();
@@ -29,6 +29,10 @@ $app->υse(new NotFound());
 
 $static_path = __DIR__ . DS .  "static" ;
 $app->υse(new StaticFiles( $static_path )); 
+
+use Middlewares\Assets; 
+$themes_static_path = __DIR__ . DS .  "themes";
+$app->υse(new Assets( $themes_static_path )); 
 
 use Middlewares\BodyJson; 
 $app->υse(new BodyJson()); 

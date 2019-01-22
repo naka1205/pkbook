@@ -9,6 +9,18 @@ class Post extends Common
         $this->data = $data;
     }
 
+    public function getHtml()
+    {
+        $parsedown = new Parsedown();
+        return $parsedown->text($this->data['content']);
+    }
+
+    public function setHtml($content)
+    {
+        $parsedown = new Parsedown();
+        $this->data['html'] = $parsedown->text($content);
+    }
+
     public static function select($page,$num=10){
         $data = self::data();
         $count = count($data);
@@ -94,6 +106,7 @@ class Post extends Common
             return false;
         }
 
+        $data['content'] = urldecode($data['content']);
         global $configs;
         $md = "---\n";
         $md .= "title: " . $data['title'] . "\n";
@@ -110,7 +123,7 @@ class Post extends Common
             $db_file = file_get_contents(DB_FILE);
             $db = json_decode($db_file,true);
             $md5 = md5($data['filename']);
-            if ( !empty($_id) && isset($db[$_id]) && $_id !== $md5 ) {
+            if ( !empty($_id) && isset($db[$_id]) && $_id == $md5 ) {
                 $data['id'] = $db[$_id]['id'];
                 self::del($db[$_id]);
                 unset($db[$_id]);
@@ -189,5 +202,6 @@ class Post extends Common
         $db = self::update();
         return isset($db[$_id]) ? $db[$_id] : false;
     }
+
 
 }

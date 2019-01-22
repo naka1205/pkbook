@@ -18,7 +18,4 @@ class Posts
         yield $ctx->render(VIEW_PATH . "/posts/edit.html");
     }
 
-
-
-
 }

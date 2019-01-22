@@ -4,4 +4,13 @@ date: 2016-03-18 05:03:43
 tags: [demo]
 categories: option1
 ---
-Demo10
+体验
+=======
+1. [PHPKoa Demo](https://github.com/naka1205/phpkoa_demo) 是使用 `PHPKoa` 开发 `HTTP SERVER` 的一个简单示例！
+2. [PHP Krpano](https://github.com/naka1205/phpkrpano) PHP 全景图片生成！
+
+安装
+=======
+```
+composer require naka1205/phpkoa
+```

@@ -26,6 +26,14 @@ $router->mount('/posts', function() use ($router) {
 
 });
 
+
+$router->mount('/show', function() use ($router) {
+
+    $router->get('/index', ['Controllers\Show', 'index']);
+    $router->get('/posts/(\w+)', ['Controllers\Show', 'posts']);
+
+});
+
 $router->mount('/api', function() use ($router) {
 
     $router->post('/login', ['Controllers\Api', 'login']);

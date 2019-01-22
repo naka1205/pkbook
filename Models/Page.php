@@ -1,6 +1,6 @@
 <?php
 namespace Models;
-class Post extends Common
+class Page extends Common
 {
 
     public function __construct($_id)
