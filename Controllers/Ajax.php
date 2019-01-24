@@ -19,7 +19,8 @@ class Ajax
         $data['filename'] = isset($data['filename']) ? $data['filename'] : '';
         $data['date'] = isset($data['date']) ? urldecode($data['date']) : date('Y-m-d h:i:s');
 
-        $bool = Post::save($data,$_id);
+        $post = new Post($_id);
+        $bool = $post->save($data);
 
         $ctx->status = 200;
         $ctx->body = $bool;

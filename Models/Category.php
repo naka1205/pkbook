@@ -24,8 +24,12 @@ class Category extends Common
         return $data;
     }
 
-    public static function select($page,$num=10,$link =''){
-        $data = Source::categories();
+    public static function select($where,$page=0,$num=10,$link =''){
+        $data = Source::categories($where);
+        if ( $page <= 0 ) {
+            return $data;
+        }
+
         $count = count($data);
         $num = $count < $num ? $count : $num;
         $end = $page * $num;

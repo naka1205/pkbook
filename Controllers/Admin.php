@@ -41,7 +41,7 @@ class Admin
         $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
         $cate = isset($vars[0]) ? $vars[0] : '';
 
-        $categories = Category::find();
+        $categories = Category::select([]);
 
         $where = [];
         $link = '/admin/posts';

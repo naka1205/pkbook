@@ -17,8 +17,9 @@ return [
         'categories'    =>  __DIR__ . DS . "categories",
         'tags'          =>  __DIR__ . DS . "tags",
     ],
-    'url' => [
-        'permalink'     =>  ":category/:id.html"
+    'link' => [
+        'posts'         =>  "/posts/:_id",
+        'category'      =>  "/category/:_id"
     ],
     'site' => [
         'title'         => "pkbook",

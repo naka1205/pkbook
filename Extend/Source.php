@@ -8,21 +8,21 @@ class Source
         if (empty($arguments)) {
             return Cache::has($method) ? Cache::get($method) : Source::update($method);
         }
-        return Cache::has($arguments[0]) ? Cache::get($arguments[0]) : false;
-    }
-    
-    public function posts($where = []){
-        $data = Cache::has('_posts') ? Cache::get('_posts') : Source::update();
-        if ( !empty($where) ) {
-            foreach ($data as $key => $value) {
-                foreach ($where as $k => $v ) {
-                    if ( !isset($value[$k]) || self::key($value[$k]) != $v ) {
-                        unset($data[$key]);
+        if ( is_array($arguments[0]) ) {
+            $data = Cache::has($method) ? Cache::get($method) : Source::update($method);
+            if ( !empty($arguments[0]) ) {
+                $where = $arguments[0];
+                foreach ($data as $key => $value) {
+                    foreach ($where as $k => $v ) {
+                        if ( !isset($value[$k]) || self::key($value[$k]) != $v ) {
+                            unset($data[$key]);
+                        }
                     }
                 }
             }
+            return $data;
         }
-        return $data;
+        return Cache::has($arguments[0]) ? Cache::get($arguments[0]) : false;
     }
 
     public function key($name){
@@ -85,6 +85,7 @@ class Source
         $md .= "date: " . $data['date'] . "\n";
         $md .= "tags: [" . $data['tags'] . "]\n";
         $md .= "categories: " . $data['categories'] . "\n";
+        $md .= "createtime: " . $data['createtime'] . "\n";
         $md .= "---\n";
         $md .= $data['content'];
 
@@ -95,7 +96,7 @@ class Source
     }
 
     public function add($source,$id = 0){
-
+        global $configs;
         $contents = file_get_contents($source);
         if ( !$contents ) {
             return false;
@@ -123,24 +124,61 @@ class Source
             $post[$temp[0]] = $temp[1];
         }
         $post['content'] = $arr[2];
-        Cache::set($_id,$post);
+        $post['prev'] = '';
+        $post['next'] = '';
+        $post['link'] = str_replace (':_id',$_id,$configs['link']['posts']);
+        if ( !isset($post['createtime'])) {
+            $post['createtime'] = time();
+        }
         return $post;
     }
-    
 
-    public static function update($name = ''){
+    public static function prev($_id=''){
+        if ( $_id == '') {
+            return false;
+        }
+
+        $data = Cache::has('_posts') ? Cache::get('_posts') : Source::update();
+
+        return $files;
+    }    
+
+
+    public static function globs(){
         global $configs;
         $source = $configs['dir']['source'] . DS . "_posts" . DS;
         $files = glob ( $source . "*.md" );
 
+        usort($files, function($prev, $next) {
+            $prevtime = $prev['createtime'];
+            $nexttime = $next['createtime'];
+            if ( $prevtime < $nexttime ) {
+                return -1;
+            }
+            if ( $prevtime > $nexttime ) {
+                return 1;
+            }
+            return 0;
+        });
+
+        return $files;
+    }
+    
+    
+    public static function update($name = ''){
+        $files = slef::globs();
+
         $_tags = [];
         $_posts = [];
         $_categories = [];
-        
+        $prev = '';    
+        $next = '';    
         foreach ($files as $key => $value) {
             
             $id = $key + 1; 
             $post = self::add($value,$id);
+
+            Cache::set($_id,$post);
             unset($post['content']);
 
             $_id = $post['_id'];

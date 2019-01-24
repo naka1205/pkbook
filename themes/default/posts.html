@@ -15,8 +15,8 @@
 <body>
 <header class="am-g my-head">
   <div class="am-u-sm-12 am-article">
-    <h1 class="am-article-title">{posts->title}</h1>
-    <p class="am-article-meta">{posts->date}</p>
+    <h1 class="am-article-title">{$posts.title}</h1>
+    <p class="am-article-meta">{$posts.date}</p>
   </div>
 </header>
 <hr class="am-article-divider"/>
@@ -25,7 +25,7 @@
     <div class="am-g">
       <div class="am-u-sm-11 am-u-sm-centered">
         <div class="am-cf am-article">
-          {posts->html}
+          {$posts.html|raw}
         </div>
         <hr/>
         <ul class="am-comments-list">
@@ -95,8 +95,8 @@
 <!--<![endif]-->
 <script src="/assets/js/amazeui.min.js"></script>
 <script>
-var _id = '{posts->_id}';
-var id = '{posts->id}';
+var _id = '{$posts._id}';
+var id = '{$posts.id}';
 </script>
 </body>
 </html>
