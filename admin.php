@@ -37,6 +37,9 @@ $app->υse(new Assets( $themes_static_path ));
 use Middlewares\BodyJson; 
 $app->υse(new BodyJson()); 
 
+use Middlewares\Render; 
+$app->υse(new Render($configs['view'])); 
+
 $routes = require __DIR__ . DS . "routes.php";
 $app->υse($routes->routes());
 

@@ -5,6 +5,11 @@ return [
         'password'      => "123456",
         'token'         => ""
     ],
+    'view' => [
+        'view_suffix'   =>	'html',
+        'view_path'	    =>	__DIR__ . DS . "views",
+	    'cache_path'	=>	__DIR__ . DS . "runtime" . DS . 'views'
+    ],
     'dir' => [
         'source'        =>  __DIR__ . DS . "source",
         'public'        =>  __DIR__ . DS . "public",
@@ -23,6 +28,8 @@ return [
         'theme'         => "default"
     ],
     'write' => [
+        'cache_suffix'   => 'php',
+        'cache_path'     => __DIR__ . DS . "runtime" . DS . 'cache',
         'new_post_name'  => ":title.md"
     ],
 

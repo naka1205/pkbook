@@ -12,7 +12,14 @@ $router->mount('/admin', function() use ($router) {
 
     $router->get('/index', ['Controllers\Admin', 'index']);
     $router->get('/info', ['Controllers\Admin', 'info']);
+
+    $router->get('/pages/(\w+)', ['Controllers\Admin', 'pages']);
+    $router->get('/pages', ['Controllers\Admin', 'pages']);
+    
+    $router->get('/posts/(\w+)', ['Controllers\Admin', 'posts']);
     $router->get('/posts', ['Controllers\Admin', 'posts']);
+    
+
     $router->get('/gallery', ['Controllers\Admin', 'gallery']);
     $router->get('/logs', ['Controllers\Admin', 'logs']);
 

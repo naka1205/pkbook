@@ -1,26 +1,4 @@
-<!doctype html>
-<html class="no-js">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Amaze UI Admin table Examples</title>
-  <meta name="description" content="这是一个 table 页面">
-  <meta name="keywords" content="table">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="icon" type="image/png" href="/i/favicon.png">
-  <link rel="apple-touch-icon-precomposed" href="/i/app-icon72x72@2x.png">
-  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-  <link rel="stylesheet" href="/css/amazeui.min.css"/>
-  <link rel="stylesheet" href="/css/admin.css">
-  <script> var token = '{token}'; </script>
-</head>
-<body>
-<!--[if lte IE 9]>
-<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
-  以获得更好的体验！</p>
-<![endif]-->
+    {include file="header" /}
 
     <div class="admin-content-body">
       <div class="am-cf am-padding am-padding-bottom-0">
@@ -42,14 +20,11 @@
         </div>
         <div class="am-u-sm-12 am-u-md-3">
           <div class="am-form-group">
-            <select data-am-selected="{btnSize: 'sm'}">
-              <option value="option1">所有类别</option>
-              <option value="option2">IT业界</option>
-              <option value="option3">数码产品</option>
-              <option value="option3">笔记本电脑</option>
-              <option value="option3">平板电脑</option>
-              <option value="option3">只能手机</option>
-              <option value="option3">超极本</option>
+            <select id="categories" data-am-selected="{btnSize: 'sm'}">
+              <option value="all" {if $cate eq 'all' } selected {/if}> 全部 </option>
+              {volist name="categories" id="vo"}
+              <option value="{$vo._id}" {if $vo._id eq $cate } selected {/if}>{$vo.title}</option>
+              {/volist}
             </select>
           </div>
         </div>
@@ -73,31 +48,31 @@
               </tr>
               </thead>
               <tbody>
-              <!-- BEGIN DATA_EMPTY -->
+              {empty name="data"}
               <tr>
                 <td colspan="7" class="am-text-center">暂无数据</td>
               </tr>
-              <!-- END DATA_EMPTY -->
-              <!-- BEGIN DATA -->
+              {/empty}
+              {volist name="data" id="vo"}
               <tr>
                 <td><input type="checkbox" /></td>
-                <td>{id}</td>
-                <td><a href="#">{title}</a></td>
-                <td>{categories}</td>
-                <td class="am-hide-sm-only">{tags}</td>
-                <td class="am-hide-sm-only">{date}</td>
+                <td>{$vo.id}</td>
+                <td><a href="#">{$vo.title}</a></td>
+                <td>{$vo.categories}</td>
+                <td class="am-hide-sm-only">{$vo.tags}</td>
+                <td class="am-hide-sm-only">{$vo.date}</td>
                 <td>
                   <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-xs">
-                      <a class="am-btn am-btn-default am-btn-xs am-text-secondary" target="_blank" href="/show/posts/{_id}" ><span class="am-icon-pencil-square-o"></span> 预览</a>
-                      <a class="am-btn am-btn-default am-btn-xs am-text-secondary am-hide-sm-only" href="/posts/edit/{_id}" ><span class="am-icon-copy"></span> 编辑</a>
+                      <a class="am-btn am-btn-default am-btn-xs am-text-secondary" target="_blank" href="/show/posts/{$vo._id}" ><span class="am-icon-pencil-square-o"></span> 预览</a>
+                      <a class="am-btn am-btn-default am-btn-xs am-text-secondary am-hide-sm-only" href="/posts/edit/{$vo._id}" ><span class="am-icon-copy"></span> 编辑</a>
                       <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only"><span class="am-icon-copy"></span> 复制</button>
                       <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
                     </div>
                   </div>
                 </td>
               </tr>
-              <!-- END DATA -->
+              {/volist}
               </tbody>
             </table>
             <div class="am-cf">
@@ -111,68 +86,61 @@
       </div>
     </div>
 
-
-    <div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="loading-modal">
-      <div class="am-modal-dialog">
-        <div class="am-modal-hd">正在载入...</div>
-        <div class="am-modal-bd">
-          <span class="am-icon-spinner am-icon-spin"></span>
-        </div>
-      </div>
-    </div>
-
-<!--[if lt IE 9]>
-<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
-<script src="/js/amazeui.ie8polyfill.min.js"></script>
-<![endif]-->
-
-<!--[if (gte IE 9)|!(IE)]><!-->
-<script src="/js/jquery.min.js"></script>
-<!--<![endif]-->
-<script src="/js/amazeui.min.js"></script>
-<script src="/js/handlebars.min.js"></script>
-<script src="/js/amazeui.widgets.helper.js"></script>
-<script src="/js/main.js"></script>
+    {include file="footer" /}
 <script>
 
-var $modal = $('#loading-modal');
-var paginationData = {pagination};
+$(function() {
+  var $selected = $('#categories');
 
-var template = Handlebars.compile('{{>pagination}}')
-var html = template(paginationData);
-$('#pagination').append(html);
-
-$("#add").click(function(){
-  location.href = '/posts/add'
-})
-
-$("#update").click(function(){
-  $modal.modal('open');
-  $.ajax({
-    type: "POST",
-    url: "/ajax/update",
-    dataType: "json",
-    data:{},
-    beforeSend:function(){
-
-    },
-    success: function(res){
-        if ( res.code == 200 ) {
-            location.reload()
-        }else{
-            $modal.modal('close');
-        }
-    }
+  $selected.on('change', function() {
+      var cate = $(this).val();
+      if ( cate != '' ) {
+          window.location.href = '/admin/posts/' + cate;
+      }
   });
 
-})
 
-$(".btn-edit").click(function(){
-  var _id = $(this).data("_id");
-  location.href = '/posts/edit/' + _id;
-})
+});
 
-</script>
-</body>
+  var $modal = $('#loading-modal');
+  var paginationData = {$pagination|raw};
+  
+  var template = Handlebars.compile('{{>pagination}}')
+  var html = template(paginationData);
+  $('#pagination').append(html);
+  
+  $("#add").click(function(){
+    location.href = '/posts/add'
+  })
+  
+  $("#update").click(function(){
+    $modal.modal('open');
+    $.ajax({
+      type: "POST",
+      url: "/ajax/update",
+      dataType: "json",
+      data:{},
+      beforeSend:function(){
+  
+      },
+      success: function(res){
+          if ( res.code == 200 ) {
+              location.reload()
+          }else{
+              $modal.modal('close');
+          }
+      }
+    });
+  
+  })
+  
+  $(".btn-edit").click(function(){
+    var _id = $(this).data("_id");
+    location.href = '/posts/edit/' + _id;
+  })
+  
+
+
+  
+  </script>
 </html>

@@ -2,6 +2,7 @@
 namespace Controllers;
 use Naka507\Koa\Context;
 use Models\Post;
+use Models\Category;
 class Admin
 {
 
@@ -17,7 +18,7 @@ class Admin
 
     public static function index(Context $ctx, $next){
         $ctx->status = 200;
-        yield $ctx->render(VIEW_PATH . "/index.html");
+        yield $ctx->render("index");
     }
 
     public static function info(Context $ctx, $next){
@@ -26,23 +27,38 @@ class Admin
     }
 
     public static function pages(Context $ctx, $next){
+        $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
+
+        $ctegoryData = Category::select($page,2,'/admin/pages');
+        $ctx->state["data"] = $ctegoryData['data'];
+        $ctx->state["pagination"] = json_encode ($ctegoryData['pagination']);
+
         $ctx->status = 200;
         yield $ctx->render(VIEW_PATH . "/pages.html");
     }
 
-    public static function posts(Context $ctx, $next){
+    public static function posts(Context $ctx, $next, $vars){
         $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
+        $cate = isset($vars[0]) ? $vars[0] : '';
 
-        $postsData = Post::select($page,2);
-        foreach ($postsData['data'] as $key => &$value) {
-            unset($value['filename']);
-            unset($value['content']);
+        $categories = Category::find();
+
+        $where = [];
+        $link = '/admin/posts';
+        if ( !empty($cate) && $cate != 'all' ) {
+            $where['categories'] = $cate;
+            $link .= "/" . $cate;
         }
+
+        $postsData = Post::select($where,$page,2,$link);
+        
         $ctx->state["data"] = $postsData['data'];
         $ctx->state["pagination"] = json_encode ($postsData['pagination']);
-        
+        $ctx->state["cate"] = $cate;
+        $ctx->state["categories"] = $categories;
+
         $ctx->status = 200;
-        yield $ctx->render(VIEW_PATH . "/posts.html");
+        yield $ctx->render("posts");
     }
 
     public static function gallery(Context $ctx, $next){

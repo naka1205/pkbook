@@ -6,7 +6,8 @@
         "psr-4": {
             "Controllers\\": "Controllers/",
             "Middlewares\\": "Middlewares/",
-            "Models\\": "Models/"
+            "Models\\": "Models/",
+            "Extend\\": "Extend/"
         }
     }
 }
