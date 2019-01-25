@@ -102,4 +102,8 @@ class Common implements ArrayAccess
         return $paginationData;
     }
 
+    public static function publish(){
+
+    }
+
 }

@@ -2,7 +2,6 @@
 namespace Controllers;
 use Naka507\Koa\Context;
 use Models\Post;
-
 class Posts
 {
 

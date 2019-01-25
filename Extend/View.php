@@ -1,7 +1,7 @@
 <?php
 namespace Extend;
 use Exception;
-class TagLib
+class View
 {
 
     /**

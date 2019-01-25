@@ -76,4 +76,9 @@ class Post extends Common
         return ['data' => array_slice ( $data , $end - $num , $num ) , 'count' => $count ,'pagination' => $pagination];
     }
 
+
+    public static function publish(){
+        
+    }
+
 }

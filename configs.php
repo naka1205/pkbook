@@ -33,5 +33,9 @@ return [
         'cache_path'     => __DIR__ . DS . "runtime" . DS . 'cache',
         'new_post_name'  => ":title.md"
     ],
+    'publish' => [
+        'suffix'        => 'html',
+        'path'          => __DIR__ . DS . "public"
+    ]
 
 ];

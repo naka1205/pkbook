@@ -15,6 +15,7 @@
               <button type="button" id="save" class="am-btn am-btn-default"><span class="am-icon-save"></span> 保存</button>
               <button type="button" id="dels" class="am-btn am-btn-default"><span class="am-icon-trash-o"></span> 删除</button>
               <button type="button" id="update" class="am-btn am-btn-default" data-am-modal="{target: '#loading-modal'}"><span class="am-icon-archive"></span> 更新</button>
+              <button type="button" id="publish" class="am-btn am-btn-default" data-am-modal="{target: '#loading-modal'}"><span class="am-icon-archive"></span> 发布</button>
             </div>
           </div>
         </div>
@@ -134,6 +135,28 @@ $(function() {
   
   })
   
+
+  $("#publish").click(function(){
+    // $modal.modal('open');
+    $.ajax({
+      type: "POST",
+      url: "/ajax/publish",
+      dataType: "json",
+      data:{},
+      beforeSend:function(){
+  
+      },
+      success: function(res){
+          if ( res.code == 200 ) {
+              location.reload()
+          }else{
+              $modal.modal('close');
+          }
+      }
+    });
+  
+  })
+
   $(".btn-edit").click(function(){
     var _id = $(this).data("_id");
     location.href = '/posts/edit/' + _id;

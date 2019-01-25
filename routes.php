@@ -49,6 +49,7 @@ $router->mount('/api', function() use ($router) {
 
 $router->mount('/ajax', function() use ($router) {
 
+    $router->post('/publish', ['Controllers\Ajax', 'publish']);
     $router->post('/update', ['Controllers\Ajax', 'update']);
     $router->post('/posts', ['Controllers\Ajax', 'posts']);
     $router->post('/posts/(\w+)', ['Controllers\Ajax', 'posts']);

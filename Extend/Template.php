@@ -647,9 +647,9 @@ class Template
      */
     public function parseTagLib(&$content)
     {
-        $tLib = new TagLib($this);
+        $view = new View($this);
 
-        $tLib->parseTag($content);
+        $view->parseTag($content);
 
         return;
     }
