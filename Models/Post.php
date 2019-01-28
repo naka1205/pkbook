@@ -13,16 +13,9 @@ class Post extends Common
         }
     }
 
-    public static function add($data){
-        return Source::save($data);
-    }
-
     public function save($data = []){
         if ( empty($data) ) {
             $data = $this->data;
-        }
-        if ( !isset($data['createtime']) ) {
-            $data['createtime'] = time();
         }
         return Source::save($data);
     }
@@ -59,6 +52,13 @@ class Post extends Common
         
     }
 
+    public static function add($data){
+        if ( empty($data) ) {
+            return false;
+        }
+        return Source::save($data);
+    }
+
     public static function select($where,$page=0,$num=10,$link =''){
         $data = Source::posts($where);
         if ( $page <= 0 ) {
@@ -74,11 +74,6 @@ class Post extends Common
         }
 
         return ['data' => array_slice ( $data , $end - $num , $num ) , 'count' => $count ,'pagination' => $pagination];
-    }
-
-
-    public static function publish(){
-        
     }
 
 }

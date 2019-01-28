@@ -2,9 +2,8 @@
 namespace Controllers;
 use Naka507\Koa\Context;
 use Models\Post;
-use Extend\Cache;
-use Extend\Source;
-use Extend\Template;
+use Models\Single;
+use Extend\Publish;
 class Ajax
 {
     public static function base(Context $ctx, $next, $vars){
@@ -13,6 +12,10 @@ class Ajax
             $ctx->status = 200;
             $ctx->body = false;
             return;
+        }
+
+        if ( isset($ctx->post['data']) ) {
+            $ctx->post['data'] = self::parse($ctx->post['data']);
         }
     }
 
@@ -30,36 +33,44 @@ class Ajax
 
     public static function update(Context $ctx, $next){
 
-        $bool = ( yield Source::update() ? '' : false );
+        $type = isset($ctx->post['type']) ? $ctx->post['type'] : '';
+        switch ($type) {
+            case 'posts':
+                yield Source::update();
+                break;
+            case 'singles':
+                yield Publish::singles();
+                break;
+            default:
+                # code...
+                break;
+        }
+
         $ctx->status = 200;
-        $ctx->body = $bool;
+        $ctx->body = '';
     }
 
     public function publish(Context $ctx, $next){
-        // $bool = ( yield Source::publish() );
 
-        global $configs;
-        $data = ( yield Source::update() );
-        $source = $configs['publish']['path'] . str_replace ('/',DS,$configs['link']['posts']) . "." . $configs['publish']['suffix'];
-        $template = THEME_PATH . DS . $configs['site']['theme'] . "/posts.html";
-        $opt = $configs['view'];
-        $opt['tpl_cache'] = false;
-        $opt['view_path'] = THEME_PATH . DS . $configs['site']['theme'];
-
-        $savepath = str_replace (basename( $source ),'', $source);
-        if (!is_dir($savepath)) {
-            mkdir($savepath, 0755, true);
+        $type = isset($ctx->post['type']) ? $ctx->post['type'] : '';
+        switch ($type) {
+            case 'index':
+                yield Publish::index();
+                break;
+            case 'posts':
+                yield Publish::posts();
+                break;
+            case 'tags':
+                yield Publish::tags();
+                break;
+            case 'categories':
+                yield Publish::categories();
+                break;
+            default:
+                # code...
+                break;
         }
-        $view = new Template($opt);
-        foreach ($data as $key => $post) {
-            $_id = $post['_id'];
-            $post = new Post($_id);
-            $view->assign('posts',$post);
-            $html = ( yield $view->fetch('posts') );
-            $file =  str_replace (':_id',$_id,$source);
-            yield file_put_contents ( $file ,  $html );
-        }
-
+        
         $ctx->status = 200;
         $ctx->body = '';
     }

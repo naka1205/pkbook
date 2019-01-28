@@ -1,8 +1,11 @@
 <?php
 namespace Controllers;
 use Naka507\Koa\Context;
+
 use Models\Post;
 use Models\Category;
+use Models\Single;
+
 class Admin
 {
 
@@ -26,15 +29,17 @@ class Admin
         yield $ctx->render(VIEW_PATH . "/info.html");
     }
 
-    public static function pages(Context $ctx, $next){
+    public static function singles(Context $ctx, $next){
         $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
 
-        $ctegoryData = Category::select($page,2,'/admin/pages');
-        $ctx->state["data"] = $ctegoryData['data'];
-        $ctx->state["pagination"] = json_encode ($ctegoryData['pagination']);
+        $singlesData = Single::select($page,2,'/admin/singles');
+        $ctx->state["data"] = $singlesData['data'];
+        $ctx->state["pagination"] = json_encode ($singlesData['pagination']);
+
+        var_dump($singlesData['data']);
 
         $ctx->status = 200;
-        yield $ctx->render(VIEW_PATH . "/pages.html");
+        yield $ctx->render("singles");
     }
 
     public static function posts(Context $ctx, $next, $vars){

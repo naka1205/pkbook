@@ -45,7 +45,7 @@ class Source
         global $configs;
         $source = $configs['dir']['source'] . DS . "_posts" . DS . $_id . '.md';
         
-        $post = self::post($source);
+        $post = self::addPost($source);
         if ( !$post ) {
             return false;
         }
@@ -92,30 +92,17 @@ class Source
         $md = "---\n";
         $md .= "title: " . $data['title'] . "\n";
         $md .= "date: " . $data['date'] . "\n";
-
-        $source = '';
-        if ( isset($data['categories']) ) {
-            if ( isset($data['tags'] ) ) {
-                $md .= "tags: [" . $data['tags'] . "]\n";
-            }
-            $md .= "categories: " . $data['categories'] . "\n";
-            $md .= "createtime: " . $data['createtime'] . "\n";
-
-            $filename = self::key($data['title']);
-            $source = $configs['dir']['source'] . DS . "_posts" . DS . $filename . '.md';
+        if ( isset($data['tags'] ) ) {
+            $md .= "tags: [" . $data['tags'] . "]\n";
         }
-
+        $md .= "categories: " . $data['categories'] . "\n";
+        $md .= "createtime: " . $data['createtime'] . "\n";
         $md .= "---\n";
         $md .= trim($data['content']);
+        $filename = self::key($data['title']);
         
-        if ( empty($source) ) {
-            $source = $configs['dir']['source'] . DS . $data['name'];
-            if ( !is_dir($source) ) {
-                mkdir($source, 0755, true);
-            }
-            $source = $source . DS . 'index.md';
-        }
-        
+        $source = $configs['dir']['source'] . DS . "_posts" . DS . $filename . '.md';;
+
         if ( !file_put_contents ( $source ,  $md ) ) {
             return false;
         }
@@ -143,16 +130,24 @@ class Source
             $post['next_id'] = isset($data[$next_id]) ? $data[$next_id]['_id'] : '';
             $post['next_title'] = isset($data[$next_id]) ? $data[$next_id]['title'] : '';
             $post['next'] = isset($data[$next_id]) ? $data[$next_id]['link'] : '';
+
+            $filename = str_replace ('.md','', basename( $post['source'] ));
+            if ( $post['_id'] != self::key( $filename ) ) {
+                if ( is_file( $post['source'] ) ) {
+                    unlink( $post['source'] );
+                }
+                self::save($post);
+            }
             
             Cache::set($_id,$post);
             unset($post['content']);
 
             if ( isset($post['categories']) ) {
-                self::category($post,$_categories);
+                self::addCategory($post,$_categories);
             }
 
             if ( isset($post['tags']) ) {
-                self::tags($post,$_tags);
+                self::addTags($post,$_tags);
             }
 
             $_posts[$_id] = $post;
@@ -176,10 +171,10 @@ class Source
 
         usort($data, function(&$prev, &$next) {
             if ( !is_array($prev) ) {
-                $prev = self::post($prev);
+                $prev = self::addPost($prev);
             }
             if ( !is_array($next) ) {
-                $next = self::post($next);
+                $next = self::addPost($next);
             }
 
             $prevtime = isset($prev['createtime']) ? $prev['createtime'] : strtotime($prev['date']);
@@ -198,7 +193,7 @@ class Source
     }
 
 
-    public static function post($source){
+    public static function addPost($source){
         if ( !is_file($source) ) {
             return false;
         }
@@ -223,7 +218,7 @@ class Source
         return $post;
     }
 
-    public static function category($post,&$_categories){
+    public static function addCategory($post,&$_categories){
         $_id = $post['_id'];
         $title = $post['categories'];
         $_cid = self::key($title);
@@ -249,7 +244,7 @@ class Source
     }
 
 
-    public static function tags($post,&$_tags){
+    public static function addTags($post,&$_tags){
         $_id = $post['_id'];
         $data = explode(',',$post['tags']);
         $tags = [];
@@ -302,7 +297,7 @@ class Source
     }
 
 
-    public static function page($source){
+    public static function addPage($source){
         if ( !is_file($source) ) {
             return false;
         }
@@ -315,27 +310,49 @@ class Source
 
         $data['id'] = 0;
         $data['name'] = basename(dirname($source));
-        $data['link'] = str_replace (':_id',$data['name'],$configs['link']['page']);
+        $data['type'] = isset($data['type']) ? trim($data['type'],'"') : 'single';
+        $data['link'] = str_replace (':_id',$data['_id'],$configs['link']['page']);
         $data['source'] = $source;
         return $data;
     }
 
-    public static function singles(){
+    public static function pages(){
         global $configs;
         $sources  =  scandir ( $configs['dir']['source'] );
-        $_singles = [];
+        $_pages = [];
         foreach ($sources as $key => $value) {
             if ( strpos($value,'.') !== false || strpos($value,'_') !== false ) {
                 continue;
             }
             $index = $configs['dir']['source'] . DS . $value . DS . 'index.md';
-            $data = self::page($index);
+            $data = self::addPage($index);
             
-            $_singles[$data['_id']] = $data;
+            $_pages[$data['_id']] = $data;
         }
 
-        Cache::set('_singles',$_singles);
-        return $_singles;
+        Cache::set('_pages',$_pages);
+        return $_pages;
+    }
+
+    public static function page($data){
+        global $configs;
+
+        $md = "---\n";
+        $md .= "title: " . $data['title'] . "\n";
+        $md .= "date: " . $data['date'] . "\n";
+        $md .= "---\n";
+        $md .= trim($data['content']);
+
+        $source = $configs['dir']['source'] . DS . $data['name'];
+        if ( !is_dir($source) ) {
+            mkdir($source, 0755, true);
+        }
+
+        if ( !file_put_contents ( $source . DS . 'index.md' ,  $md ) ) {
+            return false;
+        }
+        
+        return true;
     }
 
 }

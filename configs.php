@@ -18,6 +18,7 @@ return [
         'tags'          =>  __DIR__ . DS . "tags",
     ],
     'link' => [
+        'page'         =>  "/:_id",
         'posts'         =>  "/posts/:_id",
         'category'      =>  "/category/:_id"
     ],

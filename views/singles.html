@@ -1,0 +1,140 @@
+    {include file="header" /}
+
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">表格</strong> / <small>Table</small></div>
+      </div>
+
+      <hr>
+
+      <div class="am-g">
+        <div class="am-u-sm-12 am-u-md-6">
+          <div class="am-btn-toolbar">
+            <div class="am-btn-group am-btn-group-xs">
+              <button type="button" id="add" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</button>
+              <button type="button" id="save" class="am-btn am-btn-default"><span class="am-icon-save"></span> 保存</button>
+              <button type="button" id="dels" class="am-btn am-btn-default"><span class="am-icon-trash-o"></span> 删除</button>
+              <button type="button" id="update" class="am-btn am-btn-default" data-am-modal="{target: '#loading-modal'}"><span class="am-icon-archive"></span> 更新</button>
+              <button type="button" id="publish" class="am-btn am-btn-default" data-am-modal="{target: '#loading-modal'}"><span class="am-icon-archive"></span> 发布</button>
+            </div>
+          </div>
+        </div>
+        <div class="am-u-sm-12 am-u-md-6">
+          <div class="am-form-group am-input-group">
+            <input type="text" class="am-form-field">
+            <span class="am-input-group-btn">
+              <button class="am-btn am-btn-default" type="button">搜索</button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="am-g">
+        <div class="am-u-sm-12">
+          <form class="am-form">
+            <table class="am-table am-table-bordered am-table-striped am-table-hover">
+              <thead>
+              <tr>
+                <th class="table-check"><input type="checkbox" /></th><th class="table-id">ID</th><th class="table-name">名称</th><th class="table-title">标题</th><th class="table-date am-hide-sm-only">修改日期</th><th class="table-set">操作</th>
+              </tr>
+              </thead>
+              <tbody>
+                {empty name="data"}
+                <tr>
+                  <td colspan="7" class="am-text-center">暂无数据</td>
+                </tr>
+                {/empty}
+                {volist name="data" id="vo"}
+                <tr>
+                  <td><input type="checkbox" /></td>
+                  <td>{$vo.id}</td>
+                  <td>{$vo.name}</td>
+                  <td><a href="#">{$vo.title}</a></td>
+                  <td class="am-hide-sm-only">{$vo.date}</td>
+                  <td>
+                    <div class="am-btn-toolbar">
+                      <div class="am-btn-group am-btn-group-xs">
+                        <a class="am-btn am-btn-default am-btn-xs am-text-secondary am-hide-sm-only" href="/singles/edit/{$vo._id}" ><span class="am-icon-copy"></span> 编辑</a>
+                        <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                {/volist}
+              </tbody>
+            </table>
+            <div class="am-cf">
+              <div class="am-fr" id="pagination"></div>
+            </div>
+            <hr />
+            <p>注：.....</p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    {include file="footer" /}
+
+<script>
+  
+    var $modal = $('#loading-modal');
+    var paginationData = {$pagination|raw};
+    
+    var template = Handlebars.compile('{{>pagination}}')
+    var html = template(paginationData);
+    $('#pagination').append(html);
+    
+    $("#add").click(function(){
+        location.href = '/singles/add'
+    })
+    
+    $("#update").click(function(){
+      $modal.modal('open');
+      $.ajax({
+        type: "POST",
+        url: "/ajax/update",
+        dataType: "json",
+        data:{type:"singles"},
+        beforeSend:function(){
+    
+        },
+        success: function(res){
+            if ( res.code == 200 ) {
+                location.reload()
+            }else{
+                $modal.modal('close');
+            }
+        }
+      });
+    
+    })
+    
+    $("#publish").click(function(){
+      // $modal.modal('open');
+      $.ajax({
+        type: "POST",
+        url: "/ajax/publish",
+        dataType: "json",
+        data:{},
+        beforeSend:function(){
+    
+        },
+        success: function(res){
+            if ( res.code == 200 ) {
+                location.reload()
+            }else{
+                $modal.modal('close');
+            }
+        }
+      });
+    
+    })
+  
+    $(".btn-edit").click(function(){
+      var _id = $(this).data("_id");
+      location.href = '/posts/edit/' + _id;
+    })
+
+</script>
+</html>

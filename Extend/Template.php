@@ -125,6 +125,40 @@ class Template
         }
     }
 
+    public function publish($template, $file)
+    {
+        $template = $this->parseTemplateFile($template);
+
+        if ($template) {
+
+            $cacheFile = $this->config['cache_path'] . $this->config['cache_prefix'] . md5($this->config['layout_on'] . $this->config['layout_name'] . $template) . '.' . ltrim($this->config['cache_suffix'], '.');
+
+            if (!$this->checkCache($cacheFile)) {
+                // 缓存无效 重新模板编译
+                $content = file_get_contents($template);
+                $this->compiler($content, $cacheFile);
+            }
+
+            // 页面缓存
+            ob_start();
+            ob_implicit_flush(0);
+
+            // 读取编译存储
+            $this->storage->read($cacheFile, $this->data);
+
+            // 获取并清空缓存
+            $content = ob_get_clean();
+
+            $dir = dirname($file);
+
+            if (!is_dir($dir)) {
+                mkdir($dir, 0755, true);
+            }
+
+            file_put_contents ( $file ,  $content );
+        }
+    }
+
     /**
      * 渲染模板文件
      * @access public
@@ -283,7 +317,7 @@ class Template
      * @param string    $cacheFile 缓存文件名
      * @return void
      */
-    private function compiler(&$content, $cacheFile)
+    private function compiler(&$content, $cacheFile='')
     {
         // 判断是否启用布局
         if ($this->config['layout_on']) {
@@ -320,11 +354,13 @@ class Template
         $replace = $this->config['tpl_replace_string'];
         $content = str_replace(array_keys($replace), array_values($replace), $content);
 
-        // 添加安全代码及模板引用记录
-        $content = '<?php /*' . serialize($this->includeFile) . '*/ ?>' . "\n" . $content;
         // 编译存储
-        $this->storage->write($cacheFile, $content);
-
+        if ( !empty($cacheFile) ) {
+            // 添加安全代码及模板引用记录
+            $content = '<?php /*' . serialize($this->includeFile) . '*/ ?>' . "\n" . $content;
+            $this->storage->write($cacheFile, $content);
+        }
+        
         $this->includeFile = [];
 
         return;

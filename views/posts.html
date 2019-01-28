@@ -79,8 +79,6 @@
             <div class="am-cf">
               <div class="am-fr" id="pagination"></div>
             </div>
-            <hr />
-            <p>注：.....</p>
           </form>
         </div>
 
@@ -120,7 +118,7 @@ $(function() {
       type: "POST",
       url: "/ajax/update",
       dataType: "json",
-      data:{},
+      data:{type:"posts"},
       beforeSend:function(){
   
       },
@@ -142,7 +140,7 @@ $(function() {
       type: "POST",
       url: "/ajax/publish",
       dataType: "json",
-      data:{},
+      data:{type:'posts'},
       beforeSend:function(){
   
       },
