@@ -7,6 +7,7 @@ $router->get('/login',['Controllers\Main', 'login']);
 
 $router->before('GET|POST', '/admin/.*',['Controllers\Admin', 'base']);
 $router->before('GET|POST', '/ajax/.*',['Controllers\Ajax', 'base']);
+$router->before('GET|POST', '/show/.*',['Controllers\Show', 'base']);
 
 $router->mount('/admin', function() use ($router) {
 
@@ -44,7 +45,9 @@ $router->mount('/show', function() use ($router) {
 
     $router->get('/index', ['Controllers\Show', 'index']);
     $router->get('/posts/(\w+)', ['Controllers\Show', 'posts']);
-    $router->get('/singles/(\w+)', ['Controllers\Show', 'singles']);
+    $router->get('/single/(\w+)', ['Controllers\Show', 'single']);
+    $router->get('/category/(\w+)', ['Controllers\Show', 'category']);
+    $router->get('/tags/(\w+)', ['Controllers\Show', 'tags']);
 
 });
 

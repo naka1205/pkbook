@@ -35,25 +35,25 @@
             <table class="am-table am-table-bordered am-table-striped am-table-hover">
               <thead>
               <tr>
-                <th class="table-check"><input type="checkbox" /></th><th class="table-id">ID</th><th class="table-name">名称</th><th class="table-title">标题</th><th class="table-date am-hide-sm-only">修改日期</th><th class="table-set">操作</th>
+                <th class="table-check"><input type="checkbox" /></th><th class="table-name">名称</th><th class="table-title">标题</th><th class="table-date am-hide-sm-only">修改日期</th><th class="table-set">操作</th>
               </tr>
               </thead>
               <tbody>
-                {empty name="data"}
+                {empty name="state.data"}
                 <tr>
                   <td colspan="7" class="am-text-center">暂无数据</td>
                 </tr>
                 {/empty}
-                {volist name="data" id="vo"}
+                {volist name="state.data" id="vo"}
                 <tr>
                   <td><input type="checkbox" /></td>
-                  <td>{$vo.id}</td>
                   <td>{$vo.name}</td>
                   <td><a href="#">{$vo.title}</a></td>
                   <td class="am-hide-sm-only">{$vo.date}</td>
                   <td>
                     <div class="am-btn-toolbar">
                       <div class="am-btn-group am-btn-group-xs">
+                        <a class="am-btn am-btn-default am-btn-xs am-text-secondary" target="_blank" href="/show/single/{$vo.name}" ><span class="am-icon-pencil-square-o"></span> 预览</a>
                         <a class="am-btn am-btn-default am-btn-xs am-text-secondary am-hide-sm-only" href="/singles/edit/{$vo._id}" ><span class="am-icon-copy"></span> 编辑</a>
                         <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
                       </div>
@@ -79,7 +79,7 @@
 <script>
   
     var $modal = $('#loading-modal');
-    var paginationData = {$pagination|raw};
+    var paginationData = {$state.pagination|raw};
     
     var template = Handlebars.compile('{{>pagination}}')
     var html = template(paginationData);

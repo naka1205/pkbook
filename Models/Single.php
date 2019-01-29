@@ -3,11 +3,9 @@ namespace Models;
 use Extend\Source;
 class Single extends Common
 {
-
     public function __construct($_id)
     {
-        $data = Source::singles();
-        $this->data = isset($data[$_id]) ? $data[$_id] : [];
+        $this->data = !empty($_id) ? Source::singles($_id) : [];
     }
 
     public function save($data = []){
@@ -24,11 +22,12 @@ class Single extends Common
         return Source::save($data);
     }
 
-    public static function select($page=0,$num=10,$link =''){
-        $data = Source::singles();
+    public static function select($where,$page=0,$num=10,$link =''){
+        $data = Source::singles($where);
         if ( $page <= 0 ) {
             return $data;
         }
+        
         $count = count($data);
         $num = $count < $num ? $count : $num;
         $end = $page * $num;

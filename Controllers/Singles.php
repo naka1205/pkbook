@@ -13,16 +13,10 @@ class Singles
 
     public static function edit(Context $ctx, $next, $vars){
         $data = new Single($vars[0]);
-        if ( !$data ) {
-            $ctx->thrοw(500, "Data Error");
-            return;
-        }
         $ctx->status = 200;
-        $ctx->state["page"] = $data;
+        $ctx->state = $data;
         yield $ctx->render("singles/edit");
     }
-
-
 
 
 }

@@ -13,7 +13,7 @@ class Posts
     public static function edit(Context $ctx, $next, $vars){
         $data = new Post($vars[0]);
         $ctx->status = 200;
-        $ctx->state["posts"] = $data;
+        $ctx->state = $data;
         yield $ctx->render("posts/edit");
     }
 

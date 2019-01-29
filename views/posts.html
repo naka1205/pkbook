@@ -1,4 +1,4 @@
-    {include file="header" /}
+{include file="header" /}
 
     <div class="admin-content-body">
       <div class="am-cf am-padding am-padding-bottom-0">
@@ -22,9 +22,9 @@
         <div class="am-u-sm-12 am-u-md-3">
           <div class="am-form-group">
             <select id="categories" data-am-selected="{btnSize: 'sm'}">
-              <option value="all" {if $cate eq 'all' } selected {/if}> 全部 </option>
-              {volist name="categories" id="vo"}
-              <option value="{$vo._id}" {if $vo._id eq $cate } selected {/if}>{$vo.title}</option>
+              <option value="all" {if $state.cate eq 'all' } selected {/if}> 全部 </option>
+              {volist name="state.categories" id="vo"}
+              <option value="{$vo._id}" {if $vo._id eq $state.cate } selected {/if}>{$vo.title}</option>
               {/volist}
             </select>
           </div>
@@ -49,18 +49,23 @@
               </tr>
               </thead>
               <tbody>
-              {empty name="data"}
+              {empty name="state.data"}
               <tr>
                 <td colspan="7" class="am-text-center">暂无数据</td>
               </tr>
               {/empty}
-              {volist name="data" id="vo"}
+              {volist name="state.data" id="vo"}
               <tr>
                 <td><input type="checkbox" /></td>
                 <td>{$vo.id}</td>
                 <td><a href="#">{$vo.title}</a></td>
                 <td>{$vo.categories}</td>
-                <td class="am-hide-sm-only">{$vo.tags}</td>
+                <td class="am-hide-sm-only">
+                    {volist name="vo.tags" id="v" key="k"}
+                    {gt name="k" value="0"},{/gt}
+                    {$v.title}
+                    {/volist}
+                </td>
                 <td class="am-hide-sm-only">{$vo.date}</td>
                 <td>
                   <div class="am-btn-toolbar">
@@ -85,7 +90,7 @@
       </div>
     </div>
 
-    {include file="footer" /}
+{include file="footer" /}
 <script>
 
 $(function() {
@@ -102,7 +107,7 @@ $(function() {
 });
 
   var $modal = $('#loading-modal');
-  var paginationData = {$pagination|raw};
+  var paginationData = {$state.pagination|raw};
   
   var template = Handlebars.compile('{{>pagination}}')
   var html = template(paginationData);

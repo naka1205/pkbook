@@ -22,7 +22,7 @@ class Source
             }
             return $data;
         }
-        return Cache::has($arguments[0]) ? Cache::get($arguments[0]) : Source::find($arguments[0]);
+        return Cache::has($arguments[0]) ? Cache::get($arguments[0]) : Source::find($method,$arguments[0]);
     }
 
     public static function key($name){
@@ -41,49 +41,7 @@ class Source
         return true;
     }
 
-    public static function find($_id){
-        global $configs;
-        $source = $configs['dir']['source'] . DS . "_posts" . DS . $_id . '.md';
-        
-        $post = self::post($source);
-        if ( !$post ) {
-            return false;
-        }
-        $_id = $post['_id'];
-        $_posts = Cache::get('_posts');
 
-        if( isset($data['_id']) && $data['_id'] != $_id ){
-            self::del($data['_id']);
-            unset($_posts[$data['_id']]);
-        }
-        
-        if ( Cache::has($_id) ) {
-            $_post = Cache::get($_id);
-            $post['id'] = $_post['id'];
-            $post['createtime'] = $_post['createtime'];
-        }else{
-            $prev  =  end ( $_posts ); 
-            $prev_id = $prev['_id'];
-    
-            $post['id'] = intval($prev['id']) + 1;
-            $post['prev'] = $prev['link'];
-            $post['prev_id'] = $prev_id;
-            $post['prev_title'] = $prev['title'];
-
-            $prev['next'] = $post['link'];
-            $prev['next_id'] = $_id;
-            $prev['next_title'] = $post['title'];
-        }
-
-        Cache::set($_id,$post);
-
-        unset($post['content']);
-        $_posts[$_id] = $post;
-
-        Cache::set('_posts',$_posts);
-
-        return $post;
-    }
 
     public static function save($data){
         global $configs;
@@ -126,6 +84,25 @@ class Source
 
     public static function update($name = ''){
         global $configs;
+
+        if ( $name == 'singles' ) {
+            $sources  =  scandir ( $configs['dir']['source'] );
+            $_singles = [];
+            foreach ($sources as $key => $value) {
+                if ( strpos($value,'.') !== false || strpos($value,'_') !== false ) {
+                    continue;
+                }
+                $index = $configs['dir']['source'] . DS . $value . DS . 'index.md';
+                $single = self::parsePage($index);
+                Cache::set($single['_id'],$single);
+                unset($single['content']);
+                $_singles[$single['_id']] = $single;
+            }
+
+            Cache::set('singles',$_singles);
+            return $_singles;
+        }
+
         $source = $configs['dir']['source'] . DS . "_posts" . DS;
         $data = self::glob($source);
         $_tags = [];
@@ -138,48 +115,111 @@ class Source
             $next_id = $key + 1;
             $post['prev_id'] = isset($data[$prev_id]) ? $data[$prev_id]['_id'] : '';
             $post['prev_title'] = isset($data[$prev_id]) ? $data[$prev_id]['title'] : '';
-            $post['prev'] = isset($data[$prev_id]) ? $data[$prev_id]['link'] : '';
+            $post['prev_link'] = isset($data[$prev_id]) ? $data[$prev_id]['link'] : '';
 
             $post['next_id'] = isset($data[$next_id]) ? $data[$next_id]['_id'] : '';
             $post['next_title'] = isset($data[$next_id]) ? $data[$next_id]['title'] : '';
-            $post['next'] = isset($data[$next_id]) ? $data[$next_id]['link'] : '';
+            $post['next_link'] = isset($data[$next_id]) ? $data[$next_id]['link'] : '';
             
-            Cache::set($_id,$post);
-            unset($post['content']);
-
             if ( isset($post['categories']) ) {
-                self::category($post,$_categories);
+                self::parseCategory($post,$_categories);
             }
-
+            $tags = '';
             if ( isset($post['tags']) ) {
-                self::tags($post,$_tags);
+                $tags = $post['tags'];
+                $post['tags'] = self::parseTags($post,$_tags);
             }
 
+            Cache::set($_id,$post);
+
+            unset($post['content']);
+            $post['tags'] = $tags;
             $_posts[$_id] = $post;
         }
 
-        Cache::set('_posts',$_posts);
-        Cache::set('_tags',$_tags);
-        Cache::set('_categories',$_categories);
+        Cache::set('posts',$_posts);
+        Cache::set('tags',$_tags);
+        Cache::set('categories',$_categories);
 
-        if ( !empty($name) ) {
-            $name = "_" . $name;
-            return isset($$name) ? $$name : [];
-        }
-        return $_posts;
+        $name = empty($name) ?  "_posts" : '_' . $name;
+        return $$name;
     }
 
+    public static function find($name,$_id){
+        global $configs;
 
-    public static function glob($source){
+        if ( $name == 'singles' ) {
+            $sources  =  scandir ( $configs['dir']['source'] );
+            $_singles = Cache::get('singles');
+            $single = [];
+            foreach ($sources as $key => $value) {
+                if ( strpos($value,'.') !== false || strpos($value,'_') !== false ||  self::key($value) != $_id ) {
+                    continue;
+                }
+                $index = $configs['dir']['source'] . DS . $value . DS . 'index.md';
+                $single = self::parsePage($index);
+                Cache::set($single['_id'],$single);
+                unset($single['content']);
+                $_singles[$single['_id']] = $single;
+            }
+
+            Cache::set('singles',$_singles);
+            return $single;
+        }
+
+
+        $source = $configs['dir']['source'] . DS . "_posts" . DS . $_id . '.md';
+        
+        $post = self::parsePost($source);
+        if ( !$post ) {
+            return false;
+        }
+        $_id = $post['_id'];
+        $_posts = Cache::get('_posts');
+
+        if( isset($data['_id']) && $data['_id'] != $_id ){
+            self::del($data['_id']);
+            unset($_posts[$data['_id']]);
+        }
+        
+        if ( Cache::has($_id) ) {
+            $_post = Cache::get($_id);
+            $post['id'] = $_post['id'];
+            $post['createtime'] = $_post['createtime'];
+        }else{
+            $prev  =  end ( $_posts ); 
+            $prev_id = $prev['_id'];
+    
+            $post['id'] = intval($prev['id']) + 1;
+            $post['prev'] = $prev['link'];
+            $post['prev_id'] = $prev_id;
+            $post['prev_title'] = $prev['title'];
+
+            $prev['next'] = $post['link'];
+            $prev['next_id'] = $_id;
+            $prev['next_title'] = $post['title'];
+        }
+
+        Cache::set($_id,$post);
+
+        unset($post['content']);
+        $_posts[$_id] = $post;
+
+        Cache::set('posts',$_posts);
+
+        return $post;
+    }
+
+    private static function glob($source){
         
         $data = glob ( $source . "*.md" );
 
         usort($data, function(&$prev, &$next) {
             if ( !is_array($prev) ) {
-                $prev = self::post($prev);
+                $prev = self::parsePost($prev);
             }
             if ( !is_array($next) ) {
-                $next = self::post($next);
+                $next = self::parsePost($next);
             }
 
             $prevtime = isset($prev['createtime']) ? $prev['createtime'] : strtotime($prev['date']);
@@ -198,7 +238,7 @@ class Source
     }
 
 
-    public static function post($source){
+    private static function parsePost($source){
         if ( !is_file($source) ) {
             return false;
         }
@@ -223,7 +263,9 @@ class Source
         return $post;
     }
 
-    public static function category($post,&$_categories){
+    private static function parseCategory($post,&$_categories){
+        global $configs;
+
         $_id = $post['_id'];
         $title = $post['categories'];
         $_cid = self::key($title);
@@ -231,6 +273,7 @@ class Source
         if ( !isset($_categories[$_cid]) ) {
             $category = [
                 '_id' => $_cid,
+                'link' => str_replace (':_id',$_cid,$configs['link']['category']),
                 'title' => $title,
                 'posts' => [$_id]
             ];
@@ -249,7 +292,10 @@ class Source
     }
 
 
-    public static function tags($post,&$_tags){
+    private static function parseTags($post,&$_tags){
+
+        global $configs;
+        
         $_id = $post['_id'];
         $data = explode(',',$post['tags']);
         $tags = [];
@@ -258,6 +304,7 @@ class Source
             if ( !isset($_tags[$_tid]) ) {
                 $tag = [
                     '_id' => $_tid,
+                    'link' => str_replace (':_id',$_tid,$configs['link']['tags']),
                     'title' => $title,
                     'posts' => [$_id]
                 ];
@@ -279,7 +326,26 @@ class Source
         return $tags;
     }
 
-    public static function parse($contents){
+    private static function parsePage($source){
+        if ( !is_file($source) ) {
+            return false;
+        }
+        $contents = file_get_contents($source);
+        if ( !$contents ) {
+            return false;
+        }
+        global $configs;
+        $data = self::parse($contents);
+        $name = basename(dirname($source));
+        $data['id'] = 0;
+        $data['_id'] = self::key($name);
+        $data['name'] = $name;
+        $data['link'] = str_replace (':_id',$name,$configs['link']['page']);
+        $data['source'] = $source;
+        return $data;
+    }
+    
+    private static function parse($contents){
         $array = explode('---',$contents);
         $info = explode("\n",$array[1]);
         $data = [];
@@ -300,42 +366,4 @@ class Source
         
         return $data;
     }
-
-
-    public static function page($source){
-        if ( !is_file($source) ) {
-            return false;
-        }
-        $contents = file_get_contents($source);
-        if ( !$contents ) {
-            return false;
-        }
-        global $configs;
-        $data = self::parse($contents);
-
-        $data['id'] = 0;
-        $data['name'] = basename(dirname($source));
-        $data['link'] = str_replace (':_id',$data['name'],$configs['link']['page']);
-        $data['source'] = $source;
-        return $data;
-    }
-
-    public static function singles(){
-        global $configs;
-        $sources  =  scandir ( $configs['dir']['source'] );
-        $_singles = [];
-        foreach ($sources as $key => $value) {
-            if ( strpos($value,'.') !== false || strpos($value,'_') !== false ) {
-                continue;
-            }
-            $index = $configs['dir']['source'] . DS . $value . DS . 'index.md';
-            $data = self::page($index);
-            
-            $_singles[$data['_id']] = $data;
-        }
-
-        Cache::set('_singles',$_singles);
-        return $_singles;
-    }
-
 }

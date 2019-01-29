@@ -1,4 +1,4 @@
-{include file="pages/header" /}
+{include file="singles/header" /}
 
     <div class="admin-content-body">
       
@@ -23,7 +23,7 @@
                 <div class="am-g am-margin-top-sm">
                   <div class="am-u-sm-4 am-u-md-2 am-text-right">页面名称</div>
                   <div class="am-u-sm-8 am-u-md-2 am-u-end col-end">
-                    <input id="name" name="name" type="text" class="am-input-sm" value="{$page.name}">
+                    <input id="name" name="name" type="text" class="am-input-sm" value="{$state.name}">
                   </div>
                 </div>
 
@@ -33,7 +33,7 @@
                     
                       <div class="am-form-group am-form-icon">
                         <i class="am-icon-calendar"></i>
-                        <input type="text" name="date" class="am-form-field am-input-sm" value="{$page.date}" id="datetimepicker">
+                        <input type="text" name="date" class="am-form-field am-input-sm" value="{$state.date}" id="datetimepicker">
                       </div>
 
                   </div>
@@ -60,14 +60,14 @@
 
               <div class="am-tab-panel am-fade" id="tab2">
                   <div class="am-g am-margin-top">
-                      <input type="text" name="title" class="am-input-sm" value="{$page.title}" placeholder="输入标题">
-                      <input type="hidden" name="id" value="{$page.id}" >
-                      <input type="hidden" name="_id" value="{$page._id}" >
+                      <input type="text" name="title" class="am-input-sm" value="{$state.title}" placeholder="输入标题">
+                      <input type="hidden" name="id" value="{$state.id}" >
+                      <input type="hidden" name="_id" value="{$state._id}" >
                   </div>
 
                   <div class="am-g am-margin-top-sm">
                     <div class="am-u-sm-12" id="editormd">
-                      <textarea style="display:none;" name="content">{$page.content}</textarea>
+                      <textarea style="display:none;" name="content">{$state.content}</textarea>
                     </div>
                   </div>
 
@@ -83,10 +83,10 @@
         </form>
     </div>
 
-{include file="pages/footer" /}
+{include file="singles/footer" /}
 <script>
-var _id = '{$page._id}';
-var id = '{$page.id}';
+var _id = '{$state._id}';
+var id = '{$state.id}';
 
 $(function() {
   $('#datetimepicker').datetimepicker({

@@ -1,16 +1,13 @@
 <?php
 namespace Models;
 use Extend\Source;
-use Extend\Parsedown;
+
 class Post extends Common
 {
 
     public function __construct($_id='')
     {
-        if ( !empty($_id) ) {
-            $data = Source::posts($_id);
-            $this->data = $data;
-        }
+        $this->data = !empty($_id) ? Source::posts($_id) : [];
     }
 
     public function save($data = []){
@@ -20,37 +17,6 @@ class Post extends Common
         return Source::save($data);
     }
 
-    public function getHtml()
-    {
-        $parsedown = new Parsedown();
-        return $parsedown->text($this->data['content']);
-    }
-
-    public function setHtml($content)
-    {
-        $parsedown = new Parsedown();
-        $this->data['html'] = $parsedown->text($content);
-    }
-
-    public function offsetGet($offset)
-    {
-        if ( $offset == 'html' ) {
-            $parsedown = new Parsedown();
-            return $parsedown->text($this->data['content']);
-        }
-        return $this->data[$offset];
-    }
-
-    public function offsetSet($offset, $value)
-    {
-        if ( $offset == 'html' ) {
-            $parsedown = new Parsedown();
-            $this->data[$offset] = $parsedown->text($content);
-        }else{
-            $this->data[$offset] = $value;
-        }
-        
-    }
 
     public static function add($data){
         if ( empty($data) ) {

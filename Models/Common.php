@@ -3,6 +3,7 @@ namespace Models;
 use ArrayAccess;
 use Extend\Cache;
 use Extend\Storage;
+use Extend\Parsedown;
 class Common implements ArrayAccess
 {
     public $data;
@@ -16,19 +17,48 @@ class Common implements ArrayAccess
         $this->data[$name] = $value;
     }
 
-    public function offsetExists($offset)
+    public function getHtml()
     {
-        return isset($this->data[$offset]);
+        if ( empty($this->data['content']) ) {
+            return '';
+        }
+        $parsedown = new Parsedown();
+        return $parsedown->text($this->data['content']);
+    }
+
+    public function setHtml($content)
+    {
+        if ( empty($content) ) {
+            $this->data['html'] = '';
+            return;
+        }
+        $parsedown = new Parsedown();
+        $this->data['html'] = $parsedown->text($content);
     }
 
     public function offsetGet($offset)
     {
+        if ( $offset == 'html' && !empty( $this->data['content']) ) {
+            $parsedown = new Parsedown();
+            return $parsedown->text($this->data['content']);
+        }
         return $this->data[$offset];
     }
 
     public function offsetSet($offset, $value)
     {
-        $this->data[$offset] = $value;
+        if ( $offset == 'html' && !empty( $value ) ) {
+            $parsedown = new Parsedown();
+            $this->data[$offset] = $parsedown->text($value);
+        }else{
+            $this->data[$offset] = $value;
+        }
+        
+    }
+
+    public function offsetExists($offset)
+    {
+        return isset($this->data[$offset]);
     }
 
     public function offsetUnset($offset)

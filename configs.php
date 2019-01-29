@@ -10,6 +10,11 @@ return [
         'view_path'	    =>	__DIR__ . DS . "views",
 	    'cache_path'	=>	__DIR__ . DS . "runtime" . DS . 'views'
     ],
+    'show' => [
+        'view_suffix'   =>	'html',
+        'view_path'	    =>	__DIR__ . DS . "themes",
+	    'cache_path'	=>	__DIR__ . DS . "runtime" . DS . 'themes'
+    ],
     'dir' => [
         'source'        =>  __DIR__ . DS . "source",
         'public'        =>  __DIR__ . DS . "public",
@@ -20,14 +25,15 @@ return [
     'link' => [
         'page'         =>  "/:_id",
         'posts'         =>  "/posts/:_id",
+        'tags'         =>  "/tags/:_id",
         'category'      =>  "/category/:_id"
     ],
     'site' => [
-        'title'         => "pkbook",
-        'subtitle'      => "pkbook",
-        'description'   => "pkbook",
-        'author'        => "pkbook",
-        'theme'         => "default"
+        'title'         => "naka1205的博客",
+        'subtitle'      => "个人博客",
+        'description'   => "PHPKOA开发个人博客",
+        'author'        => "naka1205",
+        'theme'         => "green"
     ],
     'write' => [
         'cache_suffix'   => 'php',

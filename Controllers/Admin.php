@@ -26,18 +26,16 @@ class Admin
 
     public static function info(Context $ctx, $next){
         $ctx->status = 200;
-        yield $ctx->render(VIEW_PATH . "/info.html");
+        yield $ctx->render("info");
     }
 
     public static function singles(Context $ctx, $next){
         $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
 
-        $singlesData = Single::select($page,2,'/admin/singles');
+        $singlesData = Single::select([],$page,2,'/admin/singles');
         $ctx->state["data"] = $singlesData['data'];
         $ctx->state["pagination"] = json_encode ($singlesData['pagination']);
-
-        var_dump($singlesData['data']);
-
+        
         $ctx->status = 200;
         yield $ctx->render("singles");
     }
@@ -68,12 +66,12 @@ class Admin
 
     public static function gallery(Context $ctx, $next){
         $ctx->status = 200;
-        yield $ctx->render(VIEW_PATH . "/gallery.html");
+        yield $ctx->render("gallery");
     }
 
     public static function logs(Context $ctx, $next){
         $ctx->status = 200;
-        yield $ctx->render(VIEW_PATH . "/logs.html");
+        yield $ctx->render("logs");
     }
     
 }

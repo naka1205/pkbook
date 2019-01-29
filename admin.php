@@ -39,6 +39,9 @@ $app->υse(new BodyJson());
 use Middlewares\Render; 
 $app->υse(new Render($configs['view'])); 
 
+use Middlewares\Show; 
+$app->υse(new Show($configs['show'])); 
+
 $routes = require __DIR__ . DS . "routes.php";
 $app->υse($routes->routes());
 

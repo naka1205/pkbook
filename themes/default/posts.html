@@ -15,8 +15,8 @@
 <body>
 <header class="am-g my-head">
   <div class="am-u-sm-12 am-article">
-    <h1 class="am-article-title">{$posts.title}</h1>
-    <p class="am-article-meta">{$posts.date}</p>
+    <h1 class="am-article-title">{$state.title}</h1>
+    <p class="am-article-meta">{$state.date}</p>
   </div>
 </header>
 <hr class="am-article-divider"/>
@@ -25,12 +25,16 @@
     <div class="am-g">
       <div class="am-u-sm-11 am-u-sm-centered">
         <div class="am-cf am-article">
-          {$posts.html|raw}
+          {$state.html|raw}
         </div>
         <hr/>
         <ul class="am-pagination">
-          <li><a href="">&laquo; Prev</a></li>
-          <li><a href="">Next &raquo;</a></li>
+          {notempty name="state.prev_id"}
+          <li class="am-pagination-prev"><a href="{$state.prev_link}">&laquo; {$state.prev_title}</a></li>
+          {/notempty}
+          {notempty name="state.next_id"}
+          <li class="am-pagination-next"><a href="{$state.next_link}">{$state.next_title} &raquo;</a></li>
+          {/notempty}
         </ul>
         <hr/>
         <ul class="am-comments-list">
@@ -100,8 +104,8 @@
 <!--<![endif]-->
 <script src="/assets/js/amazeui.min.js"></script>
 <script>
-var _id = '{$posts._id}';
-var id = '{$posts.id}';
+var _id = '{$state._id}';
+var id = '{$state.id}';
 </script>
 </body>
 </html>
