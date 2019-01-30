@@ -70,18 +70,24 @@ class Common implements ArrayAccess
 
         $pages = ceil( $count / $num );
         $content = [];
+        $content['pages'] = $pages;
+        
         $content['prevTitle'] = '上一页';
-        $content['prevLink'] = $link . '?page=' . $page + 1;
+        $content['prevLink'] = str_replace (':page',$page - 1,$link);
 
         $content['nextTitle'] = '下一页';
-        $content['nextLink'] = $link . '?page='. $page - 1;
+        $content['nextLink'] = str_replace (':page',$page + 1,$link);
 
         $content['firstTitle'] = '第一页';
-        $content['firstLink'] = $link . '?page=1';
+        $content['firstLink'] = str_replace (':page',1,$link);
 
         $content['lastTitle'] = '最末页';
-        $content['lastLink'] = $link . '?page=' . $pages;
+        $content['lastLink'] = str_replace (':page',$pages,$link);
 
+        $content['prevClassName'] = '';
+        $content['nextClassName'] = '';
+        $content['lastClassName'] = '';
+        
         if ( $page <= 1 ) {
             $content['prevClassName'] = 'am-disabled';
             $content['prevLink'] = '';
@@ -105,8 +111,9 @@ class Common implements ArrayAccess
                 $className = '';
                 if ( $title == $page ) {
                     $className = 'am-active';
+                    $content['current'] = $title;
                 }
-                $content['page'][] = ['title'=> $title ,"link"=> $link . '?page=' . $title ,"className"=> $className];
+                $content['page'][] = ['title'=> $title ,"link"=> str_replace (':page',$title,$link) ,"className"=> $className];
             }
         }
 
@@ -116,8 +123,9 @@ class Common implements ArrayAccess
                 $className = '';
                 if ( $title == $page ) {
                     $className = 'am-active';
+                    $content['current'] = $title;
                 }
-                $content['page'][] = ['title'=> $title ,"link"=> $link . '?page=' . $title ,"className"=> $className];
+                $content['page'][] = ['title'=> $title ,"link"=> str_replace (':page',$title,$link) ,"className"=> $className];
             }
         }
 

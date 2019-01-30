@@ -14,10 +14,8 @@ class BodyJson implements Middleware
     public function __invoke(Context $ctx, $next)
     {
         yield $next;
-        $pos = strpos($ctx->accept,'json');
-        if ( $pos !== false ) {
+        if ( $ctx->accept('json') !== false ) {
             $ctx->type = 'application/json';
-
             $result = [ "code" => 0,  "msg" => '操作失败'];
             $data = $ctx->body;
             if ( $data !== false ) {

@@ -14,7 +14,7 @@ class Source
                 $where = $arguments[0];
                 foreach ($data as $key => $value) {
                     foreach ($where as $k => $v ) {
-                        if ( !isset($value[$k]) || self::key($value[$k]) != $v ) {
+                        if ( !isset($value[$k]) || $value[$k] != $v ) {
                             unset($data[$key]);
                         }
                     }
@@ -131,7 +131,10 @@ class Source
             }
 
             Cache::set($_id,$post);
-
+            if ( !isset($post['excerpt']) ) {
+                $post['excerpt'] = empty($post['content']);
+            }
+            
             unset($post['content']);
             $post['tags'] = $tags;
             $_posts[$_id] = $post;

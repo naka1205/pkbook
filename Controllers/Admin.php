@@ -32,7 +32,7 @@ class Admin
     public static function singles(Context $ctx, $next){
         $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
 
-        $singlesData = Single::select([],$page,2,'/admin/singles');
+        $singlesData = Single::select([],$page,2,'/admin/singles?page=:page');
         $ctx->state["data"] = $singlesData['data'];
         $ctx->state["pagination"] = json_encode ($singlesData['pagination']);
         
@@ -42,15 +42,14 @@ class Admin
 
     public static function posts(Context $ctx, $next, $vars){
         $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
-        $cate = isset($vars[0]) ? $vars[0] : '';
+        $cate = isset($ctx->get["cate"]) ? $ctx->get["cate"] : '';
 
         $categories = Category::select([]);
-
         $where = [];
-        $link = '/admin/posts';
+        $link = '/admin/posts?page=:page';
         if ( !empty($cate) && $cate != 'all' ) {
             $where['categories'] = $cate;
-            $link .= "/" . $cate;
+            $link = '/admin/posts?cate='.$cate.'&page=:page';
         }
 
         $postsData = Post::select($where,$page,2,$link);

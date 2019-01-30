@@ -24,7 +24,7 @@
             <select id="categories" data-am-selected="{btnSize: 'sm'}">
               <option value="all" {if $state.cate eq 'all' } selected {/if}> 全部 </option>
               {volist name="state.categories" id="vo"}
-              <option value="{$vo._id}" {if $vo._id eq $state.cate } selected {/if}>{$vo.title}</option>
+              <option value="{$vo.title}" {if $vo.title eq $state.cate } selected {/if}>{$vo.title}</option>
               {/volist}
             </select>
           </div>
@@ -99,7 +99,7 @@ $(function() {
   $selected.on('change', function() {
       var cate = $(this).val();
       if ( cate != '' ) {
-          window.location.href = '/admin/posts/' + cate;
+          window.location.href = '/admin/posts?cate=' + cate;
       }
   });
 
@@ -145,7 +145,7 @@ $(function() {
       type: "POST",
       url: "/ajax/publish",
       dataType: "json",
-      data:{type:'posts'},
+      data:{type:'index'},
       beforeSend:function(){
   
       },

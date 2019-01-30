@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/naka1205/phpkoa.git",
-                "reference": "3b2c96f74515565a196fd7ebbb7f8d7e6539e043"
+                "reference": "0e68f16f366888e2621ef0e8cf39ee834c09a1cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/naka1205/phpkoa/zipball/3b2c96f74515565a196fd7ebbb7f8d7e6539e043",
-                "reference": "3b2c96f74515565a196fd7ebbb7f8d7e6539e043",
+                "url": "https://api.github.com/repos/naka1205/phpkoa/zipball/0e68f16f366888e2621ef0e8cf39ee834c09a1cd",
+                "reference": "0e68f16f366888e2621ef0e8cf39ee834c09a1cd",
                 "shasum": ""
             },
             "require": {
@@ -45,7 +45,7 @@
                 }
             ],
             "description": "php koa",
-            "time": "2019-01-15T07:11:53+00:00"
+            "time": "2019-01-25T06:26:51+00:00"
         },
         {
             "name": "naka1205/phpkoa_static",
