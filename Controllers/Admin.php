@@ -48,10 +48,9 @@ class Admin
         $where = [];
         $link = '/admin/posts?page=:page';
         if ( !empty($cate) && $cate != 'all' ) {
-            $where['categories'] = $cate;
+            $where['categories_value'] = $cate;
             $link = '/admin/posts?cate='.$cate.'&page=:page';
         }
-
         $postsData = Post::select($where,$page,2,$link);
         
         $ctx->state["data"] = $postsData['data'];

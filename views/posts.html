@@ -59,13 +59,8 @@
                 <td><input type="checkbox" /></td>
                 <td>{$vo.id}</td>
                 <td><a href="#">{$vo.title}</a></td>
-                <td>{$vo.categories}</td>
-                <td class="am-hide-sm-only">
-                    {volist name="vo.tags" id="v" key="k"}
-                    {gt name="k" value="0"},{/gt}
-                    {$v.title}
-                    {/volist}
-                </td>
+                <td>{$vo.categories_value}</td>
+                <td class="am-hide-sm-only">{$vo.tags_value}</td>
                 <td class="am-hide-sm-only">{$vo.date}</td>
                 <td>
                   <div class="am-btn-toolbar">
@@ -145,7 +140,7 @@ $(function() {
       type: "POST",
       url: "/ajax/publish",
       dataType: "json",
-      data:{type:'index'},
+      data:{type:'categories'},
       beforeSend:function(){
   
       },

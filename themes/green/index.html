@@ -64,12 +64,12 @@
         {volist name="state.posts" id="vo" key="k"}
         <article class="am-g blog-entry-article">
             <div class="am-u-lg-12 am-u-md-12 am-u-sm-12 blog-entry-text">
-                <span><a href="" class="blog-color">{$vo.date}&nbsp;</a></span>
+                <span><a href="{$vo.categories.link}" class="blog-color">{$vo.categories.title}&nbsp;</a></span>
                 <span>{$vo.date}</span>
-                <h1><a href="">{$vo.title}</a></h1>
+                <h1><a href="{$vo.link}">{$vo.title}</a></h1>
                 <p>你可以选择在原处不停地跟周遭不解的人解释你为何这么做，让他们理解你，你可以选择什么都不讲，自顾自往前走。
                 </p>
-                <p><a href="" class="blog-continue">阅读全文</a></p>
+                <p><a href="{$vo.link}" class="blog-continue">阅读全文</a></p>
             </div>
         </article>
         {/volist}

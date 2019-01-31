@@ -2,13 +2,19 @@
 namespace Middlewares;
 use Naka507\Koa\Middleware;
 use Naka507\Koa\Context;
+use Extend\Config;
 use Extend\Template;
 class Render implements Middleware
 {
     public $view;
-    public function __construct($opt)
+    public function __construct()
     {
-        $this->view = new Template($opt);
+        $config = [
+            'view_suffix'   =>	'html',
+            'view_path'	    =>  VIEW_PATH,
+            'cache_path'	=>	CACHE_PATH . DS . 'views'
+        ];
+        $this->view = new Template($config);
     }
 
     public function __invoke(Context $ctx, $next)

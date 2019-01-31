@@ -5,8 +5,8 @@
         <div class="am-article-hd">
             <h1 class="am-article-title blog-text-center">{$state.post.title}</h1>
             <p class="am-article-meta blog-text-center">
-                <span><a href="#" class="blog-color">{$state.post.categories} &nbsp;</a></span>-
-                <span><a href="#">{$state.post.date}</a></span>
+                <span><a href="{$state.post.categories.link}" class="blog-color">{$state.post.categories_value} &nbsp;</a></span>-
+                <span><a>{$state.post.date}</a></span>
             </p>
         </div>        
         <div class="am-article-bd">
@@ -19,7 +19,7 @@
             <span class="am-icon-tags"> &nbsp;</span>
             {volist name="state.post.tags" id="vo"  key="k" }
             {gt name="k" value="1"},{/gt}
-            <a href="{$state.link}{$vo.link}">{$vo.title}</a>
+            <a href="{$vo.link}">{$vo.title}</a>
             {/volist}
             <hr>
             <a href=""><span class="am-icon-qq am-icon-fw am-primary blog-icon"></span></a>
@@ -32,10 +32,10 @@
 
         <ul class="am-pagination blog-article-margin">
             {notempty name="state.post.prev_id"}
-            <li class="am-pagination-prev"><a href="{$state.link}{$state.post.prev_link}">&laquo; {$state.post.prev_title}</a></li>
+            <li class="am-pagination-prev"><a href="{$state.post.prev_link}">&laquo; {$state.post.prev_title}</a></li>
             {/notempty}
             {notempty name="state.post.next_id"}
-            <li class="am-pagination-next"><a href="{$state.link}{$state.post.next_link}">{$state.post.next_title} &raquo;</a></li>
+            <li class="am-pagination-next"><a href="{$state.post.next_link}">{$state.post.next_title} &raquo;</a></li>
             {/notempty}
         </ul>
         

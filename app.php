@@ -9,8 +9,6 @@ if ( !IS_CLI ) {
     die('Please use cli');
 }
 
-$configs = require __DIR__ . DS . "configs.php";
-
 use Naka507\Koa\Application;
 use Naka507\Koa\Context;
 use Naka507\Koa\Error;

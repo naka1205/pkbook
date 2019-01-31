@@ -2,27 +2,28 @@
 namespace Middlewares;
 use Naka507\Koa\Middleware;
 use Naka507\Koa\Context;
+use Extend\Config;
 class Assets implements Middleware
 {
     public $path;
     public static $mimes = array (
-        'css' => 'text/css',
-        'xml' => 'text/xml',
-        'gif' => 'image/gif',
-        'jpeg' => 'image/jpeg',
-        'jpg' => 'image/jpeg',
-        'js' => 'application/x-javascript',
-        'eot' => 'application/octet-stream',
-        'txt' => 'text/plain',
-        'png' => 'image/png'
+        'css'   => 'text/css',
+        'xml'   => 'text/xml',
+        'gif'   => 'image/gif',
+        'jpeg'  => 'image/jpeg',
+        'jpg'   => 'image/jpeg',
+        'js'    => 'application/x-javascript',
+        'eot'   => 'application/octet-stream',
+        'txt'   => 'text/plain',
+        'png'   => 'image/png'
     );
-    public function __construct( $path = "./themes")
+    public function __construct()
     {
-        if ( !is_dir($path) ) {
-            throw new \RuntimeException("static path error");
+        if ( !defined ( 'THEME_PATH' ) || !is_dir(THEME_PATH) ) {
+            throw new \RuntimeException("assets path error");
         }
-        global $configs;
-        $this->path = $path . DS . $configs['site']['theme'] ;
+        $site = Config::get('site');
+        $this->path = THEME_PATH . DS . $site['theme'] ;
     }
 
     public function __invoke(Context $ctx, $next)
@@ -36,9 +37,9 @@ class Assets implements Middleware
         
         $path = isset($url_info['path']) ? $url_info['path'] : '/';
         $path_info      = pathinfo($path);
-
         $file_extension = isset($path_info['extension']) ? $path_info['extension'] : '';
-        if ($file_extension !== '') {
+
+        if ( $file_extension !== '' && strpos ( $path_info['dirname'] , '/assets/' ) === 0 ) {
             $file_path = $this->path .  $path;
             if (is_file($file_path)) {
                 $file_path = realpath($file_path);

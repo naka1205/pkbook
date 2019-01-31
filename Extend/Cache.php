@@ -19,13 +19,16 @@ class Cache
     //自动初始化缓存
     public static function init(array $options = [])
     {
-        global $configs;
         if (is_null(self::$handler)) {
             // 自动初始化缓存
             if (!empty($options)) {
                 $connect = self::connect($options);
             }  else {
-                $connect = self::connect($configs['write']);
+                $config = [
+                    'cache_suffix'   => 'php',
+                    'cache_path'     => CACHE_PATH . DS . 'cache'
+                ];
+                $connect = self::connect($config);
             }
             self::$handler = self::connect($options);
         }

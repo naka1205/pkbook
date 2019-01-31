@@ -1,22 +1,24 @@
 <?php
 namespace Models;
+use Extend\Config;
 class User
 {
     public static function check($email,$password){
-        global $configs;
         if ( !$email || !$password) {
             return false;
         }
-        if ($configs['admin']['email'] == $email && $configs['admin']['password'] == $password) {
-            $configs['admin']['token'] = md5( $email . time() );
+        $admin = Config::get('admin');
+        if ($admin['email'] == $email && $admin['password'] == $password) {
+            $admin['token'] = md5( $email . time() );
+            // Config::set('admin',$admin,true);
             return true;
         }
         return false;
     }
 
     public static function token(){
-        global $configs;
-        return $configs['admin']['token'];
+        $admin = Config::get('admin');
+        return $admin['token'];
     }
 
 }
