@@ -13,10 +13,6 @@ class Ajax
             $ctx->body = false;
             return;
         }
-
-        if ( isset($ctx->post['data']) ) {
-            $ctx->post['data'] = self::parse($ctx->post['data']);
-        }
     }
 
     public static function posts(Context $ctx, $next, $vars){
@@ -25,7 +21,7 @@ class Ajax
         $data['date'] = isset($data['date']) ? $data['date'] : date('Y-m-d h:i:s');
 
         $post = new Post($_id);
-        $bool = $post->save($data);
+        $bool = $post->save($data) ? true : false;
 
         $ctx->status = 200;
         $ctx->body = $bool;
@@ -65,6 +61,9 @@ class Ajax
                 break;
             case 'categories':
                 yield Publish::categories();
+                break;
+            case '404':
+                yield Publish::notFound();
                 break;
             default:
                 # code...

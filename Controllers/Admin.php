@@ -5,10 +5,11 @@ use Naka507\Koa\Context;
 use Models\Post;
 use Models\Category;
 use Models\Single;
+use Extend\Config;
 
 class Admin
 {
-
+    public static $pagenum = 10;
     public static function base(Context $ctx, $next, $vars){
         $admin = $ctx->getSession('admin');
         if ( !$admin ) {
@@ -17,6 +18,9 @@ class Admin
         }
         $token = $ctx->getCookie('token');
         $ctx->state["token"] = $token;
+
+        $admin = Config::get('admin');
+        self::$pagenum = intval($admin["pagenum"]);
     }
 
     public static function index(Context $ctx, $next){
@@ -32,7 +36,7 @@ class Admin
     public static function singles(Context $ctx, $next){
         $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
 
-        $singlesData = Single::select([],$page,2,'/admin/singles?page=:page');
+        $singlesData = Single::select([],$page,self::$pagenum,'/admin/singles?page=:page');
         $ctx->state["data"] = $singlesData['data'];
         $ctx->state["pagination"] = json_encode ($singlesData['pagination']);
         
@@ -51,7 +55,7 @@ class Admin
             $where['categories_value'] = $cate;
             $link = '/admin/posts?cate='.$cate.'&page=:page';
         }
-        $postsData = Post::select($where,$page,2,$link);
+        $postsData = Post::select($where,$page,self::$pagenum,$link);
         
         $ctx->state["data"] = $postsData['data'];
         $ctx->state["pagination"] = json_encode ($postsData['pagination']);

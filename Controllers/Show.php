@@ -11,8 +11,14 @@ use Extend\Publish;
 
 class Show
 {
-
+    public static $pagenum = 10;
     public static function base(Context $ctx, $next, $vars){
+
+        $link = [
+            'domain'        =>  "/show",
+            'suffix'        =>  ".html"
+        ];
+        $ctx->state['link'] = $link;
 
         $categories = Category::select([]);
         $ctx->state['categories'] = $categories;
@@ -26,7 +32,7 @@ class Show
         $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
         $where = [];
         $link = '/show/index?page=:page';
-        $posts = Post::select($where,$page,5,$link);
+        $posts = Post::select($where,$page,self::$pagenum,$link);
         $ctx->status = 200;
         $ctx->state["posts"] = $posts['data'];
         $ctx->state["pagination"] = Publish::pagination($posts['pagination']);
@@ -39,7 +45,7 @@ class Show
         $category = new Category($vars[0]);
         $link = '/show/category/'.$vars[0].'?page=:page';
         $where['categories_value'] = $category['title'];
-        $posts = Post::select($where,$page,1,$link);
+        $posts = Post::select($where,$page,self::$pagenum,$link);
 
         $ctx->status = 200;
         $ctx->state['posts'] = $posts['data'];
@@ -55,7 +61,7 @@ class Show
         $tag = new Tag($vars[0]);
         $link = '/show/tags/'.$vars[0].'?page=:page';
         $where['tags_value'] = $tag['title'];
-        $posts = Post::select($where,$page,1,$link);
+        $posts = Post::select($where,$page,self::$pagenum,$link);
 
         $ctx->status = 200;
         $ctx->state['posts'] = $posts['data'];
@@ -65,7 +71,7 @@ class Show
     }
 
     public static function posts(Context $ctx, $next, $vars){
-        $post = new Post($vars[0]);
+        $post = new Post($vars[1]);
         $ctx->status = 200;
         $ctx->state['post'] = $post;
         yield $ctx->show("posts");

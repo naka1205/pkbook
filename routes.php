@@ -26,7 +26,6 @@ $router->mount('/admin', function() use ($router) {
 
 });
 
-
 $router->mount('/posts', function() use ($router) {
 
     $router->get('/add', ['Controllers\Posts', 'add']);
@@ -38,16 +37,6 @@ $router->mount('/singles', function() use ($router) {
 
     $router->get('/add', ['Controllers\Singles', 'add']);
     $router->get('/edit/(\w+)', ['Controllers\Singles', 'edit']);
-
-});
-
-$router->mount('/show', function() use ($router) {
-
-    $router->get('/index', ['Controllers\Show', 'index']);
-    $router->get('/posts/(\w+)', ['Controllers\Show', 'posts']);
-    $router->get('/single/(\w+)', ['Controllers\Show', 'single']);
-    $router->get('/category/(\w+)', ['Controllers\Show', 'category']);
-    $router->get('/tags/(\w+)', ['Controllers\Show', 'tags']);
 
 });
 
@@ -66,6 +55,16 @@ $router->mount('/ajax', function() use ($router) {
     $router->post('/singles', ['Controllers\Ajax', 'singles']);
     $router->post('/singles/(\w+)', ['Controllers\Ajax', 'singles']);
 
+});
+
+$router->mount('/show', function() use ($router) {
+    $router->suffix('.html');
+    $router->get('/index', ['Controllers\Show', 'index']);
+    $router->get('/posts(/\d+)?/(\w+)', ['Controllers\Show', 'posts']);
+    $router->get('/posts/(\w+)', ['Controllers\Show', 'posts']);
+    $router->get('/category/(\w+)', ['Controllers\Show', 'category']);
+    $router->get('/tags/(\w+)', ['Controllers\Show', 'tags']);
+    $router->get('/(\w+)', ['Controllers\Show', 'single']);
 });
 
 return $router;

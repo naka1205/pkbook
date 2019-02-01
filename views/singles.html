@@ -53,7 +53,7 @@
                   <td>
                     <div class="am-btn-toolbar">
                       <div class="am-btn-group am-btn-group-xs">
-                        <a class="am-btn am-btn-default am-btn-xs am-text-secondary" target="_blank" href="/show/single/{$vo.name}" ><span class="am-icon-pencil-square-o"></span> 预览</a>
+                        <a class="am-btn am-btn-default am-btn-xs am-text-secondary" target="_blank" href="/show{$vo.link}" ><span class="am-icon-pencil-square-o"></span> 预览</a>
                         <a class="am-btn am-btn-default am-btn-xs am-text-secondary am-hide-sm-only" href="/singles/edit/{$vo._id}" ><span class="am-icon-copy"></span> 编辑</a>
                         <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
                       </div>
@@ -116,7 +116,9 @@
         type: "POST",
         url: "/ajax/publish",
         dataType: "json",
-        data:{},
+        data:{type:"404"},
+        // data:{type:'tags'},
+        // data:{type:'index'},
         beforeSend:function(){
     
         },

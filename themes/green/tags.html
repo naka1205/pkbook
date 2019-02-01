@@ -3,27 +3,12 @@
 <div class="am-g am-g-fixed blog-fixed">
     <div class="am-u-md-12 am-u-sm-12">
       
-        <article class="am-g blog-entry-article">
-            <div class="am-u-lg-12 am-u-md-12 am-u-sm-12 blog-entry-text">
-                <span><a href="" class="blog-color">article &nbsp;</a></span>
-                <span> @amazeUI &nbsp;</span>
-                <span>2015/10/9</span>
-                <h1><a href="">我本楚狂人，凤歌笑孔丘</a></h1>
-                <p>我们一直在坚持着，不是为了改变这个世界，而是希望不被这个世界所改变。
-                </p>
-                <p><a href="" class="blog-continue">continue reading</a></p>
-            </div>
-        </article>
-
-        <ul class="am-pagination">
-            <li class="am-disabled"><a href="#">&laquo;</a></li>
-            <li class="am-active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">&raquo;</a></li>
-        </ul>
+        <h1 class="blog-text-center">-- {$state.title} --</h1>
+        <p class="tags">
+            {volist name="state.tags" id="vo"  key="k" }
+            <a href="{$vo.link}" class="am-badge am-badge-primary am-round am-text-default">{$vo.title}</a>
+            {/volist}
+        </p>
 
     </div>
     

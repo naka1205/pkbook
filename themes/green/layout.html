@@ -1,14 +1,16 @@
 <!doctype html>
 <html>
 
-{include file="green/header" /}
+{include file="green/header" title="$state.title" sitename="$state.site.title" keywords="$state.site.keywords" description="$state.site.description" /}
 
 <body id="blog">
 
 <header class="am-g am-g-fixed blog-fixed blog-text-center blog-header">
     <div class="am-u-sm-8 am-u-sm-centered">
-        <img width="200" src="http://s.amazeui.org/media/i/brand/amazeui-b.png" alt="Amaze UI Logo"/>
-        <h2 class="am-hide-sm-only">中国首个开源 HTML5 跨屏前端框架</h2>
+        {notempty name="state.site.logo"}
+        <img width="200" src="{$state.site.logo}" alt="{$state.site.title}"/>
+        {/notempty}
+        <h2 class="am-hide-sm-only">{$state.site.subtitle}</h2>
     </div>
 </header>
 <hr>

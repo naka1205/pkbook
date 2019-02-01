@@ -71,6 +71,8 @@ class Common implements ArrayAccess
         $pages = ceil( $count / $num );
         $content = [];
         $content['pages'] = $pages;
+        $content['page'] = [];
+        $content['current'] = 0;
         
         $content['prevTitle'] = '上一页';
         $content['prevLink'] = str_replace (':page',$page - 1,$link);
@@ -105,27 +107,28 @@ class Common implements ArrayAccess
 
         }
 
-        for ( $i=2; $i >= 0; $i-- ) { 
-            $title = $page - $i;
-            if ( $title >= 1) {
-                $className = '';
-                if ( $title == $page ) {
-                    $className = 'am-active';
-                    $content['current'] = $title;
-                }
-                $content['page'][] = ['title'=> $title ,"link"=> str_replace (':page',$title,$link) ,"className"=> $className];
-            }
-        }
+        $btnNum = 8;
+        $nowPage = ceil($btnNum/2);
 
-        for ( $i=1; $i < 4; $i++) { 
-            $title = $page + $i;
-            if ( $title <= $pages) {
-                $className = '';
-                if ( $title == $page ) {
-                    $className = 'am-active';
-                    $content['current'] = $title;
+        for($i = 1; $i <= $btnNum; $i++){
+            if(($page - $nowPage) <= 0 ){
+                    $title = $i;
+            }elseif(($page + $nowPage - 1) >= $pages){
+                    $title = $pages - $btnNum + $i;
+            }else{
+                    $title = $page - $nowPage + $i;
+            }
+            if($title > 0 && $title != $page){
+                if($title <= $pages){
+                    $content['page'][] = ['title'=> $title ,"link"=> str_replace (':page',$title,$link) ,"className"=> ''];
+                }else{
+                    break;
                 }
-                $content['page'][] = ['title'=> $title ,"link"=> str_replace (':page',$title,$link) ,"className"=> $className];
+            }else{
+                if($title > 0 && $pages != 1){
+                    $content['current'] = $title;
+                    $content['page'][] = ['title'=> $title ,"link"=> str_replace (':page',$title,$link) ,"className"=> 'am-active'];
+                }
             }
         }
 

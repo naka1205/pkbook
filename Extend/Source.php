@@ -25,11 +25,11 @@ class Source
             }
             return $data;
         }
-        return Cache::has($arguments[0]) ? Cache::get($arguments[0]) : Source::find($method,$arguments[0]);
+        return Cache::has($arguments[0]) ? Cache::get($arguments[0]) : Source::find($arguments[0],$method);
     }
 
     public static function key($name){
-        return md5( base64_encode($name) );
+        return strtoupper( substr( md5( base64_encode($name) ), 8, 16) );
     }
 
     public static function del($_id){
@@ -50,16 +50,18 @@ class Source
         $md .= "title: " . $data['title'] . "\n";
         $md .= "date: " . $data['date'] . "\n";
 
+        $_id = self::key($data['title']);
+        $name = '';
         $source = '';
+
         if ( isset($data['categories']) ) {
             if ( isset($data['tags'] ) ) {
                 $md .= "tags: [" . $data['tags'] . "]\n";
             }
             $md .= "categories: " . $data['categories'] . "\n";
             $md .= "createtime: " . $data['createtime'] . "\n";
-
-            $filename = self::key($data['title']);
-            $source = SOURCE_PATH . DS . "_posts" . DS . $filename . '.md';
+            $md .= "excerpt: " . $data['excerpt'] . "\n";
+            $source = SOURCE_PATH . DS . "_posts" . DS . $_id . '.md';
         }
 
         $md .= "---\n";
@@ -71,13 +73,16 @@ class Source
                 mkdir($source, 0755, true);
             }
             $source = $source . DS . 'index.md';
+
+            $name = 'singles';
+            $_id = self::key($data['name']);
         }
         
         if ( !file_put_contents ( $source ,  $md ) ) {
             return false;
         }
-        
-        return true;
+
+        return self::find($_id,$name);
     }
 
 
@@ -130,10 +135,11 @@ class Source
                 $post['tags'] = self::parseTags($post,$_tags);
             }
 
-            Cache::set($_id,$post);
             if ( !isset($post['excerpt']) ) {
                 $post['excerpt'] = '';
             }
+
+            Cache::set($_id,$post);
             
             unset($post['content']);
             $_posts[$_id] = $post;
@@ -182,7 +188,7 @@ class Source
         return [];
     }
 
-    public static function find($name,$_id){
+    public static function find($_id,$name=''){
 
         if ( $name == 'singles' ) {
             return self::findSingles($_id);
@@ -203,7 +209,8 @@ class Source
             return false;
         }
         $_id = $post['_id'];
-        $_posts = Cache::get('_posts');
+        $_posts = Cache::get('posts');
+        
 
         if( isset($data['_id']) && $data['_id'] != $_id ){
             self::del($data['_id']);
@@ -226,6 +233,25 @@ class Source
             $prev['next'] = $post['link'];
             $prev['next_id'] = $_id;
             $prev['next_title'] = $post['title'];
+        }
+
+        if ( isset($post['categories']) ) {
+            $_categories = Cache::get('categories');
+            $post['categories_value'] = $post['categories'];
+            $post['categories'] = self::parseCategory($post,$_categories);
+            Cache::set('categories',$_categories);
+        }
+
+        if ( isset($post['tags']) ) {
+            $_tags = Cache::get('tags');
+            $post['tags_value'] = $post['tags'];
+            $post['tags'] = self::parseTags($post,$_tags);
+            Cache::set('tags',$_tags);
+        }
+
+        Cache::set($_id,$post);
+        if ( !isset($post['excerpt']) ) {
+            $post['excerpt'] = '';
         }
 
         Cache::set($_id,$post);
@@ -278,6 +304,11 @@ class Source
         $configs = Config::all();
         $post = self::parse($contents);
         $link = $configs['link']['domain'] . $configs['link']['posts'] . $configs['link']['suffix'];
+        $_date = date('Ymd',strtotime($post['date']));
+
+        $link = str_replace (':_id',$post['_id'],$link);
+        $link = str_replace (':_date',$_date,$link);
+
         $post['id'] = 0;
         $post['prev'] = '';
         $post['prev_id'] = '';
@@ -286,7 +317,7 @@ class Source
         $post['next'] = '';
         $post['next_id'] = '';
         $post['next_title'] = '';
-        $post['link'] = str_replace (':_id',$post['_id'],$link);
+        $post['link'] = $link;
         $post['source'] = $source;
         
         return $post;
@@ -367,6 +398,7 @@ class Source
         }
         $configs = Config::all();
         $data = self::parse($contents);
+        //获取 目录名称
         $name = basename(dirname($source));
         $link = $configs['link']['domain'] . $configs['link']['page'] . $configs['link']['suffix'];
 

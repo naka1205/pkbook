@@ -489,3 +489,25 @@ h1 span{
 .am-article-bd{
     min-height: 30px;
 }
+.page-404 {
+    background: #fff;
+    border: none;
+    width: 200px;
+    margin: 0 auto;
+}
+.tags {
+    min-height: 200px;
+}
+.tags a{
+    margin: 0.5rem 0;
+}
+.tags a:nth-of-type(1){background-color: #0e90d2;}
+.tags a:nth-of-type(2){background-color: #3bb4f2;}
+.tags a:nth-of-type(3){background-color: #5eb95e;}
+.tags a:nth-of-type(4){background-color: #F37B1D;}
+.tags a:nth-of-type(5){background-color: #FF9600;}
+.tags a:nth-of-type(6){background-color: #dd514c;}
+.tags a:nth-of-type(7){background-color: #EE1225;}
+.tags a:nth-of-type(8){background-color: #063880;}
+.tags a:nth-of-type(9){background-color: #00B990;}
+.tags a:nth-of-type(10){background-color: #646770;}

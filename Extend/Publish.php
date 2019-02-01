@@ -1,9 +1,12 @@
 <?php
 namespace Extend;
 use Exception;
+
+use Models\Tag;
 use Models\Post;
 use Models\Single;
 use Models\Category;
+
 class Publish
 {
 
@@ -16,7 +19,7 @@ class Publish
         foreach ($pagination['content']['page'] as $key => $value) {
             if ( $key == 0 ) {
                 $html .= '<li class="'.$pagination['content']['prevClassName'].'"><a href="'.$pagination['content']['prevLink'].'">&laquo;</a></li>';
-                if ( intval($pagination['content']['current']) > 4 ) {
+                if ( intval($pagination['content']['current']) > 5 ) {
                     $html .= '<li><a href="'.$pagination['content']['firstLink'].'">1</a></li>';
                     $html .= '<li><a>...</a></li>';
                 }
@@ -24,7 +27,7 @@ class Publish
             $html .= '<li class="'.$value['className'].'"><a href="'.$value['link'].'">'.$value['title'].'</a></li>';
 
             if ( ( $key + 1 ) == $count ) {
-                if ( ( intval($pagination['content']['current']) + 4 ) < $pagination['content']['pages'] ) {
+                if ( ( intval($pagination['content']['current']) + 5 ) < $pagination['content']['pages'] ) {
                     $html .= '<li><a>...</a></li>';
                     $html .= '<li><a href="'.$pagination['content']['lastLink'].'">'.$pagination['content']['pages'].'</a></li>';
                 }
@@ -34,12 +37,15 @@ class Publish
         return $html;
     }
 
-    public function index()
+    public static function index()
     {
-        
+        self::clear(PUBLIC_PATH . DS . 'page');
+
+        $configs = Config::all();
+
         $posts = Post::select([]);
         
-        $num = 1;
+        $num = intval($configs['site']['pagenum']);
         $pages = ceil( count($posts) / $num );
 
         $source = PUBLIC_PATH . DS . 'page' . DS . ':_id.html';
@@ -62,35 +68,99 @@ class Publish
             $posts = Post::select($where,$page,$num,$link);
 
             $state = [];
-            $state['link'] = '';
+            $state['link'] = $configs['link'];
+            $state['site'] = $configs['site'];
+            $state['title'] = '首页';
             $state['posts'] = $posts['data'];
             $state['pagination'] = self::pagination($posts['pagination']);
             $state['singles'] = $singles;
             $state['categories'] = $categories;
             $view->assign('state',$state);
 
-            $site = Config::all('site');
             if ( $page == 1 ) {
-                yield $view->publish($site['theme'] . '/index', PUBLIC_PATH . DS . "index.html");
+                yield $view->publish($configs['site']['theme'] . '/index', PUBLIC_PATH . DS . "index.html");
             }
             $file =  str_replace (':_id',$page,$source);   
-            yield $view->publish($site['theme'] . '/index',$file);
+            yield $view->publish($configs['site']['theme'] . '/index',$file);
         }
     }
 
-    public function single()
+    public static function single()
     {
 
     }
 
-    public function tags()
+    public static function tags()
     {
+        self::clear(PUBLIC_PATH . DS . 'tags');
 
-    }
-
-    public function categories()
-    {
         $configs = Config::all();
+        $num = intval($configs['site']['pagenum']);
+
+        $categories = Category::select([]);
+        $singles = Single::select([]);
+        $tags = Tag::select([]);
+
+        $opt = [
+            'view_suffix'   =>	'html',
+            'tpl_cache'     =>	false,
+            'view_path'	    =>  THEME_PATH,
+            'cache_path'	=>	CACHE_PATH . DS . 'themes'
+        ];
+        $view = new Template($opt);
+        $state = [];
+        $state['link'] = $configs['link'];
+        $state['site'] = $configs['site'];
+        $state['title'] = '标签';
+        $state['singles'] = $singles;
+        $state['categories'] = $categories;
+        $state['tags'] = $tags;
+        $view->assign('state',$state);
+        yield $view->publish($configs['site']['theme'] . '/tags', PUBLIC_PATH . DS . "tags.html");
+
+        foreach ($tags as $key => $value) {
+            $where = ['_id'=>$value['posts']];
+            $posts = Post::select($where);
+            
+            $pages = ceil( count($posts) / $num );
+
+            $source = PUBLIC_PATH . DS . 'tags' . DS . $value['_id'] . DS . 'page' . DS . ':_id.html';
+
+            for ( $page = 1 ; $page <= $pages; $page++) { 
+                $link = '/tags/'.$value['_id'].'/page/:page'. $configs['link']['suffix'];
+                $posts = Post::select($where,$page,$num,$link);
+
+                $state = [];
+                $state['link'] = $configs['link'];
+                $state['site'] = $configs['site'];
+                $state['title'] = $value['title'];
+                $state['posts'] = $posts['data'];
+                $state['pagination'] = self::pagination($posts['pagination']);
+                $state['singles'] = $singles;
+                $state['categories'] = $categories;
+                $state['tag'] = $value;
+                
+                $view->assign('state',$state);
+
+                if ( $page == 1 ) {
+                    yield $view->publish($configs['site']['theme'] . '/category', PUBLIC_PATH. DS . 'tags' . DS . $value['_id'] . DS . "index.html");
+                }
+                $file =  str_replace (':_id',$page,$source);   
+                yield $view->publish($configs['site']['theme'] . '/category',$file);
+            }
+
+        }
+        
+        return;
+
+    }
+
+    public static function categories()
+    {
+        self::clear(PUBLIC_PATH . DS . 'category');
+
+        $configs = Config::all();
+        $num = intval($configs['site']['pagenum']);
 
         $categories = Category::select([]);
         $singles = Single::select([]);
@@ -102,11 +172,11 @@ class Publish
             'cache_path'	=>	CACHE_PATH . DS . 'themes'
         ];
         $view = new Template($opt);
-
+        
         foreach ($categories as $key => $value) {
             $where = ['_id'=>$value['posts']];
             $posts = Post::select($where);
-            $num = 1;
+            
             $pages = ceil( count($posts) / $num );
 
             $source = PUBLIC_PATH . DS . 'category' . DS . $value['_id'] . DS . 'page' . DS . ':_id.html';
@@ -116,18 +186,22 @@ class Publish
                 $posts = Post::select($where,$page,$num,$link);
 
                 $state = [];
-                $state['link'] = '';
+                $state['link'] = $configs['link'];
+                $state['site'] = $configs['site'];
+                $state['title'] = $value['title'];
                 $state['posts'] = $posts['data'];
                 $state['pagination'] = self::pagination($posts['pagination']);
                 $state['singles'] = $singles;
                 $state['categories'] = $categories;
+                $state['category'] = $value;
+                
                 $view->assign('state',$state);
 
                 if ( $page == 1 ) {
                     yield $view->publish($configs['site']['theme'] . '/category', PUBLIC_PATH. DS . 'category' . DS . $value['_id'] . DS . "index.html");
                 }
                 $file =  str_replace (':_id',$page,$source);   
-                yield $view->publish($configs['site']['theme'] . '/index',$file);
+                yield $view->publish($configs['site']['theme'] . '/category',$file);
             }
 
         }
@@ -137,12 +211,11 @@ class Publish
         
     }
 
-    public function posts()
+    public static function posts()
     {
+        self::clear(PUBLIC_PATH . DS . 'posts');
+
         $configs = Config::all();
-        
-        $configs['link']['domain'] = '';
-        $configs['link']['suffix'] = '.html';
 
         $posts = Source::update();
         $categories = Category::select([]);
@@ -163,13 +236,65 @@ class Publish
 
             $post = new Post($_id);
             $state = [];
+            $state['link'] = $configs['link'];
+            $state['site'] = $configs['site'];
+            $state['title'] = $post['title'];
             $state['post'] = $post;
             $state['singles'] = $singles;
             $state['categories'] = $categories;
             $view->assign('state',$state);
 
+            $_date = date('Ymd',strtotime($post['date']));
+
             $file =  str_replace (':_id',$_id,$source);
+            $file =  str_replace (':_date',$_date,$file);
             yield $view->publish($configs['site']['theme'] . '/posts',$file);
+        }
+    }
+
+    
+
+    public static function notFound()
+    {
+        $configs = Config::all();
+        $categories = Category::select([]);
+        $singles = Single::select([]);
+
+        $opt = [
+            'view_suffix'   =>	'html',
+            'tpl_cache'     =>	false,
+            'view_path'	    =>  THEME_PATH,
+            'cache_path'	=>	CACHE_PATH . DS . 'themes'
+        ];
+
+        $view = new Template($opt);
+        $state = [];
+        $state['link'] = $configs['link'];
+        $state['site'] = $configs['site'];
+        $state['title'] = '404';
+        $state['singles'] = $singles;
+        $state['categories'] = $categories;
+        $view->assign('state',$state);
+        yield $view->publish($configs['site']['theme'] . '/404', PUBLIC_PATH . DS . "404.html");
+    }
+
+    public static function clear($path)
+    {
+        if(is_dir($path)){
+            $sources = scandir($path);
+            foreach($sources as $val){
+                if($val =="." || $val ==".."){
+                    continue;
+                }
+                $source = $path . DS . $val;
+                if(is_dir($source)){
+                    $source .= DS;
+                    self::clear($source);
+                    @rmdir($source);
+                }else{
+                    unlink($source);
+                }
+            }
         }
     }
 

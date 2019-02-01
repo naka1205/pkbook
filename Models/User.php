@@ -10,7 +10,7 @@ class User
         $admin = Config::get('admin');
         if ($admin['email'] == $email && $admin['password'] == $password) {
             $admin['token'] = md5( $email . time() );
-            // Config::set('admin',$admin,true);
+            Config::set('admin',$admin);
             return true;
         }
         return false;
