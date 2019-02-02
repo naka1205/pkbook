@@ -25,7 +25,8 @@ class Source
             }
             return $data;
         }
-        return Cache::has($arguments[0]) ? Cache::get($arguments[0]) : Source::find($arguments[0],$method);
+        $_id = strlen($arguments[0]) !== 16 ? self::key($arguments[0]) : $arguments[0];
+        return Cache::has($_id) ? Cache::get($_id) : Source::find($_id,$method);
     }
 
     public static function key($name){
@@ -154,6 +155,7 @@ class Source
     }
 
     public static function findSingles($_id){
+        
         $sources  =  scandir ( SOURCE_PATH );
         $_singles = Cache::get('singles');
         $single = [];
@@ -164,8 +166,9 @@ class Source
             $index = SOURCE_PATH . DS . $value . DS . 'index.md';
             $single = self::parsePage($index);
             Cache::set($single['_id'],$single);
-            unset($single['content']);
+            
             $_singles[$single['_id']] = $single;
+            unset($_singles[$single['_id']]['content']);
         }
 
         Cache::set('singles',$_singles);

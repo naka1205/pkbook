@@ -6,9 +6,7 @@
           <h1 class="am-article-title blog-text-center">{$state.single.title}</h1>
         </div>        
         <div class="am-article-bd">
-            {notempty name="state.single.html"}
             {$state.single.html|raw}
-            {/notempty}
         </div>
       </article>
         

@@ -87,7 +87,33 @@ class Publish
 
     public static function single()
     {
+        self::clear( PUBLIC_PATH , ['assets','category','page','posts','tags','tags.html','index.html','404.html','search.json'] );
+
+        $configs = Config::all();
+        $singles = Single::select([]);
+        $categories = Category::select([]);
         
+        $opt = [
+            'view_suffix'   =>	'html',
+            'tpl_cache'     =>	false,
+            'view_path'	    =>  THEME_PATH,
+            'cache_path'	=>	CACHE_PATH . DS . 'themes'
+        ];
+        $view = new Template($opt);
+
+        foreach ($singles as $key => $value) {
+            $single = new Post($value['_id']);
+
+            $state = [];
+            $state['link'] = $configs['link'];
+            $state['site'] = $configs['site'];
+            $state['title'] = $value['title'];
+            $state['singles'] = $singles;
+            $state['categories'] = $categories;
+            $state['single'] = $single;
+            $view->assign('state',$state);
+            yield $view->publish($configs['site']['theme'] . '/single', PUBLIC_PATH . DS . $single['name'] . ".html");
+        }
     }
 
     public static function tags()
@@ -333,24 +359,28 @@ class Publish
 
     }
 
-    public static function clear($path)
+    public static function clear($path,$filter = [])
     {
-        if(is_dir($path)){
-            $sources = scandir($path);
-            foreach($sources as $val){
-                if($val =="." || $val ==".."){
-                    continue;
-                }
-                $source = $path . DS . $val;
-                if(is_dir($source)){
-                    $source .= DS;
-                    self::clear($source);
-                    @rmdir($source);
-                }else{
-                    unlink($source);
-                }
+        if(!is_dir($path)){
+           return false;
+        }
+        $filter[] = ".";
+        $filter[] = "..";
+        $sources = scandir($path);
+        foreach($sources as $val){
+            if( in_array($val,$filter) ){
+                continue;
+            }
+            $source = $path . DS . $val;
+            if(is_dir($source)){
+                $source .= DS;
+                self::clear($source);
+                @rmdir($source);
+            }else{
+                unlink($source);
             }
         }
+        return true;
     }
 
 }

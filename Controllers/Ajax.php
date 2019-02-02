@@ -35,7 +35,7 @@ class Ajax
                 yield Source::update();
                 break;
             case 'singles':
-                yield Publish::singles();
+                yield Source::singles();
                 break;
             default:
                 # code...
@@ -53,20 +53,31 @@ class Ajax
             case 'index':
                 yield Publish::index();
                 break;
-            case 'posts':
-                yield Publish::posts();
+            case 'single':
+                yield Publish::single();
                 break;
-            case 'tags':
-                yield Publish::tags();
-                break;
-            case 'categories':
-                yield Publish::categories();
+            case 'assets':
+                yield Publish::assets();
                 break;
             case '404':
                 yield Publish::notFound();
                 break;
+            case 'posts':
+                yield Publish::posts();
+                yield Publish::tags();
+                yield Publish::categories();
+                yield Publish::index();
+                yield Publish::search();
+                break;
             default:
-                # code...
+                yield Publish::single();
+                yield Publish::posts();
+                yield Publish::index();
+                yield Publish::tags();
+                yield Publish::categories();
+                yield Publish::notFound();
+                yield Publish::search();
+                yield Publish::assets();
                 break;
         }
         

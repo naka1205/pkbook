@@ -7,12 +7,16 @@ use Models\Single;
 use Models\Category;
 use Models\Tag;
 
+use Extend\Config;
 use Extend\Publish;
 
 class Show
 {
     public static $pagenum = 10;
     public static function base(Context $ctx, $next, $vars){
+
+        $configs = Config::all();
+        $ctx->state['site'] = $configs['site'];
 
         $link = [
             'domain'        =>  "/show",
@@ -79,6 +83,7 @@ class Show
 
     public static function single(Context $ctx, $next, $vars){
         $single = new Single($vars[0]);
+        var_dump($single);
         $ctx->status = 200;
         $ctx->state['single'] = $single;
         yield $ctx->show("single");

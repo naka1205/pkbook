@@ -46,7 +46,7 @@
 <div class="am-popup" id="search-popup">
     <div class="am-popup-inner">
         <div class="am-popup-hd">
-        <h4 class="am-popup-title">“<b class="search-keyword"></b>”搜索结果</h4>
+        <h4 class="am-popup-title">关于“<b class="search-keyword"></b>”的搜索结果</h4>
         <span data-am-modal-close class="am-close">&times;</span>
         </div>
         <div class="am-popup-bd">
@@ -90,7 +90,7 @@ var searchFunc = function() {
         success: function(datas) {
             var input = document.getElementById('keywords');
             var resultContent = document.getElementById('search-result');
-            $('#search-popup .search-keyword').text(input);    
+            $('#search-popup .search-keyword').text(input.value);    
 
             var searchText = input.value.trim().toLowerCase();
             var keywords = searchText.split(/[\s\-]+/);
