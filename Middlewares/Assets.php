@@ -7,15 +7,18 @@ class Assets implements Middleware
 {
     public $path;
     public static $mimes = array (
+        'txt'   => 'text/plain',
         'css'   => 'text/css',
         'xml'   => 'text/xml',
+        'png'   => 'image/png',
         'gif'   => 'image/gif',
         'jpeg'  => 'image/jpeg',
         'jpg'   => 'image/jpeg',
+        'svg'   => 'image/svg+xml',
         'js'    => 'application/x-javascript',
         'eot'   => 'application/octet-stream',
-        'txt'   => 'text/plain',
-        'png'   => 'image/png'
+        'ttf'   => 'application/x-font-ttf',
+        'woff2' => 'font/woff2'
     );
     public function __construct()
     {

@@ -5,7 +5,6 @@ define('DS', DIRECTORY_SEPARATOR);
 define('IS_CLI', PHP_SAPI == 'cli' ? true : false);
 define('IS_WIN', strpos(PHP_OS, 'WIN') !== false);
 define('ROOT_PATH', __DIR__ );
-define('THEME_PATH', ROOT_PATH . DS . 'themes');
 define('PUBLIC_PATH', ROOT_PATH . DS . 'public');
 if ( !IS_CLI ) {
     die('Please use cli');
@@ -24,9 +23,5 @@ $app->υse(new NotFound());
 
 use Middlewares\Html; 
 $app->υse(new Html( PUBLIC_PATH )); 
-
-use Middlewares\Assets; 
-$app->υse(new Assets()); 
-
 
 $app->listen(88);

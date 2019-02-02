@@ -6,9 +6,25 @@ class Html implements Middleware
 {
     public $path;
     public static $mimes = array (
-        'html' => 'text/html',
-        'htm' => 'text/html',
-        'shtml' => 'text/html'
+        'html'  => 'text/html',
+        'htm'   => 'text/html',
+        'shtml' => 'text/html',
+        'txt'   => 'text/plain',
+        'css'   => 'text/css',
+        'xml'   => 'text/xml',
+        'png'   => 'image/png',
+        'gif'   => 'image/gif',
+        'jpeg'  => 'image/jpeg',
+        'jpg'   => 'image/jpeg',
+        'svg'   => 'image/svg+xml',
+        'ico'   => 'image/x-icon',
+        'bmp'   => 'image/x-ms-bmp',
+        'rss'   => 'application/rss+xml',
+        'js'    => 'application/x-javascript',
+        'eot'   => 'application/octet-stream',
+        'ttf'   => 'application/x-font-ttf',
+        'woff2' => 'font/woff2',
+        'json'  => 'application/json'
     );
     public function __construct()
     {
@@ -20,7 +36,7 @@ class Html implements Middleware
 
     public function __invoke(Context $ctx, $next)
     {
-
+        yield $next; 
         $url_info = parse_url('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
         if ( !$url_info ) {
             $ctx->status = 404;
@@ -38,44 +54,39 @@ class Html implements Middleware
             return;
         }
 
-        if ( strpos ( $path_info['dirname'] , '/assets/' ) === false ) {
-            $file_path = $this->path .  $path;
-            if (is_file($file_path)) {
-                $file_path = realpath($file_path);
-                $info = stat($file_path);
-                $modified_time = $info ? date('D, d M Y H:i:s', $info['mtime']) . ' ' . date_default_timezone_get() : '';
-                if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']) && $info) {
+        $file_path = $this->path .  $path;
+        if (is_file($file_path)) {
+            $file_path = realpath($file_path);
+            $info = stat($file_path);
+            $modified_time = $info ? date('D, d M Y H:i:s', $info['mtime']) . ' ' . date_default_timezone_get() : '';
+            if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']) && $info) {
 
-                    if ($modified_time === $_SERVER['HTTP_IF_MODIFIED_SINCE']) {
-                        $ctx->status = 304;
-                        $ctx->body = '<h1>400 Bad Request</h1>';
-                        return;
-                    }
-                }
-
-                $file_size = filesize($file_path);
-                $file_info = pathinfo($file_path);
-                $extension = isset($file_info['extension']) ? $file_info['extension'] : '';
-                $file_name = isset($file_info['filename']) ? $file_info['filename'] : '';
-                $ctx->status = 200;
-
-                if ($modified_time) {
-                    $ctx->lastModified = $modified_time;
-                }
-                if (isset(static::$mimes[$extension])) {
-                    $ctx->type = static::$mimes[$extension];
-                    $ctx->body = file_get_contents($file_path);
+                if ($modified_time === $_SERVER['HTTP_IF_MODIFIED_SINCE']) {
+                    $ctx->status = 304;
+                    $ctx->body = '<h1>400 Bad Request</h1>';
                     return;
-                }  
-                
+                }
             }
-            $ctx->status = 404;
-            $ctx->body = file_get_contents(PUBLIC_PATH.'/404.html');
-        }
 
-        yield $next;        
-        
-        
+            $file_size = filesize($file_path);
+            $file_info = pathinfo($file_path);
+            $extension = isset($file_info['extension']) ? $file_info['extension'] : '';
+            $file_name = isset($file_info['filename']) ? $file_info['filename'] : '';
+            $ctx->status = 200;
+
+            if ($modified_time) {
+                $ctx->lastModified = $modified_time;
+            }
+            if (isset(static::$mimes[$extension])) {
+                $ctx->type = static::$mimes[$extension];
+                $ctx->body = file_get_contents($file_path);
+                return;
+            }  
+            
+        }
+        $ctx->status = 404;
+        $ctx->body = file_get_contents(PUBLIC_PATH.'/404.html');
+        return;
     }
 
 }

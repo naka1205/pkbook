@@ -87,7 +87,7 @@ class Publish
 
     public static function single()
     {
-
+        
     }
 
     public static function tags()
@@ -207,12 +207,11 @@ class Publish
         }
         
         return;
-
-        
     }
 
     public static function posts()
     {
+        self::assets();
         self::clear(PUBLIC_PATH . DS . 'posts');
 
         $configs = Config::all();
@@ -252,7 +251,6 @@ class Publish
         }
     }
 
-    
 
     public static function notFound()
     {
@@ -276,6 +274,63 @@ class Publish
         $state['categories'] = $categories;
         $view->assign('state',$state);
         yield $view->publish($configs['site']['theme'] . '/404', PUBLIC_PATH . DS . "404.html");
+    }
+
+    public static function search()
+    {
+        $posts = Post::select([]);
+
+        $search = [];
+        foreach($posts as $key=>$value ) {
+            $post = new Post($value['_id']);
+
+            $data['title'] = $post['title'];
+            $data['url'] = $post['link'];
+            $data['content'] = strip_tags($post['html']);
+            $data['categories'] = $post['categories_value'];
+            $data['tags'] = [];
+            foreach ($post['tags'] as $k => $v) {
+                $data['tags'][] = $v['title'];
+            }
+
+            $search[] = $data;
+        }
+        return file_put_contents(PUBLIC_PATH . DS . "search.json",json_encode($search));
+    }
+
+    public static function assets()
+    {
+        $configs = Config::all();
+
+        $assets = PUBLIC_PATH . DS . 'assets';
+        self::clear($assets);
+
+        $themes = THEME_PATH . DS . $configs['site']['theme'] . DS . 'assets';
+        self::copys($themes,$assets);
+
+        return ;
+    }
+
+    public static function copys($source, $dest){
+
+        $sources = scandir($source);
+        foreach($sources as $val){
+            if($val =="." || $val ==".."){
+                continue;
+            }
+
+            $source_file = $source . DS . $val;
+            $dest_file = $dest . DS . $val;
+
+            if(is_dir($source_file)){
+                mkdir($dest_file, 0755, true);
+                self::copys($source_file, $dest_file);
+            }else{
+                copy($source_file, $dest_file);
+            }
+
+        }
+
     }
 
     public static function clear($path)

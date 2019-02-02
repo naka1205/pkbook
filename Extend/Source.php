@@ -325,7 +325,7 @@ class Source
 
     private static function parseCategory($post,&$_categories){
         $configs = Config::all();
-        $link = $configs['link']['domain'] . $configs['link']['category'] .'/index'. $configs['link']['suffix'];
+        $link = $configs['link']['domain'] . $configs['link']['category'] . '/index' . $configs['link']['suffix'];
 
         $_id = $post['_id'];
         $title = $post['categories'];
@@ -360,7 +360,7 @@ class Source
         $_id = $post['_id'];
         $data = explode(',',$post['tags']);
         $tags = [];
-        $link = $configs['link']['domain'] . $configs['link']['tags'] . $configs['link']['suffix'];
+        $link = $configs['link']['domain'] . $configs['link']['tags'] . '/index' .  $configs['link']['suffix'];
         foreach ($data as $title) {
             $_tid = self::key($title);
             if ( !isset($_tags[$_tid]) ) {

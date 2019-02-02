@@ -511,3 +511,9 @@ h1 span{
 .tags a:nth-of-type(8){background-color: #063880;}
 .tags a:nth-of-type(9){background-color: #00B990;}
 .tags a:nth-of-type(10){background-color: #646770;}
+.am-popup-bd{
+    background:white;
+}
+.search-keyword{
+    color:#10D07A;
+}

@@ -6,12 +6,11 @@ class Tag extends Common
 
     public function __construct($_id)
     {
-        $data = Source::tags();
-        $this->data = isset($data[$_id]) ? $data[$_id] : [];
+        $this->data = !empty($_id) ? Source::tags($_id) : [];
     }
 
-    public static function select($where,$page,$num=10,$link =''){
-        $data = Source::tags();
+    public static function select($where,$page=0,$num=10,$link =''){
+        $data = Source::tags($where);
         if ( $page <= 0 ) {
             return $data;
         }

@@ -34,6 +34,32 @@
     </div>    
     <div class="blog-text-center">© 2015 AllMobilize, Inc. Licensed under MIT license. Made with love By LWXYFER</div>    
 </footer>
+
+<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="modal-loading">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">正在载入...</div>
+        <div class="am-modal-bd">
+        <span class="am-icon-spinner am-icon-spin"></span>
+        </div>
+    </div>
+</div>
+<div class="am-popup" id="search-popup">
+    <div class="am-popup-inner">
+        <div class="am-popup-hd">
+        <h4 class="am-popup-title">“<b class="search-keyword"></b>”搜索结果</h4>
+        <span data-am-modal-close class="am-close">&times;</span>
+        </div>
+        <div class="am-popup-bd">
+
+            <div class="am-list-news am-list-news-default">
+                <div class="am-list-news-bd" id="search-result">
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="/assets/js/jquery.min.js"></script>
 <!--<![endif]-->
@@ -43,3 +69,222 @@
 <script src="/assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
 <script src="/assets/js/amazeui.min.js"></script>
+<script>
+
+var $modalLoading = $('#modal-loading');
+var $searchPopup = $('#search-popup');
+
+$('#search').click(function(e) {
+    $modalLoading.modal();
+    searchFunc();
+});
+
+// search function;
+var searchFunc = function() {
+    'use strict';
+
+    $.ajax({
+        url: '/search.json',
+        dataType:"json",
+        async: true,
+        success: function(datas) {
+            var input = document.getElementById('keywords');
+            var resultContent = document.getElementById('search-result');
+            $('#search-popup .search-keyword').text(input);    
+
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+                keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+                datas.forEach(function(data) {
+                    var isMatch = false;
+                    var hitCount = 0;
+                    var searchTextCount = 0;
+                    var title = data.title.trim();
+                    var titleInLowerCase = title.toLowerCase();
+                    var content = data.content.trim().replace(/<[^>]+>/g,"");
+                    var contentInLowerCase = content.toLowerCase();
+                    var articleUrl = decodeURIComponent(data.url);
+                    var indexOfTitle = [];
+                    var indexOfContent = [];
+                    if(title != '') {
+                        keywords.forEach(function(keyword) {
+                            function getIndexByWord(word, text, caseSensitive) {
+                                var wordLen = word.length;
+                                if (wordLen === 0) {
+                                return [];
+                                }
+                                var startPosition = 0, position = [], index = [];
+                                if (!caseSensitive) {
+                                text = text.toLowerCase();
+                                word = word.toLowerCase();
+                                }
+                                while ((position = text.indexOf(word, startPosition)) > -1) {
+                                index.push({position: position, word: word});
+                                startPosition = position + wordLen;
+                                }
+                                return index;
+                            }
+
+                            indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                            indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                        });
+                        if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                            isMatch = true;
+                            hitCount = indexOfTitle.length + indexOfContent.length;
+                        }
+                    }
+
+                    if (isMatch) {
+
+                        [indexOfTitle, indexOfContent].forEach(function (index) {
+                            index.sort(function (itemLeft, itemRight) {
+                                if (itemRight.position !== itemLeft.position) {
+                                    return itemRight.position - itemLeft.position;
+                                } else {
+                                    return itemLeft.word.length - itemRight.word.length;
+                                }
+                            });
+                        });
+
+                        function mergeIntoSlice(text, start, end, index) {
+                            var item = index[index.length - 1];
+                            var position = item.position;
+                            var word = item.word;
+                            var hits = [];
+                            var searchTextCountInSlice = 0;
+                            while (position + word.length <= end && index.length != 0) {
+                                if (word === searchText) {
+                                    searchTextCountInSlice++;
+                                }
+                                hits.push({position: position, length: word.length});
+                                var wordEnd = position + word.length;
+
+                                index.pop();
+                                while (index.length != 0) {
+                                    item = index[index.length - 1];
+                                    position = item.position;
+                                    word = item.word;
+                                    if (wordEnd > position) {
+                                        index.pop();
+                                    } else {
+                                        break;
+                                    }
+                                }
+                            }
+                            searchTextCount += searchTextCountInSlice;
+                            return {
+                                hits: hits,
+                                start: start,
+                                end: end,
+                                searchTextCount: searchTextCountInSlice
+                            };
+                        }
+
+                        var slicesOfTitle = [];
+                        if (indexOfTitle.length != 0) {
+                            slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                        }
+
+                        var slicesOfContent = [];
+                        while (indexOfContent.length != 0) {
+                            var item = indexOfContent[indexOfContent.length - 1];
+                            var position = item.position;
+                            var word = item.word;
+                            var start = position - 20;
+                            var end = position + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if (end < position + word.length) {
+                                end = position + word.length;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                        }
+
+                        slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                            if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                                return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                            } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                                return sliceRight.hits.length - sliceLeft.hits.length;
+                            } else {
+                                return sliceLeft.start - sliceRight.start;
+                            }
+                        });
+
+                        var upperBound = parseInt('1');
+                        if (upperBound >= 0) {
+                            slicesOfContent = slicesOfContent.slice(0, upperBound);
+                        }
+
+                        function highlightKeyword(text, slice) {
+                            var result = '';
+                            var prevEnd = slice.start;
+                            slice.hits.forEach(function (hit) {
+                                result += text.substring(prevEnd, hit.position);
+                                var end = hit.position + hit.length;
+                                result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                                prevEnd = end;
+                            });
+                            result += text.substring(prevEnd, slice.end);
+                            return result;
+                        }
+
+                        var resultItem = '';
+
+                        if (slicesOfTitle.length != 0) {
+                            resultItem += "<li class='am-g am-list-item-desced'><a href='" + articleUrl + "' class='am-list-item-hd'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                        } else {
+                            resultItem += "<li class='am-g am-list-item-desced'><a href='" + articleUrl + "' class='am-list-item-hd'>" + title + "</a>";
+                        }
+
+                        slicesOfContent.forEach(function (slice) {
+                            resultItem += "<div class='am-list-item-text'>" + highlightKeyword(content, slice) + "...</div>";
+                        });
+
+                        resultItem += "</li>";
+                        resultItems.push({
+                            item: resultItem,
+                            searchTextCount: searchTextCount,
+                            hitCount: hitCount,
+                            id: resultItems.length
+                        });
+                    }
+                })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+                resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+                resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+                resultItems.sort(function (resultLeft, resultRight) {
+                    if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                        return resultRight.searchTextCount - resultLeft.searchTextCount;
+                    } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                        return resultRight.hitCount - resultLeft.hitCount;
+                    } else {
+                        return resultRight.id - resultLeft.id;
+                    }
+                });
+                var searchResultList = "<ul class='am-list'>";
+                resultItems.forEach(function (result) {
+                    searchResultList += result.item;
+                })
+                searchResultList += "</ul>";
+                resultContent.innerHTML = searchResultList;
+            }
+            
+            $modalLoading.modal('close');
+            $searchPopup.modal();
+
+        }
+    });
+}
+
+</script>
