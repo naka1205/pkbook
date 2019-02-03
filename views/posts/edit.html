@@ -103,6 +103,9 @@
 <script>
 var _id = '{$state._id}';
 var id = '{$state.id}';
+var token = '{$state.qiniu.token}';
+var upload = '{$state.qiniu.upload}';
+var domain = '{$state.qiniu.domain}';
 // $('#tags').val()
 // "Amsterdam,Washington,Sydney,Beijing,Cairo"
 
@@ -115,6 +118,11 @@ $(function() {
     format: 'yyyy-mm-dd hh:ii:ss'
   });
   var editor = editormd("editormd", {
+      imageUpload    : true,
+      imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+      imageUploadURL : upload,
+      token : token,
+      domain : domain,
       width   : "100%",
       height  : 600,
       path : "/js/editormd/"
@@ -141,9 +149,9 @@ $(function() {
         },
         success: function(res){
             if ( res.code == 200 && res.data != '') {
-                // location.reload()
+                location.reload()
             }else{
-                // $modal.modal('close');
+                $modal.modal('close');
             }
         }
       });

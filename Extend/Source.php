@@ -416,6 +416,7 @@ class Source
     private static function parse($contents){
         $array = explode('---',$contents);
         $info = explode("\n",$array[1]);
+        
         $data = [];
         foreach ($info as $val) {
             $val = trim($val);
@@ -427,7 +428,7 @@ class Source
                 $temp[1] = str_replace ('[','',$temp[1]);
                 $temp[1] = str_replace (']','',$temp[1]);
             }
-            $data[$temp[0]] = $temp[1];
+            $data[$temp[0]] = isset( $temp[1] ) ? $temp[1] : '';
         }
         $data['_id'] = self::key($data['title']);
         $data['content'] = $array[2];

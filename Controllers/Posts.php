@@ -2,6 +2,7 @@
 namespace Controllers;
 use Naka507\Koa\Context;
 use Models\Post;
+use Extend\Upload;
 class Posts
 {
 
@@ -14,6 +15,7 @@ class Posts
         $data = new Post($vars[0]);
         $ctx->status = 200;
         $ctx->state = $data;
+        $ctx->state['qiniu'] = Upload::qiniu();
         yield $ctx->render("posts/edit");
     }
 

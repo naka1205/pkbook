@@ -15,7 +15,7 @@ return [
         'category'      =>  "/category/:_id"
     ],
     'site' => [
-        'title'         => "naka1205的博客",
+        'title'         => "XX的博客",
         'subtitle'      => "个人博客",
         'description'   => "开源WEB开发框架",
         'keywords'      => "开源WEB开发框架",
@@ -23,5 +23,13 @@ return [
         'logo'          => "",
         'theme'         => "green",
         'pagenum'       => 10
-    ]
+    ],
+    'qiniu' => [
+        'domain'        =>  "",
+        'upload'        =>  "",
+        'token'         =>  "",
+        'bucket'        =>  "",
+        'access'        =>  "",
+        'secret'        =>  ""
+    ],
 ];

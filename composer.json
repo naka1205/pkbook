@@ -1,6 +1,7 @@
 {
     "require": {
-        "naka1205/phpkoa": "^1.8"
+        "naka1205/phpkoa": "^1.8",
+        "qiniu/php-sdk": "^7.2"
     },
     "autoload": {
         "psr-4": {

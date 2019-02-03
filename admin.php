@@ -16,7 +16,6 @@ if ( !IS_CLI ) {
     die('Please use cli');
 }
 
-
 use Naka507\Koa\Application;
 use Naka507\Koa\Context;
 use Naka507\Koa\Error;
