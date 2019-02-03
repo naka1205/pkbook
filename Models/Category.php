@@ -9,6 +9,13 @@ class Category extends Common
         $this->data = !empty($_id) ? Source::categories($_id) : [];
     }
 
+    public function posts(){
+        if ($this->posts) {
+            return Source::posts(['_id'=>$this->posts]);
+        }
+        return [];
+    }    
+
     public static function select($where,$page=0,$num=10,$link =''){
         $data = Source::categories($where);
         if ( $page <= 0 ) {

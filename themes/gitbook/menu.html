@@ -1,0 +1,14 @@
+<nav role="navigation">
+    <ul class="summary">
+        <li><a href="/index.html" target="blank" class="header">序言</a></li>
+        <li class="divider"></li>
+        {volist name="state.categories" id="vo" key="k"}
+        <li class="header">{$vo.title}</li>
+            {volist name=":posts(['_id'=>$vo['posts']])" id="val"}
+            <li class="chapter " data-level="{$k}.{$i}" data-path="{$val.link}"><a href="{$val.link}">{$val.title}</a></li>
+            {/volist}
+        <li class="divider"></li>
+        {/volist}
+        <li><a href="https://www.gitbook.com" target="blank" class="gitbook-link">Published with GitBook</a></li>
+    </ul>
+</nav>

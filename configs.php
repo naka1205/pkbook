@@ -10,7 +10,7 @@ return [
         'domain'        =>  "",
         'suffix'        =>  ".html",
         'page'          =>  "/:_id",
-        'posts'         =>  "/posts/:_date/:_id",
+        'posts'         =>  "/posts/:_id",
         'tags'          =>  "/tags/:_id",
         'category'      =>  "/category/:_id"
     ],

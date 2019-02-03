@@ -1,0 +1,725 @@
+/*
+ * Theme 1
+ */
+.color-theme-1 .dropdown-menu {
+  background-color: #111111;
+  border-color: #7e888b;
+}
+.color-theme-1 .dropdown-menu .dropdown-caret .caret-inner {
+  border-bottom: 9px solid #111111;
+}
+.color-theme-1 .dropdown-menu .buttons {
+  border-color: #7e888b;
+}
+.color-theme-1 .dropdown-menu .button {
+  color: #afa790;
+}
+.color-theme-1 .dropdown-menu .button:hover {
+  color: #73553c;
+}
+/*
+ * Theme 2
+ */
+.color-theme-2 .dropdown-menu {
+  background-color: #2d3143;
+  border-color: #272a3a;
+}
+.color-theme-2 .dropdown-menu .dropdown-caret .caret-inner {
+  border-bottom: 9px solid #2d3143;
+}
+.color-theme-2 .dropdown-menu .buttons {
+  border-color: #272a3a;
+}
+.color-theme-2 .dropdown-menu .button {
+  color: #62677f;
+}
+.color-theme-2 .dropdown-menu .button:hover {
+  color: #f4f4f5;
+}
+.book .book-header .font-settings .font-enlarge {
+  line-height: 30px;
+  font-size: 1.4em;
+}
+.book .book-header .font-settings .font-reduce {
+  line-height: 30px;
+  font-size: 1em;
+}
+.book.color-theme-1 .book-body {
+  color: #704214;
+  background: #f3eacb;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section {
+  background: #f3eacb;
+}
+.book.color-theme-2 .book-body {
+  color: #bdcadb;
+  background: #1c1f2b;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section {
+  background: #1c1f2b;
+}
+.book.font-size-0 .book-body .page-inner section {
+  font-size: 1.2rem;
+}
+.book.font-size-1 .book-body .page-inner section {
+  font-size: 1.4rem;
+}
+.book.font-size-2 .book-body .page-inner section {
+  font-size: 1.6rem;
+}
+.book.font-size-3 .book-body .page-inner section {
+  font-size: 2.2rem;
+}
+.book.font-size-4 .book-body .page-inner section {
+  font-size: 4rem;
+}
+.book.font-family-0 {
+  font-family: Georgia, serif;
+}
+.book.font-family-1 {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal {
+  color: #704214;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal a {
+  color: inherit;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal h1,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal h2,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal h3,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal h4,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal h5,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal h6 {
+  color: inherit;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal h1,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal h2 {
+  border-color: inherit;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal h6 {
+  color: inherit;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal hr {
+  background-color: inherit;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal blockquote {
+  border-color: inherit;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code {
+  background: #fdf6e3;
+  color: #657b83;
+  border-color: #f8df9c;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal .highlight {
+  background-color: inherit;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal table th,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal table td {
+  border-color: #f5d06c;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal table tr {
+  color: inherit;
+  background-color: #fdf6e3;
+  border-color: #444444;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal table tr:nth-child(2n) {
+  background-color: #fbeecb;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal {
+  color: #bdcadb;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal a {
+  color: #3eb1d0;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h1,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h2,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h3,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h4,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h5,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h6 {
+  color: #fffffa;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h1,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h2 {
+  border-color: #373b4e;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal h6 {
+  color: #373b4e;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal hr {
+  background-color: #373b4e;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal blockquote {
+  border-color: #373b4e;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code {
+  color: #9dbed8;
+  background: #2d3143;
+  border-color: #2d3143;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal .highlight {
+  background-color: #282a39;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal table th,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal table td {
+  border-color: #3b3f54;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal table tr {
+  color: #b6c2d2;
+  background-color: #2d3143;
+  border-color: #3b3f54;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal table tr:nth-child(2n) {
+  background-color: #35394b;
+}
+.book.color-theme-1 .book-header {
+  color: #afa790;
+  background: transparent;
+}
+.book.color-theme-1 .book-header .btn {
+  color: #afa790;
+}
+.book.color-theme-1 .book-header .btn:hover {
+  color: #73553c;
+  background: none;
+}
+.book.color-theme-1 .book-header h1 {
+  color: #704214;
+}
+.book.color-theme-2 .book-header {
+  color: #7e888b;
+  background: transparent;
+}
+.book.color-theme-2 .book-header .btn {
+  color: #3b3f54;
+}
+.book.color-theme-2 .book-header .btn:hover {
+  color: #fffff5;
+  background: none;
+}
+.book.color-theme-2 .book-header h1 {
+  color: #bdcadb;
+}
+.book.color-theme-1 .book-body .navigation {
+  color: #afa790;
+}
+.book.color-theme-1 .book-body .navigation:hover {
+  color: #73553c;
+}
+.book.color-theme-2 .book-body .navigation {
+  color: #383f52;
+}
+.book.color-theme-2 .book-body .navigation:hover {
+  color: #fffff5;
+}
+/*
+ * Theme 1
+ */
+.book.color-theme-1 .book-summary {
+  color: #afa790;
+  background: #111111;
+  border-right: 1px solid rgba(0, 0, 0, 0.07);
+}
+.book.color-theme-1 .book-summary .book-search {
+  background: transparent;
+}
+.book.color-theme-1 .book-summary .book-search input,
+.book.color-theme-1 .book-summary .book-search input:focus {
+  border: 1px solid transparent;
+}
+.book.color-theme-1 .book-summary ul.summary li.divider {
+  background: #7e888b;
+  box-shadow: none;
+}
+.book.color-theme-1 .book-summary ul.summary li i.fa-check {
+  color: #33cc33;
+}
+.book.color-theme-1 .book-summary ul.summary li.done > a {
+  color: #877f6a;
+}
+.book.color-theme-1 .book-summary ul.summary li a,
+.book.color-theme-1 .book-summary ul.summary li span {
+  color: #877f6a;
+  background: transparent;
+  font-weight: normal;
+}
+.book.color-theme-1 .book-summary ul.summary li.active > a,
+.book.color-theme-1 .book-summary ul.summary li a:hover {
+  color: #704214;
+  background: transparent;
+  font-weight: normal;
+}
+/*
+ * Theme 2
+ */
+.book.color-theme-2 .book-summary {
+  color: #bcc1d2;
+  background: #2d3143;
+  border-right: none;
+}
+.book.color-theme-2 .book-summary .book-search {
+  background: transparent;
+}
+.book.color-theme-2 .book-summary .book-search input,
+.book.color-theme-2 .book-summary .book-search input:focus {
+  border: 1px solid transparent;
+}
+.book.color-theme-2 .book-summary ul.summary li.divider {
+  background: #272a3a;
+  box-shadow: none;
+}
+.book.color-theme-2 .book-summary ul.summary li i.fa-check {
+  color: #33cc33;
+}
+.book.color-theme-2 .book-summary ul.summary li.done > a {
+  color: #62687f;
+}
+.book.color-theme-2 .book-summary ul.summary li a,
+.book.color-theme-2 .book-summary ul.summary li span {
+  color: #c1c6d7;
+  background: transparent;
+  font-weight: 600;
+}
+.book.color-theme-2 .book-summary ul.summary li.active > a,
+.book.color-theme-2 .book-summary ul.summary li a:hover {
+  color: #f4f4f5;
+  background: #252737;
+  font-weight: 600;
+}
+.book .book-body .page-wrapper .page-inner section.normal pre,
+.book .book-body .page-wrapper .page-inner section.normal code {
+  /* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+  /* Tomorrow Comment */
+  /* Tomorrow Red */
+  /* Tomorrow Orange */
+  /* Tomorrow Yellow */
+  /* Tomorrow Green */
+  /* Tomorrow Aqua */
+  /* Tomorrow Blue */
+  /* Tomorrow Purple */
+}
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-comment,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-comment,
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-title,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-title {
+  color: #8e908c;
+}
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-variable,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-variable,
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-attribute,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-attribute,
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-tag,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-tag,
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-regexp,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-regexp,
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-deletion,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-deletion,
+.book .book-body .page-wrapper .page-inner section.normal pre .ruby .hljs-constant,
+.book .book-body .page-wrapper .page-inner section.normal code .ruby .hljs-constant,
+.book .book-body .page-wrapper .page-inner section.normal pre .xml .hljs-tag .hljs-title,
+.book .book-body .page-wrapper .page-inner section.normal code .xml .hljs-tag .hljs-title,
+.book .book-body .page-wrapper .page-inner section.normal pre .xml .hljs-pi,
+.book .book-body .page-wrapper .page-inner section.normal code .xml .hljs-pi,
+.book .book-body .page-wrapper .page-inner section.normal pre .xml .hljs-doctype,
+.book .book-body .page-wrapper .page-inner section.normal code .xml .hljs-doctype,
+.book .book-body .page-wrapper .page-inner section.normal pre .html .hljs-doctype,
+.book .book-body .page-wrapper .page-inner section.normal code .html .hljs-doctype,
+.book .book-body .page-wrapper .page-inner section.normal pre .css .hljs-id,
+.book .book-body .page-wrapper .page-inner section.normal code .css .hljs-id,
+.book .book-body .page-wrapper .page-inner section.normal pre .css .hljs-class,
+.book .book-body .page-wrapper .page-inner section.normal code .css .hljs-class,
+.book .book-body .page-wrapper .page-inner section.normal pre .css .hljs-pseudo,
+.book .book-body .page-wrapper .page-inner section.normal code .css .hljs-pseudo {
+  color: #c82829;
+}
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-number,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-number,
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-preprocessor,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-preprocessor,
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-pragma,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-pragma,
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-built_in,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-built_in,
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-literal,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-literal,
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-params,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-params,
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-constant,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-constant {
+  color: #f5871f;
+}
+.book .book-body .page-wrapper .page-inner section.normal pre .ruby .hljs-class .hljs-title,
+.book .book-body .page-wrapper .page-inner section.normal code .ruby .hljs-class .hljs-title,
+.book .book-body .page-wrapper .page-inner section.normal pre .css .hljs-rules .hljs-attribute,
+.book .book-body .page-wrapper .page-inner section.normal code .css .hljs-rules .hljs-attribute {
+  color: #eab700;
+}
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-string,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-string,
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-value,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-value,
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-inheritance,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-inheritance,
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-header,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-header,
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-addition,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-addition,
+.book .book-body .page-wrapper .page-inner section.normal pre .ruby .hljs-symbol,
+.book .book-body .page-wrapper .page-inner section.normal code .ruby .hljs-symbol,
+.book .book-body .page-wrapper .page-inner section.normal pre .xml .hljs-cdata,
+.book .book-body .page-wrapper .page-inner section.normal code .xml .hljs-cdata {
+  color: #718c00;
+}
+.book .book-body .page-wrapper .page-inner section.normal pre .css .hljs-hexcolor,
+.book .book-body .page-wrapper .page-inner section.normal code .css .hljs-hexcolor {
+  color: #3e999f;
+}
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-function,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-function,
+.book .book-body .page-wrapper .page-inner section.normal pre .python .hljs-decorator,
+.book .book-body .page-wrapper .page-inner section.normal code .python .hljs-decorator,
+.book .book-body .page-wrapper .page-inner section.normal pre .python .hljs-title,
+.book .book-body .page-wrapper .page-inner section.normal code .python .hljs-title,
+.book .book-body .page-wrapper .page-inner section.normal pre .ruby .hljs-function .hljs-title,
+.book .book-body .page-wrapper .page-inner section.normal code .ruby .hljs-function .hljs-title,
+.book .book-body .page-wrapper .page-inner section.normal pre .ruby .hljs-title .hljs-keyword,
+.book .book-body .page-wrapper .page-inner section.normal code .ruby .hljs-title .hljs-keyword,
+.book .book-body .page-wrapper .page-inner section.normal pre .perl .hljs-sub,
+.book .book-body .page-wrapper .page-inner section.normal code .perl .hljs-sub,
+.book .book-body .page-wrapper .page-inner section.normal pre .javascript .hljs-title,
+.book .book-body .page-wrapper .page-inner section.normal code .javascript .hljs-title,
+.book .book-body .page-wrapper .page-inner section.normal pre .coffeescript .hljs-title,
+.book .book-body .page-wrapper .page-inner section.normal code .coffeescript .hljs-title {
+  color: #4271ae;
+}
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs-keyword,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs-keyword,
+.book .book-body .page-wrapper .page-inner section.normal pre .javascript .hljs-function,
+.book .book-body .page-wrapper .page-inner section.normal code .javascript .hljs-function {
+  color: #8959a8;
+}
+.book .book-body .page-wrapper .page-inner section.normal pre .hljs,
+.book .book-body .page-wrapper .page-inner section.normal code .hljs {
+  display: block;
+  background: white;
+  color: #4d4d4c;
+  padding: 0.5em;
+}
+.book .book-body .page-wrapper .page-inner section.normal pre .coffeescript .javascript,
+.book .book-body .page-wrapper .page-inner section.normal code .coffeescript .javascript,
+.book .book-body .page-wrapper .page-inner section.normal pre .javascript .xml,
+.book .book-body .page-wrapper .page-inner section.normal code .javascript .xml,
+.book .book-body .page-wrapper .page-inner section.normal pre .tex .hljs-formula,
+.book .book-body .page-wrapper .page-inner section.normal code .tex .hljs-formula,
+.book .book-body .page-wrapper .page-inner section.normal pre .xml .javascript,
+.book .book-body .page-wrapper .page-inner section.normal code .xml .javascript,
+.book .book-body .page-wrapper .page-inner section.normal pre .xml .vbscript,
+.book .book-body .page-wrapper .page-inner section.normal code .xml .vbscript,
+.book .book-body .page-wrapper .page-inner section.normal pre .xml .css,
+.book .book-body .page-wrapper .page-inner section.normal code .xml .css,
+.book .book-body .page-wrapper .page-inner section.normal pre .xml .hljs-cdata,
+.book .book-body .page-wrapper .page-inner section.normal code .xml .hljs-cdata {
+  opacity: 0.5;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code {
+  /*
+
+Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmail.com>
+
+*/
+  /* Solarized Green */
+  /* Solarized Cyan */
+  /* Solarized Blue */
+  /* Solarized Yellow */
+  /* Solarized Orange */
+  /* Solarized Red */
+  /* Solarized Violet */
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs {
+  display: block;
+  padding: 0.5em;
+  background: #fdf6e3;
+  color: #657b83;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-comment,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-comment,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-template_comment,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-template_comment,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .diff .hljs-header,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .diff .hljs-header,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-doctype,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-doctype,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-pi,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-pi,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .lisp .hljs-string,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .lisp .hljs-string,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-javadoc,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-javadoc {
+  color: #93a1a1;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-keyword,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-keyword,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-winutils,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-winutils,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .method,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .method,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-addition,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-addition,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .css .hljs-tag,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .css .hljs-tag,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-request,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-request,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-status,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-status,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .nginx .hljs-title,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .nginx .hljs-title {
+  color: #859900;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-number,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-number,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-command,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-command,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-string,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-string,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-tag .hljs-value,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-tag .hljs-value,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-rules .hljs-value,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-rules .hljs-value,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-phpdoc,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-phpdoc,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .tex .hljs-formula,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .tex .hljs-formula,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-regexp,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-regexp,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-hexcolor,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-hexcolor,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-link_url,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-link_url {
+  color: #2aa198;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-title,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-title,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-localvars,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-localvars,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-chunk,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-chunk,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-decorator,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-decorator,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-built_in,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-built_in,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-identifier,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-identifier,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .vhdl .hljs-literal,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .vhdl .hljs-literal,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-id,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-id,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .css .hljs-function,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .css .hljs-function {
+  color: #268bd2;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-attribute,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-attribute,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-variable,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-variable,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .lisp .hljs-body,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .lisp .hljs-body,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .smalltalk .hljs-number,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .smalltalk .hljs-number,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-constant,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-constant,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-class .hljs-title,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-class .hljs-title,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-parent,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-parent,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .haskell .hljs-type,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .haskell .hljs-type,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-link_reference,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-link_reference {
+  color: #b58900;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-preprocessor,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-preprocessor,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-preprocessor .hljs-keyword,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-preprocessor .hljs-keyword,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-pragma,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-pragma,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-shebang,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-shebang,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-symbol,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-symbol,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-symbol .hljs-string,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-symbol .hljs-string,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .diff .hljs-change,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .diff .hljs-change,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-special,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-special,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-attr_selector,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-attr_selector,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-subst,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-subst,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-cdata,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-cdata,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .clojure .hljs-title,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .clojure .hljs-title,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .css .hljs-pseudo,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .css .hljs-pseudo,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-header,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-header {
+  color: #cb4b16;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-deletion,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-deletion,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-important,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-important {
+  color: #dc322f;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .hljs-link_label,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .hljs-link_label {
+  color: #6c71c4;
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal pre .tex .hljs-formula,
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal code .tex .hljs-formula {
+  background: #eee8d5;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code {
+  /* Tomorrow Night Bright Theme */
+  /* Original theme - https://github.com/chriskempson/tomorrow-theme */
+  /* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+  /* Tomorrow Comment */
+  /* Tomorrow Red */
+  /* Tomorrow Orange */
+  /* Tomorrow Yellow */
+  /* Tomorrow Green */
+  /* Tomorrow Aqua */
+  /* Tomorrow Blue */
+  /* Tomorrow Purple */
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-comment,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-comment,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-title,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-title {
+  color: #969896;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-variable,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-variable,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-attribute,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-attribute,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-tag,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-tag,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-regexp,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-regexp,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-deletion,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-deletion,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .ruby .hljs-constant,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .ruby .hljs-constant,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .xml .hljs-tag .hljs-title,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .xml .hljs-tag .hljs-title,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .xml .hljs-pi,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .xml .hljs-pi,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .xml .hljs-doctype,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .xml .hljs-doctype,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .html .hljs-doctype,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .html .hljs-doctype,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .css .hljs-id,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .css .hljs-id,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .css .hljs-class,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .css .hljs-class,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .css .hljs-pseudo,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .css .hljs-pseudo {
+  color: #d54e53;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-number,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-number,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-preprocessor,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-preprocessor,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-pragma,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-pragma,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-built_in,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-built_in,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-literal,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-literal,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-params,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-params,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-constant,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-constant {
+  color: #e78c45;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .ruby .hljs-class .hljs-title,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .ruby .hljs-class .hljs-title,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .css .hljs-rules .hljs-attribute,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .css .hljs-rules .hljs-attribute {
+  color: #e7c547;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-string,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-string,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-value,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-value,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-inheritance,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-inheritance,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-header,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-header,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-addition,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-addition,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .ruby .hljs-symbol,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .ruby .hljs-symbol,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .xml .hljs-cdata,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .xml .hljs-cdata {
+  color: #b9ca4a;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .css .hljs-hexcolor,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .css .hljs-hexcolor {
+  color: #70c0b1;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-function,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-function,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .python .hljs-decorator,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .python .hljs-decorator,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .python .hljs-title,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .python .hljs-title,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .ruby .hljs-function .hljs-title,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .ruby .hljs-function .hljs-title,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .ruby .hljs-title .hljs-keyword,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .ruby .hljs-title .hljs-keyword,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .perl .hljs-sub,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .perl .hljs-sub,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .javascript .hljs-title,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .javascript .hljs-title,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .coffeescript .hljs-title,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .coffeescript .hljs-title {
+  color: #7aa6da;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs-keyword,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs-keyword,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .javascript .hljs-function,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .javascript .hljs-function {
+  color: #c397d8;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .hljs,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .hljs {
+  display: block;
+  background: black;
+  color: #eaeaea;
+  padding: 0.5em;
+}
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .coffeescript .javascript,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .coffeescript .javascript,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .javascript .xml,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .javascript .xml,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .tex .hljs-formula,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .tex .hljs-formula,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .xml .javascript,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .xml .javascript,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .xml .vbscript,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .xml .vbscript,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .xml .css,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .xml .css,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal pre .xml .hljs-cdata,
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code .xml .hljs-cdata {
+  opacity: 0.5;
+}

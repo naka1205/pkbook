@@ -16,6 +16,7 @@ if ( !IS_CLI ) {
     die('Please use cli');
 }
 
+
 use Naka507\Koa\Application;
 use Naka507\Koa\Context;
 use Naka507\Koa\Error;
@@ -42,7 +43,10 @@ $app->υse(new Render());
 use Middlewares\Show; 
 $app->υse(new Show()); 
 
+require __DIR__ . DS . "helper.php";
+
 $routes = require __DIR__ . DS . "routes.php";
 $app->υse($routes->routes());
+
 
 $app->listen(3000);

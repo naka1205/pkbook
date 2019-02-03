@@ -62,6 +62,8 @@ class Publish
         $categories = Category::select([]);
         $singles = Single::select([]);
 
+        $single = new Single('about');
+
         for ( $page = 1 ; $page <= $pages; $page++) { 
             $where = [];
             $link = '/page/:page.html';
@@ -73,12 +75,16 @@ class Publish
             $state['title'] = '首页';
             $state['posts'] = $posts['data'];
             $state['pagination'] = self::pagination($posts['pagination']);
+            $state['single'] = $single;
             $state['singles'] = $singles;
             $state['categories'] = $categories;
             $view->assign('state',$state);
 
             if ( $page == 1 ) {
                 yield $view->publish($configs['site']['theme'] . '/index', PUBLIC_PATH . DS . "index.html");
+            }
+            if ( $num == 1 ) {
+                return;
             }
             $file =  str_replace (':_id',$page,$source);   
             yield $view->publish($configs['site']['theme'] . '/index',$file);
@@ -119,7 +125,6 @@ class Publish
     public static function tags()
     {
         self::clear(PUBLIC_PATH . DS . 'tags');
-
         $configs = Config::all();
         $num = intval($configs['site']['pagenum']);
 
@@ -142,8 +147,12 @@ class Publish
         $state['categories'] = $categories;
         $state['tags'] = $tags;
         $view->assign('state',$state);
-        yield $view->publish($configs['site']['theme'] . '/tags', PUBLIC_PATH . DS . "tags.html");
+        $bool = ( yield $view->publish($configs['site']['theme'] . '/tags', PUBLIC_PATH . DS . "tags.html") );
+        
+        if ( !$bool ) {
 
+            return;
+        }
         foreach ($tags as $key => $value) {
             $where = ['_id'=>$value['posts']];
             $posts = Post::select($where);
