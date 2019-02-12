@@ -83,7 +83,6 @@ class Show
 
     public static function single(Context $ctx, $next, $vars){
         $single = new Single($vars[0]);
-        var_dump($single);
         $ctx->status = 200;
         $ctx->state['single'] = $single;
         yield $ctx->show("single");

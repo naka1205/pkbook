@@ -69,7 +69,14 @@
 <script src="/assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
 <script src="/assets/js/amazeui.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
 <script>
+    
+document.addEventListener('DOMContentLoaded', (event) => {
+  document.querySelectorAll('pre code').forEach((block) => {
+    hljs.highlightBlock(block);
+  });
+});
 
 var $modalLoading = $('#modal-loading');
 var $searchPopup = $('#search-popup');

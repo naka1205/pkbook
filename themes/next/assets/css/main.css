@@ -1401,7 +1401,7 @@ pre .javascript .function {
   display: none;
 }
 .posts-collapse .post-title {
-  margin-left: 60px;
+  margin-left: 160px;
   font-size: 16px;
   font-weight: normal;
   line-height: inherit;
@@ -2860,7 +2860,7 @@ hr {
 }
 .page-post-detail .post-title,
 .page-post-detail .post-meta {
-  text-align: center;
+  text-align: left;
 }
 .page-post-detail .post-title:before {
   display: none;

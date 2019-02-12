@@ -155,8 +155,10 @@ class Template
                 mkdir($dir, 0755, true);
             }
 
-            file_put_contents ( $file ,  $content );
+            return file_put_contents ( $file ,  $content ) ? true : false;
         }
+
+        return false;
     }
 
     /**
@@ -484,7 +486,6 @@ class Template
                         if (0 === strpos($v, '$')) {
                             $v = $this->get(substr($v, 1));
                         }
-
                         $parseStr = str_replace('[' . $k . ']', $v, $parseStr);
                     }
 

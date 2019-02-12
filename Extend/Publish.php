@@ -148,9 +148,7 @@ class Publish
         $state['tags'] = $tags;
         $view->assign('state',$state);
         $bool = ( yield $view->publish($configs['site']['theme'] . '/tags', PUBLIC_PATH . DS . "tags.html") );
-        
         if ( !$bool ) {
-
             return;
         }
         foreach ($tags as $key => $value) {
@@ -178,10 +176,10 @@ class Publish
                 $view->assign('state',$state);
 
                 if ( $page == 1 ) {
-                    yield $view->publish($configs['site']['theme'] . '/category', PUBLIC_PATH. DS . 'tags' . DS . $value['_id'] . DS . "index.html");
+                    yield $view->publish($configs['site']['theme'] . '/tag', PUBLIC_PATH. DS . 'tags' . DS . $value['_id'] . DS . "index.html");
                 }
                 $file =  str_replace (':_id',$page,$source);   
-                yield $view->publish($configs['site']['theme'] . '/category',$file);
+                yield $view->publish($configs['site']['theme'] . '/tag',$file);
             }
 
         }
@@ -207,6 +205,14 @@ class Publish
             'cache_path'	=>	CACHE_PATH . DS . 'themes'
         ];
         $view = new Template($opt);
+        $state = [];
+        $state['link'] = $configs['link'];
+        $state['site'] = $configs['site'];
+        $state['title'] = '分类';
+        $state['singles'] = $singles;
+        $state['categories'] = $categories;
+        $view->assign('state',$state);
+        yield $view->publish($configs['site']['theme'] . '/categories', PUBLIC_PATH . DS . "categories.html");
         
         foreach ($categories as $key => $value) {
             $where = ['_id'=>$value['posts']];

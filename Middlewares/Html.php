@@ -38,9 +38,11 @@ class Html implements Middleware
     {
         yield $next; 
         $url_info = parse_url('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+
+        
         if ( !$url_info ) {
-            $ctx->status = 404;
-            $ctx->body = file_get_contents(PUBLIC_PATH.'/404.html');
+            $ctx->status = 400;
+            $ctx->body = '<h1>Bad Request</h1>';
             return;
         }
         
@@ -49,8 +51,8 @@ class Html implements Middleware
         $file_extension = isset($path_info['extension']) ? $path_info['extension'] : '';
 
         if ( $file_extension === '' ) {
-            $ctx->status = 404;
-            $ctx->body = file_get_contents(PUBLIC_PATH.'/404.html');
+            $ctx->status = 400;
+            $ctx->body = '<h1>Bad Request</h1>';
             return;
         }
 
@@ -63,7 +65,7 @@ class Html implements Middleware
 
                 if ($modified_time === $_SERVER['HTTP_IF_MODIFIED_SINCE']) {
                     $ctx->status = 304;
-                    $ctx->body = '<h1>400 Bad Request</h1>';
+                    $ctx->body = '<h1>Not Modified</h1>';
                     return;
                 }
             }
@@ -84,8 +86,12 @@ class Html implements Middleware
             }  
             
         }
+
+        $html = PUBLIC_PATH  . DS . '404.html';
+        $body_404 = is_file($html) ? file_get_contents($html) : '<h1>Not Found</h1>';
+
         $ctx->status = 404;
-        $ctx->body = file_get_contents(PUBLIC_PATH.'/404.html');
+        $ctx->body = $body_404;
         return;
     }
 

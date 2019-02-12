@@ -64,8 +64,8 @@ class Ajax
                 break;
             case 'posts':
                 yield Publish::posts();
-                yield Publish::tags();
                 yield Publish::categories();
+                yield Publish::tags();
                 yield Publish::index();
                 yield Publish::search();
                 break;

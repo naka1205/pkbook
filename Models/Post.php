@@ -1,13 +1,18 @@
 <?php
 namespace Models;
 use Extend\Source;
-
+use Extend\Parsedown;
 class Post extends Common
 {
 
     public function __construct($_id='')
     {
         $this->data = !empty($_id) ? Source::posts($_id) : [];
+        if ( !empty( $this->data['content'] ) ) {
+            $parsedown = new Parsedown();
+            $this->data['html'] = $parsedown->text($this->data['content']);
+            $this->data['toc'] = parent::toc($parsedown->contentsList());
+        }
     }
 
     public function save($data = []){
@@ -41,5 +46,7 @@ class Post extends Common
 
         return ['data' => array_slice ( $data , $end - $num , $num ) , 'count' => $count ,'pagination' => $pagination];
     }
+
+
 
 }

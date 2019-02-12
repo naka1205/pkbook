@@ -61,7 +61,7 @@ class Source
             }
             $md .= "categories: " . $data['categories'] . "\n";
             $md .= "createtime: " . $data['createtime'] . "\n";
-            $md .= "excerpt: " . $data['excerpt'] . "\n";
+            $md .= "description: " . $data['description'] . "\n";
             $source = SOURCE_PATH . DS . "_posts" . DS . $_id . '.md';
         }
 
@@ -109,6 +109,7 @@ class Source
 
         $source = SOURCE_PATH . DS . "_posts" . DS;
         $data = self::glob($source);
+
         $_tags = [];
         $_posts = [];
         $_categories = [];
@@ -128,7 +129,6 @@ class Source
             if ( isset($post['categories']) ) {
                 $post['categories_value'] = $post['categories'];
                 $post['categories'] = self::parseCategory($post,$_categories);
-                
             }
 
             if ( isset($post['tags']) ) {
@@ -253,8 +253,8 @@ class Source
         }
 
         Cache::set($_id,$post);
-        if ( !isset($post['excerpt']) ) {
-            $post['excerpt'] = '';
+        if ( !isset($post['description']) ) {
+            $post['description'] = '';
         }
 
         Cache::set($_id,$post);
@@ -270,7 +270,10 @@ class Source
     private static function glob($source){
         
         $data = glob ( $source . "*.md" );
-
+        if ( count($data) === 1 ) {
+            $data[0] = self::parsePost($data[0]);
+            return $data;
+        }
         usort($data, function(&$prev, &$next) {
             if ( !is_array($prev) ) {
                 $prev = self::parsePost($prev);
@@ -278,11 +281,19 @@ class Source
             if ( !is_array($next) ) {
                 $next = self::parsePost($next);
             }
+            $prevtime = 0;
+            $nexttime = 0;
 
-            $prevtime = isset($prev['createtime']) ? $prev['createtime'] : strtotime($prev['date']);
-            $prev['createtime'] = $prevtime;
-            $nexttime = isset($next['createtime']) ? $next['createtime'] : strtotime($next['date']);
-            $next['createtime'] = $nexttime;
+            if ( $prev ) {
+                $prevtime = isset($prev['createtime']) ? $prev['createtime'] : strtotime($prev['date']);
+                $prev['createtime'] = $prevtime;
+            }
+
+            if ( $next ) {
+                $nexttime = isset($next['createtime']) ? $next['createtime'] : strtotime($next['date']);
+                $next['createtime'] = $nexttime;
+            }
+            
             if ( $prevtime < $nexttime ) {
                 return -1;
             }
@@ -414,9 +425,9 @@ class Source
     }
     
     private static function parse($contents){
-        $array = explode('---',$contents);
+        $array = explode("---",$contents,3);
         $info = explode("\n",$array[1]);
-        
+
         $data = [];
         foreach ($info as $val) {
             $val = trim($val);

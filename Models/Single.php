@@ -1,11 +1,17 @@
 <?php
 namespace Models;
 use Extend\Source;
+use Extend\Parsedown;
 class Single extends Common
 {
     public function __construct($_id)
     {
         $this->data = !empty($_id) ? Source::singles($_id) : [];
+        if ( !empty( $this->data['content']) ) {
+            $parsedown = new Parsedown();
+            $this->data['html'] = $parsedown->text($content);
+            $this->data['toc'] = parent::toc($parsedown->contentsList());
+        }
     }
 
     public function save($data = []){

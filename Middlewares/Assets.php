@@ -33,7 +33,7 @@ class Assets implements Middleware
     {
         $url_info = parse_url('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
         if ( !$url_info ) {
-            $ctx->status = 404;
+            $ctx->status = 400;
             $ctx->body = '<h1>400 Bad Request</h1>';
             return;
         }

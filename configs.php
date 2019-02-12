@@ -15,13 +15,13 @@ return [
         'category'      =>  "/category/:_id"
     ],
     'site' => [
-        'title'         => "XX的博客",
+        'title'         => "PKBOOK",
         'subtitle'      => "个人博客",
         'description'   => "开源WEB开发框架",
         'keywords'      => "开源WEB开发框架",
         'author'        => "naka1205",
         'logo'          => "",
-        'theme'         => "green",
+        'theme'         => "next",
         'pagenum'       => 10
     ],
     'qiniu' => [

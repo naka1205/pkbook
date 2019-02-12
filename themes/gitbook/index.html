@@ -1,33 +1,33 @@
 {layout name="gitbook/layout" /}
-<div class="book-body">
-    <div class="body-inner">
-        <div class="book-header" role="navigation">
-            <h1><i class="fa fa-circle-o-notch fa-spin"></i><a href="/">{$state.single.title}</a></h1>
-        </div>
-        <div class="page-wrapper" tabindex="-1" role="main">
-            <div class="page-inner">
-                <div id="book-search-results">
-                    <div class="search-noresults">
-                        <section class="normal markdown-section">
-                            {$state.single.html|raw}
-                        </section>
-                    </div>
-                    <div class="search-results">
-                        <div class="has-results">
-                            <h1 class="search-results-title">
-                                关于"<span class='search-query'></span>"的搜索结果共<span class='search-results-count'></span>条
-                            </h1>
-                            <ul class="search-results-list"></ul>
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header" role="navigation">
+                <h1><i class="fa fa-circle-o-notch fa-spin"></i><a href="/">{$state.single.title}</a></h1>
+            </div>
+            <div class="page-wrapper" tabindex="-1" role="main">
+                <div class="page-inner">
+                    <div id="book-search-results">
+                        <div class="search-noresults">
+                            <section class="normal markdown-section">
+                                {$state.single.html|raw}
+                            </section>
                         </div>
-                        <div class="no-results">
-                            <h1 class="search-results-title">没有"<span class='search-query'></span>"相关内容</h1>
+                        <div class="search-results">
+                            <div class="has-results">
+                                <h1 class="search-results-title">
+                                    关于"<span class='search-query'></span>"的搜索结果共<span class='search-results-count'></span>条
+                                </h1>
+                                <ul class="search-results-list"></ul>
+                            </div>
+                            <div class="no-results">
+                                <h1 class="search-results-title">没有"<span class='search-query'></span>"相关内容</h1>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 <script>
 var gitbook = gitbook || [];
 gitbook.push(function() {
@@ -46,15 +46,7 @@ gitbook.push(function() {
             "pluginsConfig": {
                 "search-pro": {},
                 "highlight": {},
-                "sharing": {
-                    "facebook": true,
-                    "twitter": true,
-                    "google": false,
-                    "weibo": false,
-                    "instapaper": false,
-                    "vk": false,
-                    "all": ["facebook", "google", "twitter", "weibo", "instapaper"]
-                },
+                "sharing": {},
                 "fontsettings": {
                     "theme": "white",
                     "family": "sans",
@@ -72,12 +64,7 @@ gitbook.push(function() {
                     "showLevel": false
                 }
             },
-            "structure": {
-                "langs": "LANGS.md",
-                "readme": "README.md",
-                "glossary": "GLOSSARY.md",
-                "summary": "SUMMARY.md"
-            },
+            "structure": {},
             "pdf": {
                 "pageNumbers": true,
                 "fontSize": 12,
@@ -102,7 +89,7 @@ gitbook.push(function() {
             }
         },
         "file": {
-            "path": "README.md",
+            "path": "",
             "mtime": "2019-02-03T01:36:16.947Z",
             "type": "markdown"
         },

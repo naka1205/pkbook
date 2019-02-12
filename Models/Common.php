@@ -3,7 +3,6 @@ namespace Models;
 use ArrayAccess;
 use Extend\Cache;
 use Extend\Storage;
-use Extend\Parsedown;
 class Common implements ArrayAccess
 {
     public $data;
@@ -16,44 +15,15 @@ class Common implements ArrayAccess
     {
         $this->data[$name] = $value;
     }
-
-    public function getHtml()
-    {
-        if ( empty($this->data['content']) ) {
-            return '';
-        }
-        $parsedown = new Parsedown();
-        return $parsedown->text($this->data['content']);
-    }
-
-    public function setHtml($content)
-    {
-        if ( empty($content) ) {
-            $this->data['html'] = '';
-            return;
-        }
-        $parsedown = new Parsedown();
-        $this->data['html'] = $parsedown->text($content);
-    }
-
+    
     public function offsetGet($offset)
     {
-        if ( $offset == 'html' && !empty( $this->data['content']) ) {
-            $parsedown = new Parsedown();
-            return $parsedown->text($this->data['content']);
-        }
         return $this->data[$offset];
     }
 
     public function offsetSet($offset, $value)
     {
-        if ( $offset == 'html' && !empty( $value ) ) {
-            $parsedown = new Parsedown();
-            $this->data[$offset] = $parsedown->text($value);
-        }else{
-            $this->data[$offset] = $value;
-        }
-        
+        $this->data[$offset] = $value;
     }
 
     public function offsetExists($offset)
@@ -141,6 +111,43 @@ class Common implements ArrayAccess
             'content' => $content
         ];
         return $paginationData;
+    }
+
+    public static function toc($data){
+        $tree = [];
+        $level = 0;
+        $id = '';
+        $child_id = '';
+        $num1 = 1;
+        $num2 = 1;
+        $num3 = 1;
+        foreach ($data as $key => $value) {
+            
+            if ( $level != 0 && $level < $value['level'] ) {
+                if ( ( intval($value['level']) - 1 ) == $level ) {
+                    $child_id = $value['id'];
+                    $value['num'] = $num2;
+                    $tree[$id]['child'][$child_id] = $value;
+                    $num2++;
+                    $num3 = 1;
+                }elseif ( ( intval($value['level']) - 2 ) == $level ) {
+                    $value['num'] = $num3;
+                    $tree[$id]['child'][$child_id]['child'][] = $value;
+                    $num3++;
+                }
+                
+            }else{
+                $id = $value['id'];
+                $level = intval($value['level']);
+                $value['num'] = $num1;
+                $tree[$id] = $value;
+                $tree[$id]['child'] = [];
+                $num1++;
+                $num2 = 1;
+                $num3 = 1;
+            }
+        }
+        return $tree;
     }
 
     public static function count(){
