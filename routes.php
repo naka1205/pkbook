@@ -60,10 +60,12 @@ $router->mount('/ajax', function() use ($router) {
 $router->mount('/show', function() use ($router) {
     $router->suffix('.html');
     $router->get('/index', ['Controllers\Show', 'index']);
+    $router->get('/categories', ['Controllers\Show', 'categories']);
+    $router->get('/tags', ['Controllers\Show', 'tags']);
     $router->get('/posts(/\d+)?/(\w+)', ['Controllers\Show', 'posts']);
     $router->get('/posts/(\w+)', ['Controllers\Show', 'posts']);
-    $router->get('/category/(\w+)', ['Controllers\Show', 'category']);
-    $router->get('/tags/(\w+)', ['Controllers\Show', 'tags']);
+    $router->get('/category/(\w+)/index', ['Controllers\Show', 'category']);
+    $router->get('/tag/(\w+)/index', ['Controllers\Show', 'tags']);
     $router->get('/(\w+)', ['Controllers\Show', 'single']);
 });
 

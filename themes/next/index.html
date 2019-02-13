@@ -53,21 +53,12 @@
                 </article>
                 {/volist}
             </section>
-            <nav class="pagination">
-                <a class="extend prev" rel="prev" href="/page/7/">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                <a class="page-number" href="/">1</a>
-                <span class="space">…</span>
-                <a class="page-number" href="/page/7/">7</a>
-                <span class="page-number current">8</span>
-                <a class="page-number" href="/page/9/">9</a>
-                <span class="space">…</span>
-                <a class="page-number" href="/page/13/">13</a>
-                <a class="extend next" rel="next" href="/page/9/">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            </nav>
+
+            {if 1 != intval($state['pagination']['content']['pages']) }
+
+            {include file="next/pagination" /}
+
+            {/if}
         </div>
     </div>
     <div class="sidebar-toggle">

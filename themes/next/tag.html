@@ -3,29 +3,28 @@
 <div class="main-inner">
     <div class="content-wrap">
         <div id="content" class="content">
-            <div id="posts" class="posts-expand">
-                <div class="post-block page">
-                    <header class="post-header">
-                        <h1 class="post-title" itemprop="name headline">{$state.title}</h1></header>
-                    <div class="post-body">
-                        <div class="category-all-page">
-                            <div class="category-all-title">目前共计 {$state.categories|count} 个分类</div>
-                            <div class="category-all">
-                                <ul class="category-list">
-                                    {volist name="state.categories" id="vo"}
-                                    <li class="category-list-item">
-                                        <a class="category-list-link" href="{$vo.link}">{$vo.title}</a>
-                                        <span class="category-list-count">{$vo.posts|count}</span>
-                                    </li>
-                                    {/volist}  
-                                </ul>
-                            </div>
-                        </div>
+            <div class="post-block category">
+                <div id="posts" class="posts-collapse">
+                    <div class="collection-title">
+                        <h1>{$state.title}<small>标签</small></h1>
                     </div>
+                    {volist name="state.posts" id="vo" key="k"}
+                    <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+                        <header class="post-header">
+                            <h2 class="post-title">
+                                <a class="post-title-link" href="{$vo.link}" itemprop="url">
+                                    <span itemprop="name">{$vo.title}</span>
+                                </a>
+                            </h2>
+                            <div class="post-meta">
+                                <time class="post-time" itemprop="dateCreated" datetime="{$vo.date}" content="{$vo.date}">{$vo.date}</time>
+                            </div>
+                        </header>
+                    </article>
+                    {/volist}
                 </div>
             </div>
         </div>
-        <div class="comments" id="comments"></div>
     </div>
     <div class="sidebar-toggle">
         <div class="sidebar-toggle-line-wrap">
@@ -37,8 +36,8 @@
     <aside id="sidebar" class="sidebar">
         <div class="sidebar-inner">
             <section class="site-overview sidebar-panel sidebar-panel-active">
-                <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-                    <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/20264902?s=400&amp;u=6f8f2aa8b92089dfd1be02963b714429b58334d7" alt="Naka1205" />
+                <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                    <img class="site-author-image" itemprop="image" src="https://avatars0.githubusercontent.com/u/20264902?s=400&u=6f8f2aa8b92089dfd1be02963b714429b58334d7" alt="Naka1205" />
                     <p class="site-author-name" itemprop="name">Naka1205</p>
                     <p class="site-description motion-element" itemprop="description">一个80后的程序员，什么都懂点，但似乎什么都不精通。</p></div>
                 <nav class="site-state motion-element">

@@ -30,6 +30,10 @@ class Source
     }
 
     public static function key($name){
+        $name = trim ($name);
+        if ( empty($name) ) {
+            return false;
+        }
         return strtoupper( substr( md5( base64_encode($name) ), 8, 16) );
     }
 
@@ -134,10 +138,6 @@ class Source
             if ( isset($post['tags']) ) {
                 $post['tags_value'] = $post['tags'];
                 $post['tags'] = self::parseTags($post,$_tags);
-            }
-
-            if ( !isset($post['excerpt']) ) {
-                $post['excerpt'] = '';
             }
 
             Cache::set($_id,$post);
@@ -253,12 +253,9 @@ class Source
         }
 
         Cache::set($_id,$post);
-        if ( !isset($post['description']) ) {
-            $post['description'] = '';
-        }
 
-        Cache::set($_id,$post);
-
+        unset($post['toc']);
+        unset($post['html']);
         unset($post['content']);
         $_posts[$_id] = $post;
 
@@ -316,25 +313,39 @@ class Source
         }
 
         $configs = Config::all();
-        $post = self::parse($contents);
+        $data = self::parse($contents);
         $link = $configs['link']['domain'] . $configs['link']['posts'] . $configs['link']['suffix'];
-        $_date = date('Ymd',strtotime($post['date']));
+        $_date = date('Ymd',strtotime($data['date']));
 
-        $link = str_replace (':_id',$post['_id'],$link);
+        $link = str_replace (':_id',$data['_id'],$link);
         $link = str_replace (':_date',$_date,$link);
 
-        $post['id'] = 0;
-        $post['prev'] = '';
-        $post['prev_id'] = '';
-        $post['prev_title'] = '';
+        $data['id'] = 0;
+        $data['prev'] = '';
+        $data['prev_id'] = '';
+        $data['prev_title'] = '';
         
-        $post['next'] = '';
-        $post['next_id'] = '';
-        $post['next_title'] = '';
-        $post['link'] = $link;
-        $post['source'] = $source;
+        $data['next'] = '';
+        $data['next_id'] = '';
+        $data['next_title'] = '';
+        $data['link'] = $link;
+        $data['source'] = $source;
         
-        return $post;
+        if ( !isset($data['description']) ) {
+            $data['description'] = '';
+        }
+
+        if ( !empty($data['content']) ) {
+            $parsedown = new Parsedown();
+            $data['html'] = $parsedown->text($data['content']);
+            $data['toc'] = $parsedown->toc();
+
+            if ( empty($data['description']) ) {
+                $data['description'] = $parsedown->line($data['content']);
+            }
+        }
+
+        return $data;
     }
 
     private static function parseCategory($post,&$_categories){
@@ -421,15 +432,22 @@ class Source
         $data['name'] = $name;
         $data['link'] = str_replace (':_id',$name,$link);
         $data['source'] = $source;
+
+        if ( !empty($data['content']) ) {
+            $parsedown = new Parsedown();
+            $data['html'] = $parsedown->text($data['content']);
+            $data['toc'] = $parsedown->toc();
+        }
+
         return $data;
     }
     
     private static function parse($contents){
-        $array = explode("---",$contents,3);
-        $info = explode("\n",$array[1]);
+        list($tm,$info,$content) = explode("---",$contents,3);
+        $array = explode("\n",$info);
 
         $data = [];
-        foreach ($info as $val) {
+        foreach ($array as $val) {
             $val = trim($val);
             if (!$val || empty($val) ) {
                 continue;
@@ -442,8 +460,10 @@ class Source
             $data[$temp[0]] = isset( $temp[1] ) ? $temp[1] : '';
         }
         $data['_id'] = self::key($data['title']);
-        $data['content'] = $array[2];
+        $data['content'] = $content;
         
+
+
         return $data;
     }
 }

@@ -1,0 +1,34 @@
+<ol class="nav">
+    {volist name="state.post.toc" id="level1" }
+    <li class="nav-item nav-level-{$level1.level}">
+        <a class="nav-link" href="#{$level1.id}">
+            <span class="nav-number">{$level1.num}.</span>
+            <span class="nav-text">{$level1.text}</span>
+        </a>
+        {notempty name="level1.child"}
+        <ol class="nav-child">
+            {volist name="level1.child" id="level2" }
+            <li class="nav-item nav-level-{$level2.level}">
+                <a class="nav-link" href="#{$level2.id}">
+                    <span class="nav-number">{$level1.num}.{$level2.num}.</span> 
+                    <span class="nav-text">{$level2.text}</span>
+                </a>
+                {notempty name="level2.child"}
+                <ol class="nav-child">
+                    {volist name="level2.child" id="level3" }
+                    <li class="nav-item nav-level-{$level3.level}">
+                        <a class="nav-link" href="#{$level3.id}">
+                            <span class="nav-number">{$level1.num}.{$level2.num}.{$level3.num}</span> 
+                            <span class="nav-text">{$level3.text}</span>
+                        </a>
+                    </li>
+                    {/volist}
+                </ol>
+                {/notempty}
+            </li>
+            {/volist}
+        </ol>
+        {/notempty}
+    </li>
+    {/volist}
+</ol>

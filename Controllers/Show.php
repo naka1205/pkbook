@@ -16,6 +16,8 @@ class Show
     public static function base(Context $ctx, $next, $vars){
 
         $configs = Config::all();
+
+        self::$pagenum = intval($configs['site']['pagenum']);
         $ctx->state['site'] = $configs['site'];
 
         $link = [
@@ -35,43 +37,68 @@ class Show
     public static function index(Context $ctx, $next){
         $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
         $where = [];
-        $link = '/show/index?page=:page';
+        $link = '/show/index.html?page=:page';
         $posts = Post::select($where,$page,self::$pagenum,$link);
         $ctx->status = 200;
+
+        $ctx->state['title'] = '首页';
         $ctx->state["posts"] = $posts['data'];
-        $ctx->state["pagination"] = Publish::pagination($posts['pagination']);
+        $ctx->state["pagination"] = $posts['pagination'];
         yield $ctx->show("index");
+    } 
+
+    public static function categories(Context $ctx, $next, $vars){
+        $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
+
+        $ctx->status = 200;
+        $ctx->state['title'] = '分类';
+        $ctx->state['posts'] = $posts['data'];
+        $ctx->state["pagination"] = $posts['pagination'];
+
+        yield $ctx->show("categories");
     } 
 
     public static function category(Context $ctx, $next, $vars){
         $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
 
         $category = new Category($vars[0]);
-        $link = '/show/category/'.$vars[0].'?page=:page';
+        $link = '/show/category/'.$vars[0].'.html?page=:page';
         $where['categories_value'] = $category['title'];
         $posts = Post::select($where,$page,self::$pagenum,$link);
 
         $ctx->status = 200;
+        $ctx->state['title'] = '分类';
         $ctx->state['posts'] = $posts['data'];
-        $ctx->state["pagination"] = Publish::pagination($posts['pagination']);
+        $ctx->state["pagination"] = $posts['pagination'];
 
         yield $ctx->show("category");
     } 
 
     public static function tags(Context $ctx, $next, $vars){
 
-        $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
+        $tags = Tag::select([]);
+
+        $ctx->status = 200;
+        $ctx->state['title'] = '标签';
+        $ctx->state['tags'] = $tags;
+
+        yield $ctx->show("tags");
+    }
+
+
+    public static function tag(Context $ctx, $next, $vars){
 
         $tag = new Tag($vars[0]);
-        $link = '/show/tags/'.$vars[0].'?page=:page';
-        $where['tags_value'] = $tag['title'];
+        $link = '/show/tag/'.$vars[0].'/index.html?page=:page';
+        $where['tag_value'] = $tag['title'];
         $posts = Post::select($where,$page,self::$pagenum,$link);
 
         $ctx->status = 200;
+        $ctx->state['title'] = $tag['title'];
         $ctx->state['posts'] = $posts['data'];
-        $ctx->state["pagination"] = Publish::pagination($posts['pagination']);
+        $ctx->state["pagination"] = $posts['pagination'];
 
-        yield $ctx->show("tags");
+        yield $ctx->show("tag");
     }
 
     public static function posts(Context $ctx, $next, $vars){

@@ -1,0 +1,12 @@
+<div class="footer-inner">
+    <div class="copyright">
+        &copy; 2016 - <span itemprop="copyrightYear">{$state.site.year}</span>
+        <span class="with-love">
+            <i class="fa fa-heart"></i>
+        </span>
+        <span class="author" itemprop="copyrightHolder">{$state.site.holder}</span>
+    </div>
+    {if !empty($state['site']['icp']) }
+    <p><a href="http://www.miitbeian.gov.cn" target="_blank">{$state.site.icp}</a></p>
+    {/if}
+</div>

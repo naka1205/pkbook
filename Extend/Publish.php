@@ -31,7 +31,7 @@ class Publish
                     $html .= '<li><a>...</a></li>';
                     $html .= '<li><a href="'.$pagination['content']['lastLink'].'">'.$pagination['content']['pages'].'</a></li>';
                 }
-                $html .= '<li class="'.$pagination['content']['lastClassName'].'"><a href="'.$pagination['content']['lastLink'].'">&raquo;</a></li>';
+                $html .= '<li class="'.$pagination['content']['nextClassName'].'"><a href="'.$pagination['content']['nextLink'].'">&raquo;</a></li>';
             }
         }
         return $html;
@@ -74,7 +74,7 @@ class Publish
             $state['site'] = $configs['site'];
             $state['title'] = '首页';
             $state['posts'] = $posts['data'];
-            $state['pagination'] = self::pagination($posts['pagination']);
+            $state['pagination'] = $posts['pagination'];
             $state['single'] = $single;
             $state['singles'] = $singles;
             $state['categories'] = $categories;
@@ -93,7 +93,7 @@ class Publish
 
     public static function single()
     {
-        self::clear( PUBLIC_PATH , ['assets','category','page','posts','tags','tags.html','index.html','404.html','search.json'] );
+        self::clear( PUBLIC_PATH , ['assets','page','category','tag','posts','categories.html','tags.html','index.html','404.html','search.json'] );
 
         $configs = Config::all();
         $singles = Single::select([]);
@@ -124,7 +124,7 @@ class Publish
 
     public static function tags()
     {
-        self::clear(PUBLIC_PATH . DS . 'tags');
+        self::clear(PUBLIC_PATH . DS . 'tag');
         $configs = Config::all();
         $num = intval($configs['site']['pagenum']);
 
@@ -157,10 +157,10 @@ class Publish
             
             $pages = ceil( count($posts) / $num );
 
-            $source = PUBLIC_PATH . DS . 'tags' . DS . $value['_id'] . DS . 'page' . DS . ':_id.html';
+            $source = PUBLIC_PATH . DS . 'tag' . DS . $value['_id'] . DS . 'page' . DS . ':_id.html';
 
             for ( $page = 1 ; $page <= $pages; $page++) { 
-                $link = '/tags/'.$value['_id'].'/page/:page'. $configs['link']['suffix'];
+                $link = '/tag/'.$value['_id'].'/page/:page'. $configs['link']['suffix'];
                 $posts = Post::select($where,$page,$num,$link);
 
                 $state = [];
@@ -168,7 +168,7 @@ class Publish
                 $state['site'] = $configs['site'];
                 $state['title'] = $value['title'];
                 $state['posts'] = $posts['data'];
-                $state['pagination'] = self::pagination($posts['pagination']);
+                $state['pagination'] = $posts['pagination'];
                 $state['singles'] = $singles;
                 $state['categories'] = $categories;
                 $state['tag'] = $value;
@@ -176,7 +176,7 @@ class Publish
                 $view->assign('state',$state);
 
                 if ( $page == 1 ) {
-                    yield $view->publish($configs['site']['theme'] . '/tag', PUBLIC_PATH. DS . 'tags' . DS . $value['_id'] . DS . "index.html");
+                    yield $view->publish($configs['site']['theme'] . '/tag', PUBLIC_PATH. DS . 'tag' . DS . $value['_id'] . DS . "index.html");
                 }
                 $file =  str_replace (':_id',$page,$source);   
                 yield $view->publish($configs['site']['theme'] . '/tag',$file);
@@ -231,7 +231,7 @@ class Publish
                 $state['site'] = $configs['site'];
                 $state['title'] = $value['title'];
                 $state['posts'] = $posts['data'];
-                $state['pagination'] = self::pagination($posts['pagination']);
+                $state['pagination'] = $posts['pagination'];
                 $state['singles'] = $singles;
                 $state['categories'] = $categories;
                 $state['category'] = $value;

@@ -113,43 +113,6 @@ class Common implements ArrayAccess
         return $paginationData;
     }
 
-    public static function toc($data){
-        $tree = [];
-        $level = 0;
-        $id = '';
-        $child_id = '';
-        $num1 = 1;
-        $num2 = 1;
-        $num3 = 1;
-        foreach ($data as $key => $value) {
-            
-            if ( $level != 0 && $level < $value['level'] ) {
-                if ( ( intval($value['level']) - 1 ) == $level ) {
-                    $child_id = $value['id'];
-                    $value['num'] = $num2;
-                    $tree[$id]['child'][$child_id] = $value;
-                    $num2++;
-                    $num3 = 1;
-                }elseif ( ( intval($value['level']) - 2 ) == $level ) {
-                    $value['num'] = $num3;
-                    $tree[$id]['child'][$child_id]['child'][] = $value;
-                    $num3++;
-                }
-                
-            }else{
-                $id = $value['id'];
-                $level = intval($value['level']);
-                $value['num'] = $num1;
-                $tree[$id] = $value;
-                $tree[$id]['child'] = [];
-                $num1++;
-                $num2 = 1;
-                $num3 = 1;
-            }
-        }
-        return $tree;
-    }
-
     public static function count(){
         
     }

@@ -74,9 +74,11 @@
         </article>
         {/volist}
 
-        <ul class="am-pagination">
-            {$state.pagination|raw}
-        </ul>
+        {if 1 != intval($state['pagination']['content']['pages']) }
+
+        {include file="green/pagination" /}
+
+        {/if}
     </div>
 
     <div class="am-u-md-4 am-u-sm-12 blog-sidebar">

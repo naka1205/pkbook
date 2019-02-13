@@ -8,11 +8,6 @@ class Post extends Common
     public function __construct($_id='')
     {
         $this->data = !empty($_id) ? Source::posts($_id) : [];
-        if ( !empty( $this->data['content'] ) ) {
-            $parsedown = new Parsedown();
-            $this->data['html'] = $parsedown->text($this->data['content']);
-            $this->data['toc'] = parent::toc($parsedown->contentsList());
-        }
     }
 
     public function save($data = []){

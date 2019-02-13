@@ -1,0 +1,19 @@
+<ul class="am-pagination">
+    {volist name="state.pagination.content.page" id="vo" key="k"}
+        {if $key == 0 }
+            <li class="{$state.pagination.content.prevClassName}"><a href="{$state.pagination.content.prevLink}">&laquo;</a></li>
+            {if intval($state['pagination']['content']['current']) > 5 }
+            <li><a href="{$state.pagination.content.firstLink}">1</a></li>
+            <li><a>...</a></li>
+            {/if}
+        {/if}
+        <li class="{$vo.className}"><a href="{$vo.link}">{$vo.title}</a></li>
+        {if ( $key + 1 ) == count($state['pagination']['content']['page']) }
+            {if intval($state['pagination']['content']['current']) > 5 }
+            <li><a>...</a></li>
+            <li><a href="{$state.pagination.content.lastLink}">{$state.pagination.content.pages}</a></li>
+            {/if}
+            <li class="{$state.pagination.content.nextClassName}"><a href="{$state.pagination.content.nextLink}">&raquo;</a></li>
+        {/if}
+    {/volist}
+</ul>
