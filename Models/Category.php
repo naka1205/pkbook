@@ -16,6 +16,11 @@ class Category extends Common
         return [];
     }    
 
+    public static function count($where=[]){
+        $data = Source::categories($where);
+        return $data ? count($data) : 0;
+    }
+
     public static function select($where,$page=0,$num=10,$link =''){
         $data = Source::categories($where);
         if ( $page <= 0 ) {

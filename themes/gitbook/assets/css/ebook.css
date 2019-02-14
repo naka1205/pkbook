@@ -133,3 +133,30 @@ pre .xml .hljs-cdata,
 code .xml .hljs-cdata {
   opacity: 0.5;
 }
+.hljs {
+  border: 0;
+  font-size: 12px;
+  display: block;
+  padding: 1px;
+  margin: 0;
+  width: 100%;
+  font-weight: 200;
+  white-space: pre-wrap;
+  overflow: hidden;
+}
+.hljs ol {
+  list-style: decimal;
+  margin: 0px 0px 0 40px !important;
+  padding: 0px;
+}
+.hljs ol li {
+  list-style: decimal-leading-zero;
+  border-left: 1px solid #ddd !important;
+  padding: 5px!important;
+  margin: 0 !important;
+  white-space: pre;
+}
+.markdown-section pre{
+  padding: 0;
+  /* background-color: #333; */
+}

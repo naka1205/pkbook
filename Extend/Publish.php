@@ -61,8 +61,12 @@ class Publish
 
         $categories = Category::select([]);
         $singles = Single::select([]);
+        $single = current($singles);
 
-        $single = new Single('about');
+        $counts = [];
+        $counts['tags'] = Tag::count([]);
+        $counts['posts'] = Post::count([]);
+        $counts['categories'] = Category::count([]);
 
         for ( $page = 1 ; $page <= $pages; $page++) { 
             $where = [];
@@ -78,6 +82,7 @@ class Publish
             $state['single'] = $single;
             $state['singles'] = $singles;
             $state['categories'] = $categories;
+            $state['counts'] = $counts;
             $view->assign('state',$state);
 
             if ( $page == 1 ) {
@@ -98,7 +103,8 @@ class Publish
         $configs = Config::all();
         $singles = Single::select([]);
         $categories = Category::select([]);
-        
+        $single = current($singles);
+
         $opt = [
             'view_suffix'   =>	'html',
             'tpl_cache'     =>	false,
@@ -114,6 +120,7 @@ class Publish
             $state['link'] = $configs['link'];
             $state['site'] = $configs['site'];
             $state['title'] = $value['title'];
+            $state['single'] = $single;
             $state['singles'] = $singles;
             $state['categories'] = $categories;
             $state['single'] = $single;
@@ -131,6 +138,12 @@ class Publish
         $categories = Category::select([]);
         $singles = Single::select([]);
         $tags = Tag::select([]);
+        $single = current($singles);
+
+        $counts = [];
+        $counts['tags'] = Tag::count([]);
+        $counts['posts'] = Post::count([]);
+        $counts['categories'] = Category::count([]);
 
         $opt = [
             'view_suffix'   =>	'html',
@@ -143,9 +156,11 @@ class Publish
         $state['link'] = $configs['link'];
         $state['site'] = $configs['site'];
         $state['title'] = '标签';
+        $state['single'] = $single;
         $state['singles'] = $singles;
         $state['categories'] = $categories;
         $state['tags'] = $tags;
+        $state['counts'] = $counts;
         $view->assign('state',$state);
         $bool = ( yield $view->publish($configs['site']['theme'] . '/tags', PUBLIC_PATH . DS . "tags.html") );
         if ( !$bool ) {
@@ -169,10 +184,11 @@ class Publish
                 $state['title'] = $value['title'];
                 $state['posts'] = $posts['data'];
                 $state['pagination'] = $posts['pagination'];
+                $state['single'] = $single;
                 $state['singles'] = $singles;
                 $state['categories'] = $categories;
                 $state['tag'] = $value;
-                
+                $state['counts'] = $counts;
                 $view->assign('state',$state);
 
                 if ( $page == 1 ) {
@@ -197,6 +213,12 @@ class Publish
 
         $categories = Category::select([]);
         $singles = Single::select([]);
+        $single = current($singles);
+
+        $counts = [];
+        $counts['tags'] = Tag::count([]);
+        $counts['posts'] = Post::count([]);
+        $counts['categories'] = Category::count([]);
 
         $opt = [
             'view_suffix'   =>	'html',
@@ -209,8 +231,10 @@ class Publish
         $state['link'] = $configs['link'];
         $state['site'] = $configs['site'];
         $state['title'] = '分类';
+        $state['single'] = $single;
         $state['singles'] = $singles;
         $state['categories'] = $categories;
+        $state['counts'] = $counts;
         $view->assign('state',$state);
         yield $view->publish($configs['site']['theme'] . '/categories', PUBLIC_PATH . DS . "categories.html");
         
@@ -232,10 +256,11 @@ class Publish
                 $state['title'] = $value['title'];
                 $state['posts'] = $posts['data'];
                 $state['pagination'] = $posts['pagination'];
+                $state['single'] = $single;
                 $state['singles'] = $singles;
                 $state['categories'] = $categories;
                 $state['category'] = $value;
-                
+                $state['counts'] = $counts;
                 $view->assign('state',$state);
 
                 if ( $page == 1 ) {
@@ -260,7 +285,13 @@ class Publish
         $posts = Source::update();
         $categories = Category::select([]);
         $singles = Single::select([]);
-        
+        $single = current($singles);
+
+        $counts = [];
+        $counts['tags'] = Tag::count([]);
+        $counts['posts'] = Post::count([]);
+        $counts['categories'] = Category::count([]);
+
         $source = PUBLIC_PATH . str_replace ('/',DS, $configs['link']['posts']) . ".html";
         
         $opt = [
@@ -280,8 +311,10 @@ class Publish
             $state['site'] = $configs['site'];
             $state['title'] = $post['title'];
             $state['post'] = $post;
+            $state['single'] = $single;
             $state['singles'] = $singles;
             $state['categories'] = $categories;
+            $state['counts'] = $counts;
             $view->assign('state',$state);
 
             $_date = date('Ymd',strtotime($post['date']));

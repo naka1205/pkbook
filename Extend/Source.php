@@ -225,6 +225,7 @@ class Source
             $post['id'] = $_post['id'];
             $post['createtime'] = $_post['createtime'];
         }else{
+            var_dump($_posts);
             $prev  =  end ( $_posts ); 
             $prev_id = $prev['_id'];
     
@@ -330,20 +331,6 @@ class Source
         $data['next_title'] = '';
         $data['link'] = $link;
         $data['source'] = $source;
-        
-        if ( !isset($data['description']) ) {
-            $data['description'] = '';
-        }
-
-        if ( !empty($data['content']) ) {
-            $parsedown = new Parsedown();
-            $data['html'] = $parsedown->text($data['content']);
-            $data['toc'] = $parsedown->toc();
-
-            if ( empty($data['description']) ) {
-                $data['description'] = $parsedown->line($data['content']);
-            }
-        }
 
         return $data;
     }
@@ -433,12 +420,6 @@ class Source
         $data['link'] = str_replace (':_id',$name,$link);
         $data['source'] = $source;
 
-        if ( !empty($data['content']) ) {
-            $parsedown = new Parsedown();
-            $data['html'] = $parsedown->text($data['content']);
-            $data['toc'] = $parsedown->toc();
-        }
-
         return $data;
     }
     
@@ -462,7 +443,19 @@ class Source
         $data['_id'] = self::key($data['title']);
         $data['content'] = $content;
         
+        if ( !isset($data['description']) ) {
+            $data['description'] = '';
+        }
 
+        if ( !empty($data['content']) ) {
+            $parsedown = new Parsedown();
+            $data['html'] = $parsedown->text($data['content']);
+            $data['toc'] = $parsedown->toc();
+
+            if ( empty($data['description']) ) {
+                $data['description'] = msubstr($parsedown->line($data['content']),100);
+            }
+        }
 
         return $data;
     }

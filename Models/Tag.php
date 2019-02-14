@@ -9,6 +9,11 @@ class Tag extends Common
         $this->data = !empty($_id) ? Source::tags($_id) : [];
     }
 
+    public static function count($where=[]){
+        $data = Source::tags($where);
+        return $data ? count($data) : 0;
+    }
+
     public static function select($where,$page=0,$num=10,$link =''){
         $data = Source::tags($where);
         if ( $page <= 0 ) {

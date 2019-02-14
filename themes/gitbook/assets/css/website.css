@@ -404,8 +404,8 @@
 .book .book-body .page-wrapper .page-inner section.normal pre .hljs,
 .book .book-body .page-wrapper .page-inner section.normal code .hljs {
   display: block;
-  background: white;
-  color: #4d4d4c;
+  /* background:#4d4d4c;
+  color: white; */
   padding: 0.5em;
 }
 .book .book-body .page-wrapper .page-inner section.normal pre .coffeescript .javascript,

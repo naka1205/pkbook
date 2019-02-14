@@ -25,6 +25,11 @@ class Post extends Common
         return Source::save($data);
     }
 
+    public static function count($where=[]){
+        $data = Source::posts($where);
+        return $data ? count($data) : 0;
+    }
+
     public static function select($where,$page=0,$num=10,$link =''){
         $data = Source::posts($where);
         if ( $page <= 0 ) {

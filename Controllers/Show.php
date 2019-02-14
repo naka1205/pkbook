@@ -31,7 +31,14 @@ class Show
 
         $singles = Single::select([]);
         $ctx->state['singles'] = $singles;
+        $ctx->state['single'] = current($singles);
+        
+        $counts = [];
+        $counts['tags'] = Tag::count([]);
+        $counts['posts'] = Post::count([]);
+        $counts['categories'] = Category::count([]);
 
+        $ctx->state['counts'] = $counts;
     }
 
     public static function index(Context $ctx, $next){

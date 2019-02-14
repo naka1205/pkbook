@@ -38,6 +38,10 @@ class Common implements ArrayAccess
 
     public static function pagination($link,$page,$num,$count){
 
+        if ( $count == 0 ) {
+            return false;
+        }
+
         $pages = ceil( $count / $num );
         $content = [];
         $content['pages'] = $pages;

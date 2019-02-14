@@ -21,12 +21,13 @@ return [
         'description'   => "开源WEB开发框架",
         'keywords'      => "开源WEB开发框架",
         'author'        => "naka1205",
+        'avatar'        => "",
         'year'          => "2019",
         'holder'        => "Naka1205",
         'icp'           => "",
         'logo'          => "",
-        'theme'         => "next",
-        'pagenum'       => 10
+        'theme'         => "gitbook",
+        'pagenum'       => 1
     ],
     'qiniu' => [
         'domain'        =>  "",

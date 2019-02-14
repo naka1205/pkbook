@@ -72,13 +72,12 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
 <script>
     
-// document.addEventListener('DOMContentLoaded', (event) => {
-//   document.querySelectorAll('pre code').forEach((block) => {
-//     hljs.highlightBlock(block);
-//   });
-// });
-
-hljs.initHighlightingOnLoad();
+document.addEventListener('DOMContentLoaded', (event) => {
+  document.querySelectorAll('pre code').forEach((block) => {
+    hljs.highlightBlock(block);
+    block.innerHTML = "<ol><li>" + block.innerHTML.replace(/\n/g,"\n</li><li>")+"\n</li></ol>"
+  });
+});
 
 var $modalLoading = $('#modal-loading');
 var $searchPopup = $('#search-popup');
