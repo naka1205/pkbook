@@ -194,7 +194,6 @@ class Source
     }
 
     public static function find($_id,$name=''){
-
         if ( $name == 'singles' ) {
             return self::findSingles($_id);
         }
@@ -213,6 +212,7 @@ class Source
         if ( !$post ) {
             return false;
         }
+
         $_id = $post['_id'];
         $_posts = Cache::get('posts');
         
@@ -451,6 +451,8 @@ class Source
 
         if ( !isset($data['comment']) ) {
             $data['comment'] = false;
+        }else{
+            $data['comment'] = json_decode($data['comment']) == true ? true : false;
         }
 
         if ( !isset($data['description']) ) {

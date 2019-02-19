@@ -6,7 +6,8 @@
         </span>
         <span class="author" itemprop="copyrightHolder">{$state.site.holder}</span>
     </div>
+    <div class="theme-info">Powered by <a class="theme-link" href="https://github.com/naka1205/pkbook">PKBOOK</a></div>
     {if !empty($state['site']['icp']) }
-    <p><a href="http://www.miitbeian.gov.cn" target="_blank">{$state.site.icp}</a></p>
+    <div class="theme-info"> <a href="http://www.miitbeian.gov.cn" target="_blank">{$state.site.icp}</a> </div>
     {/if}
 </div>
