@@ -12,7 +12,7 @@ class Render implements Middleware
         $config = [
             'view_suffix'   =>	'html',
             'view_path'	    =>  VIEW_PATH,
-            'cache_path'	=>	CACHE_PATH . DS . 'views'
+            'cache_path'	=>	TEMP_PATH . DS . 'views'
         ];
         $this->view = new Template($config);
     }

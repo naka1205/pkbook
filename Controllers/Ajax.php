@@ -18,7 +18,9 @@ class Ajax
     public static function posts(Context $ctx, $next, $vars){
         $_id = isset($vars[0]) ? $vars[0] : '';
         $data = self::parse($ctx->post['data']);
+
         $data['date'] = isset($data['date']) ? $data['date'] : date('Y-m-d h:i:s');
+        $data['comment'] = isset($data['comment']) && $data['comment'] == 1 ? true : false;
 
         $post = new Post($_id);
         $bool = $post->save($data) ? true : false;

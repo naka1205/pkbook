@@ -7,7 +7,6 @@ return [
         'pagenum'       => 10
     ],
     'link' => [
-        // 'domain'        =>  "http://www.kmei.org",
         'domain'        =>  "",
         'suffix'        =>  ".html",
         'page'          =>  "/:_id",
@@ -26,8 +25,8 @@ return [
         'holder'        => "Naka1205",
         'icp'           => "",
         'logo'          => "",
-        'theme'         => "gitbook",
-        'pagenum'       => 1
+        'theme'         => "next",
+        'pagenum'       => 10
     ],
     'qiniu' => [
         'domain'        =>  "",
@@ -36,5 +35,12 @@ return [
         'bucket'        =>  "",
         'access'        =>  "",
         'secret'        =>  ""
+    ],
+    'github' => [
+        'owner'        =>  "",
+        'repo'         =>  "",
+        'token'        =>  "",
+        'clientid'     =>  "",
+        'clientsecret' =>  ""
     ],
 ];

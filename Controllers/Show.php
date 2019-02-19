@@ -19,6 +19,7 @@ class Show
 
         self::$pagenum = intval($configs['site']['pagenum']);
         $ctx->state['site'] = $configs['site'];
+        $ctx->state['github'] = $configs['github'];
 
         $link = [
             'domain'        =>  "/show",
@@ -49,6 +50,7 @@ class Show
         $ctx->status = 200;
 
         $ctx->state['title'] = '首页';
+        $ctx->state['page_id'] = '';
         $ctx->state["posts"] = $posts['data'];
         $ctx->state["pagination"] = $posts['pagination'];
         yield $ctx->show("index");
@@ -59,6 +61,7 @@ class Show
 
         $ctx->status = 200;
         $ctx->state['title'] = '分类';
+        $ctx->state['page_id'] = '';
         $ctx->state['posts'] = $posts['data'];
         $ctx->state["pagination"] = $posts['pagination'];
 
@@ -75,6 +78,7 @@ class Show
 
         $ctx->status = 200;
         $ctx->state['title'] = '分类';
+        $ctx->state['page_id'] = '';
         $ctx->state['posts'] = $posts['data'];
         $ctx->state["pagination"] = $posts['pagination'];
 
@@ -87,6 +91,7 @@ class Show
 
         $ctx->status = 200;
         $ctx->state['title'] = '标签';
+        $ctx->state['page_id'] = '';
         $ctx->state['tags'] = $tags;
 
         yield $ctx->show("tags");
@@ -101,6 +106,7 @@ class Show
         $posts = Post::select($where,$page,self::$pagenum,$link);
 
         $ctx->status = 200;
+        $ctx->state['page_id'] = '';
         $ctx->state['title'] = $tag['title'];
         $ctx->state['posts'] = $posts['data'];
         $ctx->state["pagination"] = $posts['pagination'];
@@ -112,6 +118,7 @@ class Show
         $post = new Post($vars[1]);
         $ctx->status = 200;
         $ctx->state['post'] = $post;
+        $ctx->state['page_id'] = $post['_id'];
         yield $ctx->show("posts");
     } 
 
@@ -119,6 +126,7 @@ class Show
         $single = new Single($vars[0]);
         $ctx->status = 200;
         $ctx->state['single'] = $single;
+        $ctx->state['page_id'] = '';
         yield $ctx->show("single");
     } 
 }

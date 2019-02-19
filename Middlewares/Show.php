@@ -12,7 +12,7 @@ class Show implements Middleware
         $config = [
             'view_suffix'   =>	'html',
             'view_path'	    =>	THEME_PATH,
-	        'cache_path'	=>	CACHE_PATH . DS . 'themes'
+	        'cache_path'	=>	TEMP_PATH . DS . 'themes'
         ];
         $this->view = new Template($config);
     }

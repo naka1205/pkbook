@@ -59,10 +59,13 @@ class Source
         $name = '';
         $source = '';
 
+        $data['comment'] = isset($data['comment']) && $data['comment'] ? true : false;
+
         if ( isset($data['categories']) ) {
             if ( isset($data['tags'] ) ) {
                 $md .= "tags: [" . $data['tags'] . "]\n";
             }
+            $md .= "comment: " . var_export($data['comment'],true) . "\n";
             $md .= "categories: " . $data['categories'] . "\n";
             $md .= "createtime: " . $data['createtime'] . "\n";
             $md .= "description: " . $data['description'] . "\n";
@@ -86,7 +89,6 @@ class Source
         if ( !file_put_contents ( $source ,  $md ) ) {
             return false;
         }
-
         return self::find($_id,$name);
     }
 
@@ -225,7 +227,6 @@ class Source
             $post['id'] = $_post['id'];
             $post['createtime'] = $_post['createtime'];
         }else{
-            var_dump($_posts);
             $prev  =  end ( $_posts ); 
             $prev_id = $prev['_id'];
     
@@ -331,6 +332,11 @@ class Source
         $data['next_title'] = '';
         $data['link'] = $link;
         $data['source'] = $source;
+        $data['issues'] = [];
+
+        if ( $data['comment'] == true ) {
+            $data['issues'] = Github::create(['title' => $data['_id'],'body' => $data['description']]);
+        }
 
         return $data;
     }
@@ -442,7 +448,11 @@ class Source
         }
         $data['_id'] = self::key($data['title']);
         $data['content'] = $content;
-        
+
+        if ( !isset($data['comment']) ) {
+            $data['comment'] = false;
+        }
+
         if ( !isset($data['description']) ) {
             $data['description'] = '';
         }

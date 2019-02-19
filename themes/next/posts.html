@@ -86,7 +86,9 @@
                 <div class="post-spread"></div>
             </div>
         </div>
-        <div class="comments" id="comments"></div>
+        {if $state['post']['comment'] == true }
+        <div class="comments gitm-container" id="comments"></div>
+        {/if}
     </div>
     <div class="sidebar-toggle">
         <div class="sidebar-toggle-line-wrap">

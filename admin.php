@@ -10,7 +10,7 @@ define('THEME_PATH', ROOT_PATH . DS . 'themes');
 define('STATIC_PATH', ROOT_PATH . DS . 'static');
 define('SOURCE_PATH', ROOT_PATH . DS . 'source');
 define('PUBLIC_PATH', ROOT_PATH . DS . 'public');
-define('CACHE_PATH', ROOT_PATH . DS . 'runtime');
+define('TEMP_PATH', ROOT_PATH . DS . 'runtime');
 
 if ( !IS_CLI ) {
     die('Please use cli');

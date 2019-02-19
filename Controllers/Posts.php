@@ -13,7 +13,6 @@ class Posts
 
     public static function edit(Context $ctx, $next, $vars){
         $data = new Post($vars[0]);
-        // var_dump($data);
         $ctx->status = 200;
         $ctx->state = $data;
         $ctx->state['qiniu'] = Upload::qiniu();

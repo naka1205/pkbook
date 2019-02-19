@@ -54,7 +54,7 @@ class Publish
             'view_suffix'   =>	'html',
             'tpl_cache'     =>	false,
             'view_path'	    =>  THEME_PATH,
-            'cache_path'	=>	CACHE_PATH . DS . 'themes'
+            'cache_path'	=>	TEMP_PATH . DS . 'themes'
         ];
 
         $view = new Template($opt);
@@ -77,6 +77,7 @@ class Publish
             $state['link'] = $configs['link'];
             $state['site'] = $configs['site'];
             $state['title'] = '首页';
+            $state['page_id'] = '';
             $state['posts'] = $posts['data'];
             $state['pagination'] = $posts['pagination'];
             $state['single'] = $single;
@@ -109,7 +110,7 @@ class Publish
             'view_suffix'   =>	'html',
             'tpl_cache'     =>	false,
             'view_path'	    =>  THEME_PATH,
-            'cache_path'	=>	CACHE_PATH . DS . 'themes'
+            'cache_path'	=>	TEMP_PATH . DS . 'themes'
         ];
         $view = new Template($opt);
 
@@ -117,8 +118,10 @@ class Publish
             $single = new Post($value['_id']);
 
             $state = [];
+            $state['page_id'] = '';
             $state['link'] = $configs['link'];
             $state['site'] = $configs['site'];
+            $state['github'] = $configs['github'];
             $state['title'] = $value['title'];
             $state['single'] = $single;
             $state['singles'] = $singles;
@@ -149,13 +152,14 @@ class Publish
             'view_suffix'   =>	'html',
             'tpl_cache'     =>	false,
             'view_path'	    =>  THEME_PATH,
-            'cache_path'	=>	CACHE_PATH . DS . 'themes'
+            'cache_path'	=>	TEMP_PATH . DS . 'themes'
         ];
         $view = new Template($opt);
         $state = [];
         $state['link'] = $configs['link'];
         $state['site'] = $configs['site'];
         $state['title'] = '标签';
+        $state['page_id'] = '';
         $state['single'] = $single;
         $state['singles'] = $singles;
         $state['categories'] = $categories;
@@ -179,6 +183,7 @@ class Publish
                 $posts = Post::select($where,$page,$num,$link);
 
                 $state = [];
+                $state['page_id'] = '';
                 $state['link'] = $configs['link'];
                 $state['site'] = $configs['site'];
                 $state['title'] = $value['title'];
@@ -224,13 +229,14 @@ class Publish
             'view_suffix'   =>	'html',
             'tpl_cache'     =>	false,
             'view_path'	    =>  THEME_PATH,
-            'cache_path'	=>	CACHE_PATH . DS . 'themes'
+            'cache_path'	=>	TEMP_PATH . DS . 'themes'
         ];
         $view = new Template($opt);
         $state = [];
         $state['link'] = $configs['link'];
         $state['site'] = $configs['site'];
         $state['title'] = '分类';
+        $state['page_id'] = '';
         $state['single'] = $single;
         $state['singles'] = $singles;
         $state['categories'] = $categories;
@@ -251,6 +257,7 @@ class Publish
                 $posts = Post::select($where,$page,$num,$link);
 
                 $state = [];
+                $state['page_id'] = '';
                 $state['link'] = $configs['link'];
                 $state['site'] = $configs['site'];
                 $state['title'] = $value['title'];
@@ -298,7 +305,7 @@ class Publish
             'view_suffix'   =>	'html',
             'tpl_cache'     =>	false,
             'view_path'	    =>  THEME_PATH,
-            'cache_path'	=>	CACHE_PATH . DS . 'themes'
+            'cache_path'	=>	TEMP_PATH . DS . 'themes'
         ];
         $view = new Template($opt);
 
@@ -307,8 +314,16 @@ class Publish
 
             $post = new Post($_id);
             $state = [];
+            
+            $page_id = '';
+            if ( $post['comment'] == true ) {
+                $page_id = $post['_id'];
+            }
+
+            $state['page_id'] = $page_id;
             $state['link'] = $configs['link'];
             $state['site'] = $configs['site'];
+            $state['github'] = $configs['github'];
             $state['title'] = $post['title'];
             $state['post'] = $post;
             $state['single'] = $single;
@@ -322,6 +337,10 @@ class Publish
             $file =  str_replace (':_id',$_id,$source);
             $file =  str_replace (':_date',$_date,$file);
             yield $view->publish($configs['site']['theme'] . '/posts',$file);
+
+
+            //https://api.github.com/repos/用户名/仓库名/issues
+            
         }
     }
 
@@ -336,7 +355,7 @@ class Publish
             'view_suffix'   =>	'html',
             'tpl_cache'     =>	false,
             'view_path'	    =>  THEME_PATH,
-            'cache_path'	=>	CACHE_PATH . DS . 'themes'
+            'cache_path'	=>	TEMP_PATH . DS . 'themes'
         ];
 
         $view = new Template($opt);
@@ -344,6 +363,7 @@ class Publish
         $state['link'] = $configs['link'];
         $state['site'] = $configs['site'];
         $state['title'] = '404';
+        $state['page_id'] = '';
         $state['singles'] = $singles;
         $state['categories'] = $categories;
         $view->assign('state',$state);

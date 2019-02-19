@@ -24,9 +24,10 @@ class Cache
             if (!empty($options)) {
                 $connect = self::connect($options);
             }  else {
+                
                 $config = [
                     'cache_suffix'   => 'php',
-                    'cache_path'     => CACHE_PATH . DS . 'cache'
+                    'cache_path'     => TEMP_PATH . DS . 'cache'
                 ];
                 $connect = self::connect($config);
             }

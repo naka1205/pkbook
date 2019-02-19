@@ -67,6 +67,24 @@
 <script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.2"></script>
 <script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.2"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
+{notempty name="state.page_id"}
+<script type="text/javascript" src="/assets/js/src/gitm.min.js?v=5.1.2"></script>
+<script>
+if ( document.getElementById("comments") ) {
+    var config = {
+        id: '{$state.page_id}',
+        owner: '{$state.github.owner}',
+        repo: '{$state.github.repo}',
+        oauth: {
+            client_id: '{$state.github.clientid}',
+            client_secret: '{$state.github.clientsecret}'
+        },
+    };
+    var gm = new GitM(config)
+    gm.render('comments')   
+}
+</script>
+{/notempty}
 <script>
 
 // hljs.initHighlightingOnLoad();   
