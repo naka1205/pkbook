@@ -36,95 +36,41 @@
         <a href="{$state.post.next_link}" class="navigation navigation-next " aria-label="{$state.post.next_title}">
             <i class="fa fa-angle-right"></i>
         </a>
-        {/notempty}
+        {/notempty}       
     </div>
 <script>
 var gitbook = gitbook || [];
-var title = "{$state.post.title}";
-var prev_title = "{$state.post.prev_title}";
-var next_title = "{$state.post.next_title}";
-
 gitbook.push(function() {
     gitbook.page.hasChanged({
         "page": {
-            "title": title,
-            "level": "1.2",
-            "depth": 1,
+            "title":  "{$state.post.title}",
             "next": {
-                "title": next_title,
-                "level": "1.3",
-                "depth": 1
+                "title": "{$state.post.next_title}"
             },
             "previous": {
-                "title": prev_title,
-                "level": "1.1",
-                "depth": 1,
-            },
-            "dir": "ltr"
+                "title": "{$state.post.prev_title}"
+            }
         },
         "config": {
             "gitbook": "*",
             "theme": "default",
             "variables": {},
-            "plugins": ["-lunr", "-search", "search-pro"],
+            "plugins": ["-lunr", "-search", "-highlight","search-pro"],
             "pluginsConfig": {
                 "search-pro": {},
                 "highlight": {},
                 "sharing": {},
-                "fontsettings": {
-                    "theme": "white",
-                    "family": "sans",
-                    "size": 2
-                },
-                "theme-default": {
-                    "styles": {
-                        "website": "styles/website.css",
-                        "pdf": "styles/pdf.css",
-                        "epub": "styles/epub.css",
-                        "mobi": "styles/mobi.css",
-                        "ebook": "styles/ebook.css",
-                        "print": "styles/print.css"
-                    },
-                    "showLevel": false
-                }
+                "fontsettings": {},
+                "theme-default": {}
             },
             "structure": {},
-            "pdf": {
-                "pageNumbers": true,
-                "fontSize": 12,
-                "fontFamily": "Arial",
-                "paperSize": "a4",
-                "chapterMark": "pagebreak",
-                "pageBreaksBefore": "/",
-                "margin": {
-                    "right": 62,
-                    "left": 62,
-                    "top": 56,
-                    "bottom": 56
-                }
-            },
-            "styles": {
-                "website": "styles/website.css",
-                "pdf": "styles/pdf.css",
-                "epub": "styles/epub.css",
-                "mobi": "styles/mobi.css",
-                "ebook": "styles/ebook.css",
-                "print": "styles/print.css"
-            }
+            "pdf": {},
+            "styles": {}
         },
-        "file": {
-            "path": "part1/writing.md",
-            "mtime": "2019-02-03T02:45:58.454Z",
-            "type": "markdown"
-        },
-        "gitbook": {
-            "version": "3.2.3",
-            "time": "2019-02-03T03:17:56.053Z"
-        },
+        "file": {},
+        "gitbook": {},
         "basePath": "..",
-        "book": {
-            "language": ""
-        }
+        "book": {}
     });
 });
 </script>

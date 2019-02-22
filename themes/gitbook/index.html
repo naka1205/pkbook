@@ -11,6 +11,7 @@
                             <section class="normal markdown-section">
                                 {$state.single.html|raw}
                             </section>
+                            <div class="comments gitm-container" id="comments"></div>
                         </div>
                         <div class="search-results">
                             <div class="has-results">
@@ -26,81 +27,35 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>     
     </div>
 <script>
 var gitbook = gitbook || [];
 gitbook.push(function() {
     gitbook.page.hasChanged({
         "page": {
-            "title": '{$state.title}',
-            "level": "1.1",
-            "depth": 1,
-            "dir": "ltr"
+            "title": '{$state.single.title}'
         },
         "config": {
             "gitbook": "*",
             "theme": "default",
             "variables": {},
-            "plugins": ["-lunr", "-search", "search-pro"],
+            "plugins": ["-lunr", "-search", "-highlight","search-pro"],
             "pluginsConfig": {
                 "search-pro": {},
                 "highlight": {},
                 "sharing": {},
-                "fontsettings": {
-                    "theme": "white",
-                    "family": "sans",
-                    "size": 2
-                },
-                "theme-default": {
-                    "styles": {
-                        "website": "styles/website.css",
-                        "pdf": "styles/pdf.css",
-                        "epub": "styles/epub.css",
-                        "mobi": "styles/mobi.css",
-                        "ebook": "styles/ebook.css",
-                        "print": "styles/print.css"
-                    },
-                    "showLevel": false
-                }
+                "fontsettings": {},
+                "theme-default": {}
             },
             "structure": {},
-            "pdf": {
-                "pageNumbers": true,
-                "fontSize": 12,
-                "fontFamily": "Arial",
-                "paperSize": "a4",
-                "chapterMark": "pagebreak",
-                "pageBreaksBefore": "/",
-                "margin": {
-                    "right": 62,
-                    "left": 62,
-                    "top": 56,
-                    "bottom": 56
-                }
-            },
-            "styles": {
-                "website": "styles/website.css",
-                "pdf": "styles/pdf.css",
-                "epub": "styles/epub.css",
-                "mobi": "styles/mobi.css",
-                "ebook": "styles/ebook.css",
-                "print": "styles/print.css"
-            }
+            "pdf": {},
+            "styles": {}
         },
-        "file": {
-            "path": "",
-            "mtime": "2019-02-03T01:36:16.947Z",
-            "type": "markdown"
-        },
-        "gitbook": {
-            "version": "3.2.3",
-            "time": "2019-02-03T02:48:57.516Z"
-        },
-        "basePath": ".",
-        "book": {
-            "language": ""
-        }
+        "file": {},
+        "gitbook": {},
+        "basePath": "..",
+        "book": {}
     });
 });
 </script>

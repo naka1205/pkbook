@@ -19,7 +19,7 @@ class Admin
         $token = $ctx->getCookie('token');
         $ctx->state["token"] = $token;
 
-        $admin = Config::get('admin');
+        $admin = ( yield Config::get('admin') );
         self::$pagenum = intval($admin["pagenum"]);
     }
 
@@ -36,7 +36,7 @@ class Admin
     public static function singles(Context $ctx, $next){
         $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
 
-        $singlesData = Single::select([],$page,self::$pagenum,'/admin/singles?page=:page');
+        $singlesData = ( yield Single::select([],$page,self::$pagenum,'/admin/singles?page=:page') );
         $ctx->state["data"] = $singlesData['data'];
         $ctx->state["pagination"] = json_encode ($singlesData['pagination']);
         
@@ -48,14 +48,14 @@ class Admin
         $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
         $cate = isset($ctx->get["cate"]) ? $ctx->get["cate"] : '';
 
-        $categories = Category::select([]);
+        $categories = ( yield Category::select([]) );
         $where = [];
         $link = '/admin/posts?page=:page';
         if ( !empty($cate) && $cate != 'all' ) {
             $where['categories_value'] = $cate;
             $link = '/admin/posts?cate='.$cate.'&page=:page';
         }
-        $postsData = Post::select($where,$page,self::$pagenum,$link);
+        $postsData = ( yield Post::select($where,$page,self::$pagenum,$link) );
         
         $ctx->state["data"] = $postsData['data'];
         $ctx->state["pagination"] = json_encode ($postsData['pagination']);

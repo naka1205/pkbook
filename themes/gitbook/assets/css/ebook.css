@@ -160,3 +160,7 @@ code .xml .hljs-cdata {
   padding: 0;
   /* background-color: #333; */
 }
+
+.comments {
+  margin-top: 50px;
+}

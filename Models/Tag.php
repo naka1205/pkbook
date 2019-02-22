@@ -6,7 +6,7 @@ class Tag extends Common
 
     public function __construct($_id)
     {
-        $this->data = !empty($_id) ? Source::tags($_id) : [];
+        $this->data = !empty($_id) ? Source::tags($_id) : false;
     }
 
     public static function count($where=[]){

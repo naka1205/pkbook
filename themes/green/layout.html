@@ -1,10 +1,7 @@
 <!doctype html>
 <html>
-
 {include file="green/header" title="$state.title" sitename="$state.site.title" keywords="$state.site.keywords" description="$state.site.description" /}
-
 <body id="blog">
-
 <header class="am-g am-g-fixed blog-fixed blog-text-center blog-header">
     <div class="am-u-sm-8 am-u-sm-centered">
         {notempty name="state.site.logo"}
@@ -15,14 +12,12 @@
 </header>
 <hr>
 <!-- menu start -->
-{include file="green/menu" /}
+{include file="green/menu"/}
 <hr>
 <!-- menu end -->
 <!-- content start -->
 {__CONTENT__}
 <!-- content end -->
-
 {include file="green/footer" /}
-
 </body>
 </html>

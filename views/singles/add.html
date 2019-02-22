@@ -1,11 +1,11 @@
-{include file="pages/header" /}
+{include file="singles/header" /}
 
     <div class="admin-content-body">
       
         <div class="am-cf am-padding am-padding-bottom-0">
           <div class="am-fl am-cf">
-            <strong class="am-text-primary am-text-lg">编辑</strong> /
-            <small>edit</small>
+            <strong class="am-text-primary am-text-lg">添加</strong> /
+            <small>add</small>
           </div>
         </div>
 
@@ -14,33 +14,16 @@
           <div class="am-tabs am-margin" data-am-tabs>
             <ul class="am-tabs-nav am-nav am-nav-tabs">
               <li class="am-active"><a href="#tab1">基本信息</a></li>
+              <li><a href="#tab2">详细描述</a></li>
             </ul>
 
             <div class="am-tabs-bd">
               <div class="am-tab-panel am-fade am-in am-active" id="tab1">
 
-                <div class="am-g am-margin-top">
-                  <div class="am-u-sm-4 am-u-md-2 am-text-right">布局名称</div>
-                  <div class="am-u-sm-8 am-u-md-10">
-                    <select data-am-selected="{btnSize: 'sm'}">
-                      <option value="option1">选项一...</option>
-                      <option value="option2">选项二.....</option>
-                      <option value="option3">选项三........</option>
-                    </select>
-                  </div>
-                </div>
-
                 <div class="am-g am-margin-top-sm">
                   <div class="am-u-sm-4 am-u-md-2 am-text-right">页面名称</div>
                   <div class="am-u-sm-8 am-u-md-2 am-u-end col-end">
-                    <input id="title" name="title" type="text" class="am-input-sm" value="">
-                  </div>
-                </div>
-
-                <div class="am-g am-margin-top">
-                  <div class="am-u-sm-4 am-u-md-2 am-text-right">页面类型</div>
-                  <div class="am-u-sm-8 am-u-md-10">
-                    <input id="type" name="type" type="text" class="am-input-sm" value="">
+                    <input id="name" name="name" type="text" class="am-input-sm" value="">
                   </div>
                 </div>
 
@@ -56,22 +39,18 @@
                   </div>
                 </div>
 
-                <div class="am-g am-margin-top">
-                  <div class="am-u-sm-4 am-u-md-2 am-text-right">显示状态</div>
-                  <div class="am-u-sm-8 am-u-md-10">
-                    <div class="am-btn-group" data-am-button>
-                      <label class="am-btn am-btn-default am-btn-xs">
-                        <input type="radio" name="status" id="option1"> 正常
-                      </label>
-                      <label class="am-btn am-btn-default am-btn-xs">
-                        <input type="radio" name="status" id="option2"> 待审核
-                      </label>
-                      <label class="am-btn am-btn-default am-btn-xs">
-                        <input type="radio" name="status" id="option3"> 不显示
-                      </label>
+              </div>
+
+              <div class="am-tab-panel am-fade" id="tab2">
+                  <div class="am-g am-margin-top">
+                      <input type="text" name="title" class="am-input-sm" value="" placeholder="输入标题">
+                  </div>
+
+                  <div class="am-g am-margin-top-sm">
+                    <div class="am-u-sm-12" id="editormd">
+                      <textarea style="display:none;" name="content"></textarea>
                     </div>
                   </div>
-                </div>
 
               </div>
 
@@ -85,15 +64,26 @@
         </form>
     </div>
 
-{include file="pages/footer" /}
+{include file="singles/footer" /}
 <script>
-
+var token = '{$state.qiniu.token}';
+var upload = '{$state.qiniu.upload}';
+var domain = '{$state.qiniu.domain}';
 $(function() {
   $('#datetimepicker').datetimepicker({
     language:  'zh-CN',
     format: 'yyyy-mm-dd hh:ii:ss'
   });
-
+  var editor = editormd("editormd", {
+      imageUpload    : true,
+      imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+      imageUploadURL : upload,
+      token : token,
+      domain : domain,
+      width   : "100%",
+      height  : 600,
+      path : "/js/editormd/"
+  });
   var $form = $('#edit-form');
   var $modal = $('#loading-modal');
 
@@ -108,7 +98,7 @@ $(function() {
 
       $.ajax({
         type: "POST",
-        url: "/ajax/pages/",
+        url: "/ajax/singles",
         dataType: "json",
         data:{data:data},
         beforeSend:function(){
@@ -116,9 +106,9 @@ $(function() {
         },
         success: function(res){
             if ( res.code == 200 && res.data != '') {
-                // location.reload()
+                location.reload()
             }else{
-                // $modal.modal('close');
+                $modal.modal('close');
             }
         }
       });

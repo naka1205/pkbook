@@ -6,7 +6,7 @@ class Category extends Common
 
     public function __construct($_id)
     {
-        $this->data = !empty($_id) ? Source::categories($_id) : [];
+        $this->data = !empty($_id) ? Source::categories($_id) : false;
     }
 
     public function posts(){

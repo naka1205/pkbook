@@ -8,6 +8,7 @@ class Posts
 
     public static function add(Context $ctx, $next){
         $ctx->status = 200;
+        $ctx->state['qiniu'] = Upload::qiniu();
         yield $ctx->render("posts/add");
     }
 

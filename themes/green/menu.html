@@ -5,9 +5,9 @@
 
     <div class="am-collapse am-topbar-collapse" id="blog-collapse">
         <ul class="am-nav am-nav-pills am-topbar-nav">
-            <li class="am-active"><a href="/index.html">首页</a></li>
+            <li {if $state['page_id'] == 'index' } class="am-active" {/if} ><a href="/index.html">首页</a></li>
             {notempty name="state.categories"}
-            <li class="am-dropdown" data-am-dropdown>
+            <li class="am-dropdown {if $state['page_id'] == 'categories' } am-active {/if} " data-am-dropdown>
             <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
                 分类 <span class="am-icon-caret-down"></span>
             </a>
@@ -18,8 +18,8 @@
             </ul>
             </li>
             {/notempty}
-            <li><a href="/tags.html">标签</a></li>
-            <li><a href="/about.html">关于我们</a></li>
+            <li {if $state['page_id'] == 'tags' } class="am-active" {/if}><a href="/tags.html">标签</a></li>
+            <li {if $state['page_id'] == 'about' } class="am-active" {/if}><a href="/about.html">关于我们</a></li>
         </ul>
         <form class="am-topbar-form am-topbar-right am-form-inline" role="search">
             <div class="am-input-group am-input-group-sm">

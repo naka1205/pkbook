@@ -67,7 +67,7 @@
 <script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.2"></script>
 <script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.2"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
-{notempty name="state.page_id"}
+{if strlen($state['page_id']) == 16 }
 <script type="text/javascript" src="/assets/js/src/gitm.min.js?v=5.1.2"></script>
 <script>
 if ( document.getElementById("comments") ) {
@@ -84,7 +84,7 @@ if ( document.getElementById("comments") ) {
     gm.render('comments')   
 }
 </script>
-{/notempty}
+{/if}
 <script>
 
 // hljs.initHighlightingOnLoad();   

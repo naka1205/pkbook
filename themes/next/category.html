@@ -23,6 +23,9 @@
                     </article>
                     {/volist}
                 </div>
+                {if 1 != intval($state['pagination']['content']['pages']) }
+                {include file="next/pagination" /}
+                {/if}
             </div>
         </div>
     </div>

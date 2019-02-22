@@ -182,7 +182,7 @@ class Source
         if ( isset($_categories[$_id]) ) {
             return $_categories[$_id];
         }
-        return [];
+        return false;
     }
 
     public static function findTag($_id){
@@ -190,7 +190,7 @@ class Source
         if ( isset($_tags[$_id]) ) {
             return $_tags[$_id];
         }
-        return [];
+        return false;
     }
 
     public static function find($_id,$name=''){
@@ -301,6 +301,8 @@ class Source
             }
             return 0;
         });
+
+
         return $data;
     }
 
@@ -316,7 +318,8 @@ class Source
 
         $configs = Config::all();
         $data = self::parse($contents);
-        $link = $configs['link']['domain'] . $configs['link']['posts'] . $configs['link']['suffix'];
+        // $link = $configs['link']['domain'] . $configs['link']['posts'] . $configs['link']['suffix'];
+        $link = $configs['link']['posts'] . $configs['link']['suffix'];
         $_date = date('Ymd',strtotime($data['date']));
 
         $link = str_replace (':_id',$data['_id'],$link);
@@ -343,7 +346,8 @@ class Source
 
     private static function parseCategory($post,&$_categories){
         $configs = Config::all();
-        $link = $configs['link']['domain'] . $configs['link']['category'] . '/index' . $configs['link']['suffix'];
+        // $link = $configs['link']['domain'] . $configs['link']['category'] . '/index' . $configs['link']['suffix'];
+        $link = $configs['link']['category'] . '/index' . $configs['link']['suffix'];
 
         $_id = $post['_id'];
         $title = $post['categories'];
@@ -378,7 +382,8 @@ class Source
         $_id = $post['_id'];
         $data = explode(',',$post['tags']);
         $tags = [];
-        $link = $configs['link']['domain'] . $configs['link']['tags'] . '/index' .  $configs['link']['suffix'];
+        // $link = $configs['link']['domain'] . $configs['link']['tags'] . '/index' .  $configs['link']['suffix'];
+        $link = $configs['link']['tags'] . '/index' .  $configs['link']['suffix'];
         foreach ($data as $title) {
             $_tid = self::key($title);
             if ( !isset($_tags[$_tid]) ) {
@@ -418,7 +423,8 @@ class Source
         $data = self::parse($contents);
         //获取 目录名称
         $name = basename(dirname($source));
-        $link = $configs['link']['domain'] . $configs['link']['page'] . $configs['link']['suffix'];
+        // $link = $configs['link']['domain'] . $configs['link']['page'] . $configs['link']['suffix'];
+        $link = $configs['link']['page'] . $configs['link']['suffix'];
 
         $data['id'] = 0;
         $data['_id'] = self::key($name);

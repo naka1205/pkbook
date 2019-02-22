@@ -7,7 +7,7 @@ class Post extends Common
 
     public function __construct($_id='')
     {
-        $this->data = !empty($_id) ? Source::posts($_id) : [];
+        $this->data = !empty($_id) ? Source::posts($_id) : false;
     }
 
     public function save($data = []){

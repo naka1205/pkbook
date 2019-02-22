@@ -47,7 +47,7 @@
                                 </li>
                                 <li class="post-copyright-link">
                                     <strong>本文链接：</strong>
-                                    <a href="{$state.post.link}" title="{$state.post.title}">{$state.post.link}</a>
+                                    <a href="{$state.link.domain}{$state.post.link}" title="{$state.post.title}">{$state.link.domain}{$state.post.link}</a>
                                 </li>
                                 <li class="post-copyright-license">
                                     <strong>版权声明：</strong>本博客所有文章除特别声明外，均采用
@@ -62,19 +62,20 @@
                                 {/volist}
                             </div>
                             <div class="post-nav">
-                                {notempty name="state.post.next_id"}
+                                
+                                {notempty name="state.post.prev_id"}
                                 <div class="post-nav-next post-nav-item">
-                                    <a href="{$state.post.next_link}" rel="next" title="{$state.post.next_title}">
+                                    <a href="{$state.post.prev_link}" rel="next" title="{$state.post.prev_title}">
                                         <i class="fa fa-chevron-left"></i>
-                                        {$state.post.next_title}
+                                        {$state.post.prev_title}
                                     </a>
                                 </div>
                                 {/notempty}
                                 <span class="post-nav-divider"></span>
-                                {notempty name="state.post.prev_id"}
+                                {notempty name="state.post.next_id"}
                                 <div class="post-nav-prev post-nav-item">
-                                    <a href="{$state.post.prev_link}" rel="prev" title="{$state.post.prev_title}">
-                                        {$state.post.prev_title}
+                                    <a href="{$state.post.next_link}" rel="prev" title="{$state.post.next_title}">
+                                        {$state.post.next_title}
                                         <i class="fa fa-chevron-right"></i>
                                     </a>
                                 </div>

@@ -15,9 +15,22 @@ class Ajax
         }
     }
 
-    public static function posts(Context $ctx, $next, $vars){
-        $_id = isset($vars[0]) ? $vars[0] : '';
+    public static function singles(Context $ctx, $next){
         $data = self::parse($ctx->post['data']);
+        $_id = isset($data['_id']) ? $data['_id'] : '';
+
+        $data['date'] = isset($data['date']) ? $data['date'] : date('Y-m-d h:i:s');
+
+        $single = new Single($_id);
+        $bool = $single->save($data) ? true : false;
+
+        $ctx->status = 200;
+        $ctx->body = $bool;
+    }
+
+    public static function posts(Context $ctx, $next, $vars){
+        $data = self::parse($ctx->post['data']);
+        $_id = isset($data['_id']) ? $data['_id'] : '';
 
         $data['date'] = isset($data['date']) ? $data['date'] : date('Y-m-d h:i:s');
         $data['comment'] = isset($data['comment']) && $data['comment'] == 1 ? true : false;

@@ -16,28 +16,55 @@ class Show
     public static function base(Context $ctx, $next, $vars){
 
         $configs = Config::all();
+        $ctx->state['link'] = $configs['link'];
+        $ctx->state['contact'] = $configs['contact'];
+
+        $friend = [];
+        foreach ($configs['friend'] as $key => $value) {
+            $friend[] = [
+                'link' => $key,
+                'name' => $value
+            ];
+        }
+        $ctx->state['friend'] = $friend;
+
+        $sidebar = [];
+        $sidebar['tags'] = [];
+        $sidebar['posts'] = [];
+        $configs['sidebar']['tags'] = explode(',',$configs['sidebar']['tags']);
+        foreach ($configs['sidebar']['tags'] as $key => $value) {
+            $tag = new Tag($value);
+            if ( !$tag->data ) {
+                continue;
+            }
+            $sidebar['tags'][] = $tag;
+        }
+
+        $configs['sidebar']['posts'] = explode(',',$configs['sidebar']['posts']);
+        foreach ($configs['sidebar']['posts'] as $key => $value) {
+            $post = new Post($value);
+            if ( !$post->data ) {
+                continue;
+            }
+            $sidebar['posts'][] = $post;
+        }
+        $ctx->state['sidebar'] = $sidebar;
 
         self::$pagenum = intval($configs['site']['pagenum']);
         $ctx->state['site'] = $configs['site'];
         $ctx->state['github'] = $configs['github'];
 
-        $link = [
-            'domain'        =>  "/show",
-            'suffix'        =>  ".html"
-        ];
-        $ctx->state['link'] = $link;
-
-        $categories = Category::select([]);
+        $categories = ( yield Category::select([]) );
         $ctx->state['categories'] = $categories;
 
-        $singles = Single::select([]);
+        $singles = ( yield Single::select([]) );
         $ctx->state['singles'] = $singles;
         $ctx->state['single'] = current($singles);
         
         $counts = [];
-        $counts['tags'] = Tag::count([]);
-        $counts['posts'] = Post::count([]);
-        $counts['categories'] = Category::count([]);
+        $counts['tags'] = ( yield Tag::count([]) );
+        $counts['posts'] = ( yield Post::count([]) );
+        $counts['categories'] = ( yield Category::count([]) );
 
         $ctx->state['counts'] = $counts;
     }
@@ -46,11 +73,11 @@ class Show
         $page = isset($ctx->get["page"]) && intval($ctx->get["page"]) ? intval($ctx->get["page"]) : 1;
         $where = [];
         $link = '/show/index.html?page=:page';
-        $posts = Post::select($where,$page,self::$pagenum,$link);
+        $posts = ( yield Post::select($where,$page,self::$pagenum,$link) );
         $ctx->status = 200;
 
         $ctx->state['title'] = '首页';
-        $ctx->state['page_id'] = '';
+        $ctx->state['page_id'] = 'index';
         $ctx->state["posts"] = $posts['data'];
         $ctx->state["pagination"] = $posts['pagination'];
         yield $ctx->show("index");
@@ -61,7 +88,7 @@ class Show
 
         $ctx->status = 200;
         $ctx->state['title'] = '分类';
-        $ctx->state['page_id'] = '';
+        $ctx->state['page_id'] = 'categories';
         $ctx->state['posts'] = $posts['data'];
         $ctx->state["pagination"] = $posts['pagination'];
 
@@ -74,7 +101,7 @@ class Show
         $category = new Category($vars[0]);
         $link = '/show/category/'.$vars[0].'.html?page=:page';
         $where['categories_value'] = $category['title'];
-        $posts = Post::select($where,$page,self::$pagenum,$link);
+        $posts = ( yield Post::select($where,$page,self::$pagenum,$link) );
 
         $ctx->status = 200;
         $ctx->state['title'] = '分类';
@@ -87,7 +114,7 @@ class Show
 
     public static function tags(Context $ctx, $next, $vars){
 
-        $tags = Tag::select([]);
+        $tags = ( yield Tag::select([]) );
 
         $ctx->status = 200;
         $ctx->state['title'] = '标签';
@@ -103,7 +130,7 @@ class Show
         $tag = new Tag($vars[0]);
         $link = '/show/tag/'.$vars[0].'/index.html?page=:page';
         $where['tag_value'] = $tag['title'];
-        $posts = Post::select($where,$page,self::$pagenum,$link);
+        $posts = ( yield Post::select($where,$page,self::$pagenum,$link) );
 
         $ctx->status = 200;
         $ctx->state['page_id'] = '';

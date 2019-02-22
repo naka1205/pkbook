@@ -1,0 +1,1148 @@
+.gitm-container {
+    font-family: sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+    word-wrap: break-word;
+  }
+  
+  .gitm-container * {
+    box-sizing: border-box;
+  }
+  
+  .gitm-container *:disabled {
+    cursor: not-allowed;
+  }
+  
+  .gitm-container a,
+  .gitm-container a:visited {
+    cursor: pointer;
+    text-decoration: none;
+    color: #555;
+  }
+  
+  .gitm-container a:hover {
+    text-decoration: underline;
+  }
+  
+  .gitm-container .gitm-hidden {
+    display: none;
+  }
+  
+  .gitm-container .gitm-spinner-icon {
+    fill: #333;
+  
+    -webkit-animation: gitm-spin 1s steps(12) infinite;
+    animation: gitm-spin 1s steps(12) infinite;
+  }
+  
+  @-webkit-keyframes gitm-spin {
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg)
+    }
+  }
+  
+  @keyframes gitm-spin {
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg)
+    }
+  }
+  
+  .gitm-root-container {
+    margin: 19px 0;
+  }
+  
+  .gitm-header-container {
+    margin: 19px 0;
+  }
+  
+  .gitm-header-like-btn,
+  .gitm-comment-like-btn {
+    cursor: pointer;
+  }
+  
+  .gitm-comment-like-btn {
+    float: right;
+  }
+  
+  .gitm-comment-like-btn.liked {
+    color: #F44336;
+  }
+  
+  .gitm-header-like-btn svg {
+    vertical-align: middle;
+    height: 30px;
+  }
+  
+  .gitm-comment-like-btn svg {
+    vertical-align: middle;
+    height: 20px;
+  }
+  
+  .gitm-header-like-btn.liked svg,
+  .gitm-comment-like-btn.liked svg {
+    fill: #F44336;
+  }
+  
+  a.gitm-header-issue-link,
+  a.gitm-header-issue-link:visited {
+    float: right;
+    line-height: 30px;
+    color: #666;
+  }
+  
+  a.gitm-header-issue-link:hover {
+    color: #666;
+  }
+  
+  .gitm-comments-loading,
+  .gitm-comments-error,
+  .gitm-comments-empty {
+    text-align: center;
+    margin: 50px 0;
+  }
+  
+  .gitm-comments-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0 0 38px;
+  }
+  
+  .gitm-comment,
+  .gitm-editor-container {
+    position: relative;
+    min-height: 60px;
+    padding-left: 60px;
+    margin: 19px 0;
+  }
+  
+  .gitm-comment-avatar,
+  .gitm-editor-avatar {
+    float: left;
+    margin-left: -60px;
+  }
+  
+  .gitm-comment-avatar,
+  .gitm-comment-avatar-img,
+  .gitm-comment-avatar,
+  .gitm-editor-avatar-img,
+  .gitm-editor-avatar svg {
+    width: 44px;
+    height: 44px;
+    border-radius: 3px;
+  }
+  
+  .gitm-editor-avatar .gitm-github-icon {
+    fill: #fff;
+    background-color: #333;
+  }
+  
+  .gitm-comment-main,
+  .gitm-editor-main {
+    position: relative;
+    border: 1px solid #CFD8DC;
+    border-radius: 0;
+  }
+  
+  .gitm-editor-main::before,
+  .gitm-editor-main::after,
+  .gitm-comment-main::before,
+  .gitm-comment-main::after {
+    position: absolute;
+    top: 11px;
+    left: -16px;
+    display: block;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    content: "";
+    border-color: transparent;
+    border-style: solid solid outset;
+  }
+  
+  .gitm-editor-main::before,
+  .gitm-comment-main::before {
+    border-width: 8px;
+    border-right-color: #CFD8DC;
+  }
+  
+  .gitm-editor-main::after,
+  .gitm-comment-main::after {
+    margin-top: 1px;
+    margin-left: 2px;
+    border-width: 7px;
+    border-right-color: #fff;
+  }
+  
+  .gitm-comment-header {
+    margin: 12px 15px;
+    color: #666;
+    background-color: #fff;
+    border-radius: 3px;
+  }
+  
+  .gitm-editor-header {
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #CFD8DC;
+  }
+  
+  a.gitm-comment-name,
+  a.gitm-comment-name:visited {
+    font-weight: 600;
+    color: #666;
+  }
+  
+  .gitm-editor-tabs {
+    margin-bottom: -1px;
+    margin-left: -1px;
+  }
+  
+  .gitm-editor-tab {
+    display: inline-block;
+    padding: 11px 12px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #666;
+    text-decoration: none;
+    background-color: transparent;
+    border-width: 0 1px;
+    border-style: solid;
+    border-color: transparent;
+    border-radius: 0;
+  
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+  
+    outline: none;
+  }
+  
+  .gitm-editor-tab.gitm-selected {
+    color: #333;
+    background-color: #fff;
+    border-color: #CFD8DC;
+  }
+  
+  .gitm-editor-login {
+    float: right;
+    margin-top: -30px;
+    margin-right: 15px;
+  }
+  
+  a.gitm-footer-project-link,
+  a.gitm-footer-project-link:visited,
+  a.gitm-editor-login-link,
+  a.gitm-editor-login-link:visited {
+    color: #2196F3;
+  }
+  
+  a.gitm-editor-logout-link,
+  a.gitm-editor-logout-link:visited {
+    color: #666;
+  }
+  
+  a.gitm-editor-logout-link:hover {
+    color: #2196F3;
+    text-decoration: none;
+  }
+  
+  .gitm-comment-body {
+    position: relative;
+    margin: 12px 15px;
+    overflow: hidden;
+    border-radius: 3px;
+  }
+  
+  .gitm-comment-body-folded {
+    cursor: pointer;
+  }
+  
+  .gitm-comment-body-folded::before {
+    display: block !important;
+    content: "";
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    bottom: 50px;
+    pointer-events: none;
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0), rgba(255, 255, 255, .9));
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .9));
+  }
+  
+  .gitm-comment-body-folded::after {
+    display: block !important;
+    content: "Click to Expand" !important;
+    text-align: center;
+    color: #666;
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    left: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: rgba(255, 255, 255, .9);
+  }
+  
+  .gitm-editor-body {
+    margin: 0;
+  }
+  
+  .gitm-comment-body > *:first-child,
+  .gitm-editor-preview > *:first-child {
+    margin-top: 0 !important;
+  }
+  
+  .gitm-comment-body > *:last-child,
+  .gitm-editor-preview > *:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  .gitm-editor-body textarea {
+    display: block;
+    width: 100%;
+    min-height: 150px;
+    max-height: 500px;
+    padding: 16px;
+    resize: vertical;
+  
+    max-width: 100%;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+  
+    background-color: #fff;
+  
+    color: #333;
+    vertical-align: middle;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    box-shadow: none;
+  
+    overflow: visible;
+  }
+  
+  .gitm-editor-body textarea:focus {
+    background-color: #fff;
+  }
+  
+  .gitm-editor-preview {
+    min-height: 150px;
+  
+    padding: 16px;
+    background-color: transparent;
+  
+    width: 100%;
+    font-size: 14px;
+  
+    line-height: 1.5;
+    word-wrap: break-word;
+  }
+  
+  .gitm-editor-footer {
+    padding: 0;
+    margin-top: 10px;
+  }
+  
+  .gitm-editor-footer::after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+  
+  a.gitm-editor-footer-tip {
+    display: inline-block;
+    padding-top: 10px;
+    font-size: 12px;
+    color: #666;
+  }
+  
+  a.gitm-editor-footer-tip:hover {
+    color: #2196F3;
+    text-decoration: none;
+  }
+  
+  .gitm-comments-pagination {
+    list-style: none;
+    text-align: right;
+    border-radius: 0;
+    margin: -19px 0 19px 0;
+  }
+  
+  .gitm-comments-page-item {
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid #CFD8DC;
+    margin-left: -1px;
+    padding: .25rem .5rem;
+  }
+  
+  .gitm-comments-page-item:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .gitm-comments-page-item.gitm-selected {
+    background-color: #f5f5f5;
+  }
+  
+  .gitm-editor-submit,
+  .gitm-comments-init-btn {
+    color: #fff;
+    background-color: #00BCD4;
+  
+    position: relative;
+    display: inline-block;
+    padding: 7px 13px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-size: 110% 110%;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  
+  .gitm-editor-submit:hover,
+  .gitm-comments-init-btn:hover {
+    background-color: #00ACC1;
+  }
+  
+  .gitm-comments-init-btn:disabled,
+  .gitm-editor-submit:disabled {
+    color: rgba(255,255,255,0.75);
+    background-color: #4DD0E1;
+    box-shadow: none;
+  }
+  
+  .gitm-editor-submit {
+    float: right;
+  }
+  
+  .gitm-footer-container {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: right;
+    font-size: 12px;
+  }
+  
+  /*
+   * Markdown CSS
+   * Copied from https://github.com/sindresorhus/github-markdown-css
+   */
+  .gitm-markdown {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    line-height: 1.5;
+    color: #333;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 16px;
+    line-height: 1.5;
+    word-wrap: break-word;
+  }
+  
+  .gitm-markdown .pl-c {
+    color: #969896;
+  }
+  
+  .gitm-markdown .pl-c1,
+  .gitm-markdown .pl-s .pl-v {
+    color: #0086b3;
+  }
+  
+  .gitm-markdown .pl-e,
+  .gitm-markdown .pl-en {
+    color: #795da3;
+  }
+  
+  .gitm-markdown .pl-smi,
+  .gitm-markdown .pl-s .pl-s1 {
+    color: #333;
+  }
+  
+  .gitm-markdown .pl-ent {
+    color: #63a35c;
+  }
+  
+  .gitm-markdown .pl-k {
+    color: #a71d5d;
+  }
+  
+  .gitm-markdown .pl-s,
+  .gitm-markdown .pl-pds,
+  .gitm-markdown .pl-s .pl-pse .pl-s1,
+  .gitm-markdown .pl-sr,
+  .gitm-markdown .pl-sr .pl-cce,
+  .gitm-markdown .pl-sr .pl-sre,
+  .gitm-markdown .pl-sr .pl-sra {
+    color: #183691;
+  }
+  
+  .gitm-markdown .pl-v,
+  .gitm-markdown .pl-smw {
+    color: #ed6a43;
+  }
+  
+  .gitm-markdown .pl-bu {
+    color: #b52a1d;
+  }
+  
+  .gitm-markdown .pl-ii {
+    color: #f8f8f8;
+    background-color: #b52a1d;
+  }
+  
+  .gitm-markdown .pl-c2 {
+    color: #f8f8f8;
+    background-color: #b52a1d;
+  }
+  
+  .gitm-markdown .pl-c2::before {
+    content: "^M";
+  }
+  
+  .gitm-markdown .pl-sr .pl-cce {
+    font-weight: bold;
+    color: #63a35c;
+  }
+  
+  .gitm-markdown .pl-ml {
+    color: #693a17;
+  }
+  
+  .gitm-markdown .pl-mh,
+  .gitm-markdown .pl-mh .pl-en,
+  .gitm-markdown .pl-ms {
+    font-weight: bold;
+    color: #1d3e81;
+  }
+  
+  .gitm-markdown .pl-mq {
+    color: #008080;
+  }
+  
+  .gitm-markdown .pl-mi {
+    font-style: italic;
+    color: #333;
+  }
+  
+  .gitm-markdown .pl-mb {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .gitm-markdown .pl-md {
+    color: #bd2c00;
+    background-color: #ffecec;
+  }
+  
+  .gitm-markdown .pl-mi1 {
+    color: #55a532;
+    background-color: #eaffea;
+  }
+  
+  .gitm-markdown .pl-mc {
+    color: #ef9700;
+    background-color: #ffe3b4;
+  }
+  
+  .gitm-markdown .pl-mi2 {
+    color: #d8d8d8;
+    background-color: #808080;
+  }
+  
+  .gitm-markdown .pl-mdr {
+    font-weight: bold;
+    color: #795da3;
+  }
+  
+  .gitm-markdown .pl-mo {
+    color: #1d3e81;
+  }
+  
+  .gitm-markdown .pl-ba {
+    color: #595e62;
+  }
+  
+  .gitm-markdown .pl-sg {
+    color: #c0c0c0;
+  }
+  
+  .gitm-markdown .pl-corl {
+    text-decoration: underline;
+    color: #183691;
+  }
+  
+  .gitm-markdown .octicon {
+    display: inline-block;
+    vertical-align: text-top;
+    fill: currentColor;
+  }
+  
+  .gitm-markdown a {
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+  }
+  
+  .gitm-markdown a:active,
+  .gitm-markdown a:hover {
+    outline-width: 0;
+  }
+  
+  .gitm-markdown strong {
+    font-weight: inherit;
+  }
+  
+  .gitm-markdown strong {
+    font-weight: bolder;
+  }
+  
+  .gitm-markdown h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+  }
+  
+  .gitm-markdown img {
+    border-style: none;
+  }
+  
+  .gitm-markdown svg:not(:root) {
+    overflow: hidden;
+  }
+  
+  .gitm-markdown code,
+  .gitm-markdown kbd,
+  .gitm-markdown pre {
+    font-family: monospace, monospace;
+    font-size: 1em;
+  }
+  
+  .gitm-markdown hr {
+    box-sizing: content-box;
+    height: 0;
+    overflow: visible;
+  }
+  
+  .gitm-markdown input {
+    font: inherit;
+    margin: 0;
+  }
+  
+  .gitm-markdown input {
+    overflow: visible;
+  }
+  
+  .gitm-markdown [type="checkbox"] {
+    box-sizing: border-box;
+    padding: 0;
+  }
+  
+  .gitm-markdown * {
+    box-sizing: border-box;
+  }
+  
+  .gitm-markdown input {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+  
+  .gitm-markdown a {
+    color: #0366d6;
+    text-decoration: none;
+  }
+  
+  .gitm-markdown a:hover {
+    text-decoration: underline;
+  }
+  
+  .gitm-markdown strong {
+    font-weight: 600;
+  }
+  
+  .gitm-markdown hr {
+    height: 0;
+    margin: 15px 0;
+    overflow: hidden;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #dfe2e5;
+  }
+  
+  .gitm-markdown hr::before {
+    display: table;
+    content: "";
+  }
+  
+  .gitm-markdown hr::after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+  
+  .gitm-markdown table {
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+  
+  .gitm-markdown td,
+  .gitm-markdown th {
+    padding: 0;
+  }
+  
+  .gitm-markdown h1,
+  .gitm-markdown h2,
+  .gitm-markdown h3,
+  .gitm-markdown h4,
+  .gitm-markdown h5,
+  .gitm-markdown h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  .gitm-markdown h1 {
+    font-size: 32px;
+    font-weight: 600;
+  }
+  
+  .gitm-markdown h2 {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  
+  .gitm-markdown h3 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  
+  .gitm-markdown h4 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .gitm-markdown h5 {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .gitm-markdown h6 {
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  .gitm-markdown p {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .gitm-markdown blockquote {
+    margin: 0;
+  }
+  
+  .gitm-markdown ul,
+  .gitm-markdown ol {
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  .gitm-markdown ol ol,
+  .gitm-markdown ul ol {
+    list-style-type: lower-roman;
+  }
+  
+  .gitm-markdown ul ul ol,
+  .gitm-markdown ul ol ol,
+  .gitm-markdown ol ul ol,
+  .gitm-markdown ol ol ol {
+    list-style-type: lower-alpha;
+  }
+  
+  .gitm-markdown dd {
+    margin-left: 0;
+  }
+  
+  .gitm-markdown code {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 12px;
+  }
+  
+  .gitm-markdown pre {
+    margin-top: 0;
+    margin-bottom: 0;
+    font: 12px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  }
+  
+  .gitm-markdown .octicon {
+    vertical-align: text-bottom;
+  }
+  
+  .gitm-markdown .pl-0 {
+    padding-left: 0 !important;
+  }
+  
+  .gitm-markdown .pl-1 {
+    padding-left: 4px !important;
+  }
+  
+  .gitm-markdown .pl-2 {
+    padding-left: 8px !important;
+  }
+  
+  .gitm-markdown .pl-3 {
+    padding-left: 16px !important;
+  }
+  
+  .gitm-markdown .pl-4 {
+    padding-left: 24px !important;
+  }
+  
+  .gitm-markdown .pl-5 {
+    padding-left: 32px !important;
+  }
+  
+  .gitm-markdown .pl-6 {
+    padding-left: 40px !important;
+  }
+  
+  .gitm-markdown::before {
+    display: table;
+    content: "";
+  }
+  
+  .gitm-markdown::after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+  
+  .gitm-markdown>*:first-child {
+    margin-top: 0 !important;
+  }
+  
+  .gitm-markdown>*:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  .gitm-markdown a:not([href]) {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  .gitm-markdown .anchor {
+    float: left;
+    padding-right: 4px;
+    margin-left: -20px;
+    line-height: 1;
+  }
+  
+  .gitm-markdown .anchor:focus {
+    outline: none;
+  }
+  
+  .gitm-markdown p,
+  .gitm-markdown blockquote,
+  .gitm-markdown ul,
+  .gitm-markdown ol,
+  .gitm-markdown dl,
+  .gitm-markdown table,
+  .gitm-markdown pre {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+  
+  .gitm-markdown hr {
+    height: 0.25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #e1e4e8;
+    border: 0;
+  }
+  
+  .gitm-markdown blockquote {
+    padding: 0 1em;
+    color: #6a737d;
+    border-left: 0.25em solid #dfe2e5;
+  }
+  
+  .gitm-markdown blockquote>:first-child {
+    margin-top: 0;
+  }
+  
+  .gitm-markdown blockquote>:last-child {
+    margin-bottom: 0;
+  }
+  
+  .gitm-markdown kbd {
+    display: inline-block;
+    padding: 3px 5px;
+    font-size: 11px;
+    line-height: 10px;
+    color: #444d56;
+    vertical-align: middle;
+    background-color: #fafbfc;
+    border: solid 1px #c6cbd1;
+    border-bottom-color: #959da5;
+    border-radius: 0;
+    box-shadow: inset 0 -1px 0 #959da5;
+  }
+  
+  .gitm-markdown h1,
+  .gitm-markdown h2,
+  .gitm-markdown h3,
+  .gitm-markdown h4,
+  .gitm-markdown h5,
+  .gitm-markdown h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  
+  .gitm-markdown h1 .octicon-link,
+  .gitm-markdown h2 .octicon-link,
+  .gitm-markdown h3 .octicon-link,
+  .gitm-markdown h4 .octicon-link,
+  .gitm-markdown h5 .octicon-link,
+  .gitm-markdown h6 .octicon-link {
+    color: #1b1f23;
+    vertical-align: middle;
+    visibility: hidden;
+  }
+  
+  .gitm-markdown h1:hover .anchor,
+  .gitm-markdown h2:hover .anchor,
+  .gitm-markdown h3:hover .anchor,
+  .gitm-markdown h4:hover .anchor,
+  .gitm-markdown h5:hover .anchor,
+  .gitm-markdown h6:hover .anchor {
+    text-decoration: none;
+  }
+  
+  .gitm-markdown h1:hover .anchor .octicon-link,
+  .gitm-markdown h2:hover .anchor .octicon-link,
+  .gitm-markdown h3:hover .anchor .octicon-link,
+  .gitm-markdown h4:hover .anchor .octicon-link,
+  .gitm-markdown h5:hover .anchor .octicon-link,
+  .gitm-markdown h6:hover .anchor .octicon-link {
+    visibility: visible;
+  }
+  
+  .gitm-markdown h1 {
+    padding-bottom: 0.3em;
+    font-size: 2em;
+    border-bottom: 1px solid #eaecef;
+  }
+  
+  .gitm-markdown h2 {
+    padding-bottom: 0.3em;
+    font-size: 1.5em;
+    border-bottom: 1px solid #eaecef;
+  }
+  
+  .gitm-markdown h3 {
+    font-size: 1.25em;
+  }
+  
+  .gitm-markdown h4 {
+    font-size: 1em;
+  }
+  
+  .gitm-markdown h5 {
+    font-size: 0.875em;
+  }
+  
+  .gitm-markdown h6 {
+    font-size: 0.85em;
+    color: #6a737d;
+  }
+  
+  .gitm-markdown ul,
+  .gitm-markdown ol {
+    padding-left: 2em;
+  }
+  
+  .gitm-markdown ul ul,
+  .gitm-markdown ul ol,
+  .gitm-markdown ol ol,
+  .gitm-markdown ol ul {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  .gitm-markdown li>p {
+    margin-top: 16px;
+  }
+  
+  .gitm-markdown li+li {
+    margin-top: 0.25em;
+  }
+  
+  .gitm-markdown dl {
+    padding: 0;
+  }
+  
+  .gitm-markdown dl dt {
+    padding: 0;
+    margin-top: 16px;
+    font-size: 1em;
+    font-style: italic;
+    font-weight: 600;
+  }
+  
+  .gitm-markdown dl dd {
+    padding: 0 16px;
+    margin-bottom: 16px;
+  }
+  
+  .gitm-markdown table {
+    display: block;
+    width: 100%;
+    overflow: auto;
+  }
+  
+  .gitm-markdown table th {
+    font-weight: 600;
+  }
+  
+  .gitm-markdown table th,
+  .gitm-markdown table td {
+    padding: 6px 13px;
+    border: 1px solid #dfe2e5;
+  }
+  
+  .gitm-markdown table tr {
+    background-color: #fff;
+    border-top: 1px solid #c6cbd1;
+  }
+  
+  .gitm-markdown table tr:nth-child(2n) {
+    background-color: #f5f5f5;
+  }
+  
+  .gitm-markdown img {
+    max-width: 100%;
+    box-sizing: content-box;
+    background-color: #fff;
+  }
+  
+  .gitm-markdown code {
+    padding: 0;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(27,31,35,0.05);
+    border-radius: 0;
+  }
+  
+  .gitm-markdown code::before,
+  .gitm-markdown code::after {
+    letter-spacing: -0.2em;
+    content: "\00a0";
+  }
+  
+  .gitm-markdown pre {
+    word-wrap: normal;
+  }
+  
+  .gitm-markdown pre>code {
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  }
+  
+  .gitm-markdown .highlight {
+    margin-bottom: 16px;
+  }
+  
+  .gitm-markdown .highlight pre {
+    margin-bottom: 0;
+    word-break: normal;
+  }
+  
+  .gitm-markdown .highlight pre,
+  .gitm-markdown pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f5f5f5;
+    border-radius: 0;
+  }
+  
+  .gitm-markdown pre code {
+    display: inline;
+    max-width: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  }
+  
+  .gitm-markdown pre code::before,
+  .gitm-markdown pre code::after {
+    content: normal;
+  }
+  
+  .gitm-markdown .full-commit .btn-outline:not(:disabled):hover {
+    color: #005cc5;
+    border-color: #005cc5;
+  }
+  
+  .gitm-markdown kbd {
+    display: inline-block;
+    padding: 3px 5px;
+    font: 11px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    line-height: 10px;
+    color: #444d56;
+    vertical-align: middle;
+    background-color: #fcfcfc;
+    border: solid 1px #c6cbd1;
+    border-bottom-color: #959da5;
+    border-radius: 0;
+    box-shadow: inset 0 -1px 0 #959da5;
+  }
+  
+  .gitm-markdown :checked+.radio-label {
+    position: relative;
+    z-index: 1;
+    border-color: #0366d6;
+  }
+  
+  .gitm-markdown .task-list-item {
+    list-style-type: none;
+  }
+  
+  .gitm-markdown .task-list-item+.task-list-item {
+    margin-top: 3px;
+  }
+  
+  .gitm-markdown .task-list-item input {
+    margin: 0 0.2em 0.25em -1.6em;
+    vertical-align: middle;
+  }
+  
+  .gitm-markdown hr {
+    border-bottom-color: #eee;
+  }
+  

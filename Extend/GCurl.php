@@ -26,7 +26,7 @@ class GCurl{
             $this->combine($data);
         }
 
-        $header[] = "Accept: application/json";
+        $header[] = "Accept: application/json; charset=utf-8";
         $header[] = "User-Agent: Awesome-Octocat-App";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_HTTPHEADER,$header);
@@ -41,8 +41,7 @@ class GCurl{
 
     public function post($data = ''){
         $header[] = "Accept: application/json; charset=utf-8";
-        $header[] = "User-Agent: Awesome-Octocat-App
-        ";
+        $header[] = "User-Agent: Awesome-Octocat-App";
 
         if ( !empty($this->token) ) {
             $header[] = "Authorization: token " . $this->token;

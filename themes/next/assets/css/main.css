@@ -1027,6 +1027,7 @@ pre .javascript .function {
 }
 .comments {
   margin: 0;
+  padding: 0 5px;
 }
 .tag-cloud {
   text-align: center;

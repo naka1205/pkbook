@@ -1,11 +1,11 @@
-(function() {
-  var newEl = document.createElement('script'),
-      firstScriptTag = document.getElementsByTagName('script')[0];
+function pageChanged(){
+  document.querySelectorAll('pre code').forEach((block) => {
+      hljs.highlightBlock(block);
+      block.innerHTML = "<ol><li>" + block.innerHTML.replace(/\n/g,"\n</li><li>")+"\n</li></ol>"
+  });
 
-  if (firstScriptTag) {
-    newEl.async = 1;
-    newEl.src = '//' + window.location.hostname + ':35729/livereload.js';
-    firstScriptTag.parentNode.insertBefore(newEl, firstScriptTag);
+  if ( document.getElementById("comments") && typeof(gitm_config) != "undefined" ) {
+      var gm = new GitM(gitm_config)
+      gm.render('comments')   
   }
-
-})();
+}

@@ -53,7 +53,6 @@ $router->mount('/ajax', function() use ($router) {
     $router->post('/posts', ['Controllers\Ajax', 'posts']);
     $router->post('/posts/(\w+)', ['Controllers\Ajax', 'posts']);
     $router->post('/singles', ['Controllers\Ajax', 'singles']);
-    $router->post('/singles/(\w+)', ['Controllers\Ajax', 'singles']);
 
 });
 

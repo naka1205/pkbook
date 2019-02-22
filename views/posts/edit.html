@@ -34,8 +34,6 @@
                   </div>
                 </div>
 
-                
-
                 <div class="am-g am-margin-top">
                   <div class="am-u-sm-4 am-u-md-2 am-text-right">发布日期</div>
                   <div class="am-u-sm-8 am-u-md-10">
@@ -98,8 +96,6 @@
 
 {include file="posts/footer" /}
 <script>
-var _id = '{$state._id}';
-var id = '{$state.id}';
 var token = '{$state.qiniu.token}';
 var upload = '{$state.qiniu.upload}';
 var domain = '{$state.qiniu.domain}';
@@ -138,7 +134,7 @@ $(function() {
 
       $.ajax({
         type: "POST",
-        url: "/ajax/posts/"+_id,
+        url: "/ajax/posts",
         dataType: "json",
         data:{data:data},
         beforeSend:function(){

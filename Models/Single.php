@@ -6,7 +6,7 @@ class Single extends Common
 {
     public function __construct($_id)
     {
-        $this->data = !empty($_id) ? Source::singles($_id) : [];
+        $this->data = !empty($_id) ? Source::singles($_id) : false;
     }
 
     public function save($data = []){

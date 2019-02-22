@@ -43,6 +43,16 @@ class Publish
 
         $configs = Config::all();
 
+        $friend = [];
+        foreach ($configs['friend'] as $key => $value) {
+            $friend[] = [
+                'link' => $key,
+                'name' => $value
+            ];
+        }
+
+        $sidebar = self::sidebar($configs['sidebar']);
+
         $posts = Post::select([]);
         
         $num = intval($configs['site']['pagenum']);
@@ -76,8 +86,11 @@ class Publish
             $state = [];
             $state['link'] = $configs['link'];
             $state['site'] = $configs['site'];
+            $state['contact'] = $configs['contact'];
+            $state['friend'] = $friend;
+            $state['sidebar'] = $sidebar;
             $state['title'] = '首页';
-            $state['page_id'] = '';
+            $state['page_id'] = 'index';
             $state['posts'] = $posts['data'];
             $state['pagination'] = $posts['pagination'];
             $state['single'] = $single;
@@ -102,6 +115,14 @@ class Publish
         self::clear( PUBLIC_PATH , ['assets','page','category','tag','posts','categories.html','tags.html','index.html','404.html','search.json'] );
 
         $configs = Config::all();
+        $friend = [];
+        foreach ($configs['friend'] as $key => $value) {
+            $friend[] = [
+                'link' => $key,
+                'name' => $value
+            ];
+        }
+
         $singles = Single::select([]);
         $categories = Category::select([]);
         $single = current($singles);
@@ -115,12 +136,14 @@ class Publish
         $view = new Template($opt);
 
         foreach ($singles as $key => $value) {
-            $single = new Post($value['_id']);
+            $single = new Single($value['_id']);
 
             $state = [];
-            $state['page_id'] = '';
+            $state['page_id'] = $single['name'];
             $state['link'] = $configs['link'];
             $state['site'] = $configs['site'];
+            $state['contact'] = $configs['contact'];
+            $state['friend'] = $friend;
             $state['github'] = $configs['github'];
             $state['title'] = $value['title'];
             $state['single'] = $single;
@@ -134,8 +157,19 @@ class Publish
 
     public static function tags()
     {
-        self::clear(PUBLIC_PATH . DS . 'tag');
+        yield self::clear(PUBLIC_PATH . DS . 'tag');
         $configs = Config::all();
+
+        $friend = [];
+        foreach ($configs['friend'] as $key => $value) {
+            $friend[] = [
+                'link' => $key,
+                'name' => $value
+            ];
+        }
+
+        $sidebar = self::sidebar($configs['sidebar']);
+
         $num = intval($configs['site']['pagenum']);
 
         $categories = Category::select([]);
@@ -158,8 +192,11 @@ class Publish
         $state = [];
         $state['link'] = $configs['link'];
         $state['site'] = $configs['site'];
+        $state['contact'] = $configs['contact'];
+        $state['friend'] = $friend;
+        $state['sidebar'] = $sidebar;
         $state['title'] = '标签';
-        $state['page_id'] = '';
+        $state['page_id'] = 'tags';
         $state['single'] = $single;
         $state['singles'] = $singles;
         $state['categories'] = $categories;
@@ -183,9 +220,12 @@ class Publish
                 $posts = Post::select($where,$page,$num,$link);
 
                 $state = [];
-                $state['page_id'] = '';
+                $state['page_id'] = 'tags';
                 $state['link'] = $configs['link'];
                 $state['site'] = $configs['site'];
+                $state['contact'] = $configs['contact'];
+                $state['friend'] = $friend;
+                $state['sidebar'] = $sidebar;
                 $state['title'] = $value['title'];
                 $state['posts'] = $posts['data'];
                 $state['pagination'] = $posts['pagination'];
@@ -211,9 +251,19 @@ class Publish
 
     public static function categories()
     {
-        self::clear(PUBLIC_PATH . DS . 'category');
-
+        yield self::clear(PUBLIC_PATH . DS . 'category');
         $configs = Config::all();
+
+        $friend = [];
+        foreach ($configs['friend'] as $key => $value) {
+            $friend[] = [
+                'link' => $key,
+                'name' => $value
+            ];
+        }
+
+        $sidebar = self::sidebar($configs['sidebar']);
+
         $num = intval($configs['site']['pagenum']);
 
         $categories = Category::select([]);
@@ -235,8 +285,11 @@ class Publish
         $state = [];
         $state['link'] = $configs['link'];
         $state['site'] = $configs['site'];
+        $state['contact'] = $configs['contact'];
+        $state['friend'] = $friend;
+        $state['sidebar'] = $sidebar;
         $state['title'] = '分类';
-        $state['page_id'] = '';
+        $state['page_id'] = 'categories';
         $state['single'] = $single;
         $state['singles'] = $singles;
         $state['categories'] = $categories;
@@ -257,9 +310,12 @@ class Publish
                 $posts = Post::select($where,$page,$num,$link);
 
                 $state = [];
-                $state['page_id'] = '';
+                $state['page_id'] = 'categories';
                 $state['link'] = $configs['link'];
                 $state['site'] = $configs['site'];
+                $state['contact'] = $configs['contact'];
+                $state['friend'] = $friend;
+                $state['sidebar'] = $sidebar;
                 $state['title'] = $value['title'];
                 $state['posts'] = $posts['data'];
                 $state['pagination'] = $posts['pagination'];
@@ -284,20 +340,30 @@ class Publish
 
     public static function posts()
     {
-        self::assets();
-        self::clear(PUBLIC_PATH . DS . 'posts');
+        yield self::assets();
+        yield self::clear(PUBLIC_PATH . DS . 'posts');
+        
+        $configs = ( yield Config::all() );
 
-        $configs = Config::all();
+        $friend = [];
+        foreach ($configs['friend'] as $key => $value) {
+            $friend[] = [
+                'link' => $key,
+                'name' => $value
+            ];
+        }
 
-        $posts = Source::update();
-        $categories = Category::select([]);
-        $singles = Single::select([]);
+        $sidebar = self::sidebar($configs['sidebar']);
+
+        $posts = ( yield Source::update() );
+        $categories = ( yield Category::select([]) );
+        $singles = ( yield Single::select([]) );
         $single = current($singles);
 
         $counts = [];
-        $counts['tags'] = Tag::count([]);
-        $counts['posts'] = Post::count([]);
-        $counts['categories'] = Category::count([]);
+        $counts['tags'] = ( yield Tag::count([]) );
+        $counts['posts'] = ( yield Post::count([]) );
+        $counts['categories'] = ( yield Category::count([]) );
 
         $source = PUBLIC_PATH . str_replace ('/',DS, $configs['link']['posts']) . ".html";
         
@@ -323,7 +389,10 @@ class Publish
             $state['page_id'] = $page_id;
             $state['link'] = $configs['link'];
             $state['site'] = $configs['site'];
+            $state['contact'] = $configs['contact'];
+            $state['friend'] = $friend;
             $state['github'] = $configs['github'];
+            $state['sidebar'] = $sidebar;
             $state['title'] = $post['title'];
             $state['post'] = $post;
             $state['single'] = $single;
@@ -336,10 +405,8 @@ class Publish
 
             $file =  str_replace (':_id',$_id,$source);
             $file =  str_replace (':_date',$_date,$file);
+            
             yield $view->publish($configs['site']['theme'] . '/posts',$file);
-
-
-            //https://api.github.com/repos/用户名/仓库名/issues
             
         }
     }
@@ -348,6 +415,15 @@ class Publish
     public static function notFound()
     {
         $configs = Config::all();
+
+        $friend = [];
+        foreach ($configs['friend'] as $key => $value) {
+            $friend[] = [
+                'link' => $key,
+                'name' => $value
+            ];
+        }
+
         $categories = Category::select([]);
         $singles = Single::select([]);
 
@@ -362,8 +438,10 @@ class Publish
         $state = [];
         $state['link'] = $configs['link'];
         $state['site'] = $configs['site'];
+        $state['contact'] = $configs['contact'];
+        $state['friend'] = $friend;
         $state['title'] = '404';
-        $state['page_id'] = '';
+        $state['page_id'] = '404';
         $state['singles'] = $singles;
         $state['categories'] = $categories;
         $view->assign('state',$state);
@@ -390,6 +468,30 @@ class Publish
             $search[] = $data;
         }
         return file_put_contents(PUBLIC_PATH . DS . "search.json",json_encode($search));
+    }
+
+    public static function sidebar($data){
+        $result = [];
+        $result['tags'] = [];
+        $result['posts'] = [];
+        $tags = explode(',',$data['tags']);
+        foreach ($tags as $key => $value) {
+            $tag = new Tag($value);
+            if ( !$tag->data ) {
+                continue;
+            }
+            $result['tags'][] = $tag;
+        }
+
+        $posts = explode(',',$data['posts']);
+        foreach ($posts as $key => $value) {
+            $post = new Post($value);
+            if ( !$post->data ) {
+                continue;
+            }
+            $result['posts'][] = $post;
+        }
+        return $result;
     }
 
     public static function assets()

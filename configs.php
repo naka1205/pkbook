@@ -28,6 +28,16 @@ return [
         'theme'         => "next",
         'pagenum'       => 10
     ],
+    'contact' => [
+        'qq'            =>  "",
+        'weixin'        =>  "",
+        'weibo'         =>  "",
+        'github'        =>  ""
+    ],
+    'sidebar' => [
+        'tags'           =>  "demo,php",
+        'posts'         =>  "Hello world"
+    ],
     'qiniu' => [
         'domain'        =>  "",
         'upload'        =>  "",
