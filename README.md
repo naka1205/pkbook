@@ -1,6 +1,6 @@
 PKBook
 =================
-静态博客发布程序: 使用 [PHPKoa](https://github.com/naka1205/phpkoa) 开发，基本 `Markdown` 文档发布的轻量级博客管理应用。
+静态博客发布程序: 使用 [PHPKoa](https://github.com/naka1205/phpkoa) 开发，基于 `Markdown` 文档发布的轻量级博客管理应用。
 
 主要特性
 =======
