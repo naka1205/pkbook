@@ -61,14 +61,14 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
-<script type="text/javascript" src="/assets/js/src/utils.js?v=5.1.2"></script>
-<script type="text/javascript" src="/assets/js/src/motion.js?v=5.1.2"></script>
-<script type="text/javascript" src="/assets/js/src/scrollspy.js?v=5.1.2"></script>
-<script type="text/javascript" src="/assets/js/src/post-details.js?v=5.1.2"></script>
-<script type="text/javascript" src="/assets/js/src/bootstrap.js?v=5.1.2"></script>
+<script type="text/javascript" src="{$state.link.domain}/assets/js/src/utils.js?v=5.1.2"></script>
+<script type="text/javascript" src="{$state.link.domain}/assets/js/src/motion.js?v=5.1.2"></script>
+<script type="text/javascript" src="{$state.link.domain}/assets/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="{$state.link.domain}/assets/js/src/post-details.js?v=5.1.2"></script>
+<script type="text/javascript" src="{$state.link.domain}/assets/js/src/bootstrap.js?v=5.1.2"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
 {if strlen($state['page_id']) == 16 }
-<script type="text/javascript" src="/assets/js/src/gitm.min.js?v=5.1.2"></script>
+<script type="text/javascript" src="{$state.link.domain}/assets/js/src/gitm.min.js?v=5.1.2"></script>
 <script>
 if ( document.getElementById("comments") ) {
     var config = {
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 // Popup Window;
 var isfetched = false;
 // Search DB path;
-var path = "/search.json";
+var path =  "{$state.link.domain}/search.json";
 // monitor main search box;
 
 var onPopupClose = function (e) {

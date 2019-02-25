@@ -1,7 +1,7 @@
 <?php
 return [
     'admin' => [
-        'email'         => "171453643@qq.com",
+        'email'         => "xxx@qq.com",
         'password'      => "123456",
         'token'         => "",
         'pagenum'       => 10

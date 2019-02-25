@@ -1,6 +1,6 @@
 <nav role="navigation">
     <ul class="summary">
-        <li><a href="/index.html" target="blank" class="header">{$state.single.title}</a></li>
+        <li><a href="{$state.link.domain}/index.html" target="blank" class="header">{$state.single.title}</a></li>
         <li class="divider"></li>
         {volist name="state.categories" id="vo" key="k"}
         <li class="header">{$vo.title}</li>

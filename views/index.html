@@ -95,6 +95,7 @@
   $(document).ready(function(){
       iframeProgress(true)
       $('.link').click(function(e){
+          iframeProgress(true)
           $("#iframe-main").attr("src", $(this).attr('link'));
           $(".link").parent('li').removeClass('am-cf');
           $(this).parent('li').addClass('am-cf');
@@ -124,6 +125,7 @@
   
   function iframeProgress(bool){
       if ( bool == true ) {
+          console.log('iframeProgress')
           $.AMUI.progress.start();
           return;
       }

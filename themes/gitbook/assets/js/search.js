@@ -59,7 +59,7 @@ require([
             var $title = $('<h3>');
 
             var $link = $('<a>', {
-                'href': gitbook.state.basePath + item.url,
+                'href': item.url,
                 'text': item.title,
                 'data-is-search': 1
             });

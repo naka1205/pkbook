@@ -54,17 +54,17 @@
     </div>
 </div>
 <!--[if (gte IE 9)|!(IE)]><!-->
-<script src="/assets/js/jquery.min.js"></script>
+<script src="{$state.link.domain}/assets/js/jquery.min.js"></script>
 <!--<![endif]-->
 <!--[if lte IE 8 ]>
 <script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
-<script src="/assets/js/amazeui.ie8polyfill.min.js"></script>
+<script src="{$state.link.domain}/assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
-<script src="/assets/js/amazeui.min.js"></script>
+<script src="{$state.link.domain}/assets/js/amazeui.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
 {if strlen($state['page_id']) == 16 }
-<script type="text/javascript" src="/assets/js/gitm.am.min.js"></script>
+<script type="text/javascript" src="{$state.link.domain}/assets/js/gitm.am.min.js"></script>
 <script>
 if ( document.getElementById("comments") ) {
     var config = {
@@ -97,12 +97,14 @@ $('#search').click(function(e) {
     searchFunc();
 });
 
+var search_url =  "{$state.link.domain}/search.json";
+
 // search function;
 var searchFunc = function() {
     'use strict';
 
     $.ajax({
-        url: '/search.json',
+        url: search_url,
         dataType:"json",
         async: true,
         success: function(datas) {

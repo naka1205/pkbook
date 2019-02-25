@@ -2,7 +2,7 @@
     <div class="book-body">
         <div class="body-inner">
             <div class="book-header" role="navigation">
-                <h1><i class="fa fa-circle-o-notch fa-spin"></i><a href="/">{$state.single.title}</a></h1>
+                <h1><i class="fa fa-circle-o-notch fa-spin"></i><a href="{$state.link.domain}">{$state.single.title}</a></h1>
             </div>
             <div class="page-wrapper" tabindex="-1" role="main">
                 <div class="page-inner">
@@ -54,7 +54,7 @@ gitbook.push(function() {
         },
         "file": {},
         "gitbook": {},
-        "basePath": "..",
+        "basePath": "{$state.link.domain}",
         "book": {}
     });
 });
