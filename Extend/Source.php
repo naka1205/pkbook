@@ -338,7 +338,8 @@ class Source
         $data['issues'] = [];
 
         if ( $data['comment'] == true ) {
-            $data['issues'] = Github::create(['title' => $data['_id'],'body' => $data['description']]);
+            $body = $data['title'] . "\n\n" . $data['description'];
+            $data['issues'] = Github::create(['title' => $data['_id'],'body' => $body ]);
         }
 
         return $data;

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html class="theme-next mist use-motion" lang="zh-Hans">
-{include file="next/header" title="$state.title" link="$state.link.domain" sitename="$state.site.title" keywords="$state.site.keywords" description="$state.site.description" /}
+{include file="next/header" title="$state.title" description="$state.description" link="$state.link.domain" sitename="$state.site.title" keywords="$state.site.keywords" /}
 <body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
     <div class="container sidebar-position-left page-post-detail ">
         <div class="headband"></div>
@@ -9,7 +9,7 @@
                 <div class="site-brand-wrapper">
                     <div class="site-meta ">
                         <div class="custom-logo-site-title">
-                            <a href="/" class="brand" rel="start">
+                            <a href="{$state.link.domain}" class="brand" rel="start">
                                 <span class="logo-line-before"><i></i></span>
                                 <span class="site-title">{$state.site.title}</span>
                                 <span class="logo-line-after"><i</i></span>
@@ -70,9 +70,11 @@
 {if strlen($state['page_id']) == 16 }
 <script type="text/javascript" src="{$state.link.domain}/assets/js/src/gitm.min.js?v=5.1.2"></script>
 <script>
+var page_id = '{$state.page_id}';
 if ( document.getElementById("comments") ) {
     var config = {
-        id: '{$state.page_id}',
+        id: page_id,
+        title: '{$state.title}',
         owner: '{$state.github.owner}',
         repo: '{$state.github.repo}',
         oauth: {

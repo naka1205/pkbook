@@ -88,6 +88,7 @@ class Publish
             $state['site'] = $configs['site'];
             $state['contact'] = $configs['contact'];
             $state['friend'] = $friend;
+            $state['description'] = $configs['site']['description'];
             $state['sidebar'] = $sidebar;
             $state['title'] = '首页';
             $state['page_id'] = 'index';
@@ -138,6 +139,8 @@ class Publish
         foreach ($singles as $key => $value) {
             $single = new Single($value['_id']);
 
+            $description = $configs['site']['subtitle'] . $value['title'];
+
             $state = [];
             $state['page_id'] = $single['name'];
             $state['link'] = $configs['link'];
@@ -146,6 +149,7 @@ class Publish
             $state['friend'] = $friend;
             $state['github'] = $configs['github'];
             $state['title'] = $value['title'];
+            $state['description'] = $description;
             $state['single'] = $single;
             $state['singles'] = $singles;
             $state['categories'] = $categories;
@@ -189,12 +193,16 @@ class Publish
             'cache_path'	=>	TEMP_PATH . DS . 'themes'
         ];
         $view = new Template($opt);
+
+        $description = $configs['site']['subtitle'] . '文章标签';
+
         $state = [];
         $state['link'] = $configs['link'];
         $state['site'] = $configs['site'];
         $state['contact'] = $configs['contact'];
         $state['friend'] = $friend;
         $state['sidebar'] = $sidebar;
+        $state['description'] = $description;
         $state['title'] = '标签';
         $state['page_id'] = 'tags';
         $state['single'] = $single;
@@ -219,6 +227,8 @@ class Publish
                 $link = '/tag/'.$value['_id'].'/page/:page'. $configs['link']['suffix'];
                 $posts = Post::select($where,$page,$num,$link);
 
+                $description = $configs['site']['subtitle'] . $value['title'] . '标签';
+
                 $state = [];
                 $state['page_id'] = 'tags';
                 $state['link'] = $configs['link'];
@@ -226,6 +236,7 @@ class Publish
                 $state['contact'] = $configs['contact'];
                 $state['friend'] = $friend;
                 $state['sidebar'] = $sidebar;
+                $state['description'] = $description;
                 $state['title'] = $value['title'];
                 $state['posts'] = $posts['data'];
                 $state['pagination'] = $posts['pagination'];
@@ -282,12 +293,16 @@ class Publish
             'cache_path'	=>	TEMP_PATH . DS . 'themes'
         ];
         $view = new Template($opt);
+
+        $description = $configs['site']['subtitle'] . '栏目分类';
+
         $state = [];
         $state['link'] = $configs['link'];
         $state['site'] = $configs['site'];
         $state['contact'] = $configs['contact'];
         $state['friend'] = $friend;
         $state['sidebar'] = $sidebar;
+        $state['description'] = $description;
         $state['title'] = '分类';
         $state['page_id'] = 'categories';
         $state['single'] = $single;
@@ -309,6 +324,8 @@ class Publish
                 $link = '/category/'.$value['_id'].'/page/:page'. $configs['link']['suffix'];
                 $posts = Post::select($where,$page,$num,$link);
 
+                $description = $configs['site']['subtitle'] . $value['title'] . '分类';
+                
                 $state = [];
                 $state['page_id'] = 'categories';
                 $state['link'] = $configs['link'];
@@ -316,6 +333,7 @@ class Publish
                 $state['contact'] = $configs['contact'];
                 $state['friend'] = $friend;
                 $state['sidebar'] = $sidebar;
+                $state['description'] = $description;
                 $state['title'] = $value['title'];
                 $state['posts'] = $posts['data'];
                 $state['pagination'] = $posts['pagination'];
@@ -394,6 +412,7 @@ class Publish
             $state['github'] = $configs['github'];
             $state['sidebar'] = $sidebar;
             $state['title'] = $post['title'];
+            $state['description'] = $post['description'];
             $state['post'] = $post;
             $state['single'] = $single;
             $state['singles'] = $singles;
@@ -435,11 +454,15 @@ class Publish
         ];
 
         $view = new Template($opt);
+
+        $description = $configs['site']['subtitle'] . '页面未找到';
+
         $state = [];
         $state['link'] = $configs['link'];
         $state['site'] = $configs['site'];
         $state['contact'] = $configs['contact'];
         $state['friend'] = $friend;
+        $state['description'] = $description;
         $state['title'] = '404';
         $state['page_id'] = '404';
         $state['singles'] = $singles;

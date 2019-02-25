@@ -66,9 +66,11 @@
 {if strlen($state['page_id']) == 16 }
 <script type="text/javascript" src="{$state.link.domain}/assets/js/gitm.am.min.js"></script>
 <script>
+var page_id = '{$state.page_id}';
 if ( document.getElementById("comments") ) {
     var config = {
-        id: '{$state.page_id}',
+        id: page_id,
+        title: '{$state.title}',
         owner: '{$state.github.owner}',
         repo: '{$state.github.repo}',
         oauth: {
