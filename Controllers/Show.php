@@ -77,6 +77,7 @@ class Show
         $ctx->status = 200;
 
         $ctx->state['title'] = '首页';
+        $ctx->state['description'] = '首页';
         $ctx->state['page_id'] = 'index';
         $ctx->state["posts"] = $posts['data'];
         $ctx->state["pagination"] = $posts['pagination'];
@@ -88,6 +89,7 @@ class Show
 
         $ctx->status = 200;
         $ctx->state['title'] = '分类';
+        $ctx->state['description'] = '分类';
         $ctx->state['page_id'] = 'categories';
         $ctx->state['posts'] = $posts['data'];
         $ctx->state["pagination"] = $posts['pagination'];
@@ -105,6 +107,7 @@ class Show
 
         $ctx->status = 200;
         $ctx->state['title'] = '分类';
+        $ctx->state['description'] = '分类';
         $ctx->state['page_id'] = '';
         $ctx->state['posts'] = $posts['data'];
         $ctx->state["pagination"] = $posts['pagination'];
@@ -118,6 +121,7 @@ class Show
 
         $ctx->status = 200;
         $ctx->state['title'] = '标签';
+        $ctx->state['description'] = '标签';
         $ctx->state['page_id'] = '';
         $ctx->state['tags'] = $tags;
 
@@ -135,6 +139,7 @@ class Show
         $ctx->status = 200;
         $ctx->state['page_id'] = '';
         $ctx->state['title'] = $tag['title'];
+        $ctx->state['description'] = '标签';
         $ctx->state['posts'] = $posts['data'];
         $ctx->state["pagination"] = $posts['pagination'];
 
@@ -145,6 +150,8 @@ class Show
         $post = new Post($vars[1]);
         $ctx->status = 200;
         $ctx->state['post'] = $post;
+        $ctx->state['title'] = $post['title'];
+        $ctx->state['description'] = $post['description'];
         $ctx->state['page_id'] = $post['_id'];
         yield $ctx->show("posts");
     } 
@@ -152,6 +159,8 @@ class Show
     public static function single(Context $ctx, $next, $vars){
         $single = new Single($vars[0]);
         $ctx->status = 200;
+        $ctx->state['title'] = $single['title'];
+        $ctx->state['description'] = $single['description'];
         $ctx->state['single'] = $single;
         $ctx->state['page_id'] = '';
         yield $ctx->show("single");

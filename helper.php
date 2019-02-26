@@ -23,3 +23,14 @@ function msubstr($str,$length, $suffix=true, $start=0, $charset="utf-8") {
     if($suffix && $strlen>$length)$slice.='...';
     return $slice;
 }
+
+function cutstr_html($string){  
+    $string = strip_tags($string);  
+    $string = trim($string);  
+    $string = ereg_replace("\t","",$string);  
+    $string = ereg_replace("\r\n","",$string);  
+    $string = ereg_replace("\r","",$string);  
+    $string = ereg_replace("\n","",$string);  
+    $string = ereg_replace(" ","",$string);  
+    return trim($string);  
+}

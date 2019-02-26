@@ -68,7 +68,7 @@ class Source
             $md .= "comment: " . var_export($data['comment'],true) . "\n";
             $md .= "categories: " . $data['categories'] . "\n";
             $md .= "createtime: " . $data['createtime'] . "\n";
-            $md .= "description: " . $data['description'] . "\n";
+            $md .= "description: " . cutstr_html($data['description']) . "\n";
             $source = SOURCE_PATH . DS . "_posts" . DS . $_id . '.md';
         }
 
@@ -472,7 +472,7 @@ class Source
             $data['toc'] = $parsedown->toc();
 
             if ( empty($data['description']) ) {
-                $data['description'] = msubstr($parsedown->line($data['content']),100);
+                $data['description'] = msubstr( cutstr_html($parsedown->line($data['content'])) ,100);
             }
         }
 
