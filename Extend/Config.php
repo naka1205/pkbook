@@ -4,8 +4,8 @@ use Exception;
 class Config
 {
     public static $configs = [];
-    // public static $file = ROOT_PATH . DS . "configs.php";
-    public static $file = ROOT_PATH . DS . "debug.php";
+    public static $file = ROOT_PATH . DS . "configs.php";
+    // public static $file = ROOT_PATH . DS . "debug.php";
 	public static function __callstatic($method, $arguments) {
 
     }

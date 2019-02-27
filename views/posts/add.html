@@ -97,22 +97,34 @@
 var token = '{$state.qiniu.token}';
 var upload = '{$state.qiniu.upload}';
 var domain = '{$state.qiniu.domain}';
+var config;
+if ( upload != '' && domain != '' && token != '' ) {
+    config = {
+        imageUpload    : true,
+        imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+        imageUploadURL : upload,
+        token : token,
+        domain : domain,
+        width   : "100%",
+        height  : 600,
+        path : "/js/editormd/"
+    }
+}else{
+    config = {
+        width   : "100%",
+        height  : 600,
+        path : "/js/editormd/"
+    }
+}
 
 $(function() {
   $('#datetimepicker').datetimepicker({
     language:  'zh-CN',
     format: 'yyyy-mm-dd hh:ii:ss'
   });
-  var editor = editormd("editormd", {
-      imageUpload    : true,
-      imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-      imageUploadURL : upload,
-      token : token,
-      domain : domain,
-      width   : "100%",
-      height  : 600,
-      path : "/js/editormd/"
-  });
+
+  var editor = editormd("editormd",config );
+
   var $form = $('#add-form');
   var $modal = $('#loading-modal');
 

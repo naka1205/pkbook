@@ -34,6 +34,9 @@ return [
         'weibo'         =>  "",
         'github'        =>  ""
     ],
+    'friend' => [
+        'https://github.com/naka1205'   =>  "Naka1205"
+    ],
     'sidebar' => [
         'tags'           =>  "demo,php",
         'posts'         =>  "Hello world"
