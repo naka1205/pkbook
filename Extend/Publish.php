@@ -39,9 +39,9 @@ class Publish
 
     public static function index()
     {
-        self::clear(PUBLIC_PATH . DS . 'page');
+        yield self::clear(PUBLIC_PATH . DS . 'page');
 
-        $configs = Config::all();
+        $configs = ( yield Config::all() );
 
         $friend = [];
         foreach ($configs['friend'] as $key => $value) {
@@ -53,12 +53,12 @@ class Publish
 
         $sidebar = self::sidebar($configs['sidebar']);
 
-        $posts = Post::select([]);
+        $posts = ( yield Post::select([]) );
         
         $num = intval($configs['site']['pagenum']);
         $pages = ceil( count($posts) / $num );
 
-        $source = PUBLIC_PATH . DS . 'page' . DS . ':_id.html';
+        $source = PUBLIC_PATH . DS . 'page' . DS . ':_id' . $configs['link']['suffix'];
 
         $opt = [
             'view_suffix'   =>	'html',
@@ -69,8 +69,8 @@ class Publish
 
         $view = new Template($opt);
 
-        $categories = Category::select([]);
-        $singles = Single::select([]);
+        $categories = ( yield Category::select([]) );
+        $singles = ( yield Single::select([]) );
         $single = current($singles);
 
         $counts = [];
@@ -80,8 +80,8 @@ class Publish
 
         for ( $page = 1 ; $page <= $pages; $page++) { 
             $where = [];
-            $link = '/page/:page.html';
-            $posts = Post::select($where,$page,$num,$link);
+            $link = '/page/:page' . $configs['link']['suffix'];
+            $posts = ( yield Post::select($where,$page,$num,$link) );
 
             $state = [];
             $state['link'] = $configs['link'];
@@ -101,7 +101,7 @@ class Publish
             $view->assign('state',$state);
 
             if ( $page == 1 ) {
-                yield $view->publish($configs['site']['theme'] . '/index', PUBLIC_PATH . DS . "index.html");
+                yield $view->publish($configs['site']['theme'] . '/index', PUBLIC_PATH . DS . "index". $configs['link']['suffix']);
             }
             if ( $num == 1 ) {
                 return;
@@ -113,9 +113,33 @@ class Publish
 
     public static function single()
     {
-        self::clear( PUBLIC_PATH , ['assets','page','category','tag','posts','categories.html','tags.html','index.html','404.html','search.json'] );
+        
+        $configs = ( yield Config::all() );
 
-        $configs = Config::all();
+        $filter = ['assets','page','categories'. $configs['link']['suffix'],'tags'. $configs['link']['suffix'],'index'. $configs['link']['suffix'],'404'. $configs['link']['suffix'],'search.json'];
+
+        $posts_name = str_replace ('/:_date','', $configs['link']['posts']);
+        $posts_name = str_replace ('/:_id','', $posts_name);
+        $posts_name = explode ('/', $posts_name);
+        if ( isset($posts_name[1]) && !empty($posts_name[1]) ) {
+            $filter[] = $posts_name[1];
+        }
+        
+
+        $tags_name = str_replace ('/:_id','', $configs['link']['tags']);
+        $tags_name = explode ('/', $tags_name);
+        if (  isset($tags_name[1]) && !empty($tags_name[1]) ) {
+            $filter[] = $tags_name[1];
+        }
+
+        $category_name = str_replace ('/:_id','', $configs['link']['category']);
+        $category_name = explode ('/', $category_name);
+        if (  isset($category_name[1]) && !empty($category_name[1]) ) {
+            $filter[] = $category_name[1];
+        }
+
+        yield self::clear( PUBLIC_PATH , $filter );
+
         $friend = [];
         foreach ($configs['friend'] as $key => $value) {
             $friend[] = [
@@ -124,8 +148,8 @@ class Publish
             ];
         }
 
-        $singles = Single::select([]);
-        $categories = Category::select([]);
+        $singles = ( yield Single::select([]) );
+        $categories = ( yield Category::select([]) );
         $single = current($singles);
 
         $opt = [
@@ -155,14 +179,23 @@ class Publish
             $state['categories'] = $categories;
             $state['single'] = $single;
             $view->assign('state',$state);
-            yield $view->publish($configs['site']['theme'] . '/single', PUBLIC_PATH . DS . $single['name'] . ".html");
+            yield $view->publish($configs['site']['theme'] . '/single', PUBLIC_PATH . DS . $single['name'] . $configs['link']['suffix']);
         }
     }
 
     public static function tags()
     {
-        yield self::clear(PUBLIC_PATH . DS . 'tag');
-        $configs = Config::all();
+        $configs = ( yield Config::all() );
+
+        $tags_name = str_replace ('/:_id','', $configs['link']['tags']);
+        $tags_name = explode ('/', $tags_name);
+
+        if ( !isset($tags_name[1]) || empty($tags_name[1]) ) {
+            return;
+        }
+
+        $tags_path = $tags_name[1];
+        yield self::clear( PUBLIC_PATH . DS . $tags_path);
 
         $friend = [];
         foreach ($configs['friend'] as $key => $value) {
@@ -176,9 +209,9 @@ class Publish
 
         $num = intval($configs['site']['pagenum']);
 
-        $categories = Category::select([]);
-        $singles = Single::select([]);
-        $tags = Tag::select([]);
+        $categories = ( yield Category::select([]) );
+        $singles = ( yield Single::select([]) );
+        $tags = ( yield Tag::select([]) );
         $single = current($singles);
 
         $counts = [];
@@ -211,21 +244,21 @@ class Publish
         $state['tags'] = $tags;
         $state['counts'] = $counts;
         $view->assign('state',$state);
-        $bool = ( yield $view->publish($configs['site']['theme'] . '/tags', PUBLIC_PATH . DS . "tags.html") );
+        $bool = ( yield $view->publish($configs['site']['theme'] . '/tags', PUBLIC_PATH . DS . "tags" . $configs['link']['suffix']) );
         if ( !$bool ) {
             return;
         }
         foreach ($tags as $key => $value) {
             $where = ['_id'=>$value['posts']];
-            $posts = Post::select($where);
+            $posts = ( yield Post::select($where) );
             
             $pages = ceil( count($posts) / $num );
 
-            $source = PUBLIC_PATH . DS . 'tag' . DS . $value['_id'] . DS . 'page' . DS . ':_id.html';
+            $source = PUBLIC_PATH . DS . $tags_path . DS . $value['_id'] . DS . ':_id' . $configs['link']['suffix'];
 
             for ( $page = 1 ; $page <= $pages; $page++) { 
-                $link = '/tag/'.$value['_id'].'/page/:page'. $configs['link']['suffix'];
-                $posts = Post::select($where,$page,$num,$link);
+                $link = '/' . $tags_path . '/'.$value['_id'].'/:page'. $configs['link']['suffix'];
+                $posts = ( yield Post::select($where,$page,$num,$link) );
 
                 $description = $configs['site']['subtitle'] . $value['title'] . '标签';
 
@@ -248,7 +281,10 @@ class Publish
                 $view->assign('state',$state);
 
                 if ( $page == 1 ) {
-                    yield $view->publish($configs['site']['theme'] . '/tag', PUBLIC_PATH. DS . 'tag' . DS . $value['_id'] . DS . "index.html");
+                    yield $view->publish($configs['site']['theme'] . '/tag', PUBLIC_PATH. DS . 'tag' . DS . $value['_id'] . DS . "index" . $configs['link']['suffix']);
+                    if ( $pages == 1 ) {
+                        break;
+                    }
                 }
                 $file =  str_replace (':_id',$page,$source);   
                 yield $view->publish($configs['site']['theme'] . '/tag',$file);
@@ -262,8 +298,15 @@ class Publish
 
     public static function categories()
     {
-        yield self::clear(PUBLIC_PATH . DS . 'category');
-        $configs = Config::all();
+        $configs = ( yield Config::all() );
+
+        $category_name = str_replace ('/:_id','', $configs['link']['category']);
+        $category_name = explode ('/', $category_name);
+        if ( !isset($category_name[1]) || empty($category_name[1]) ) {
+            return;
+        }
+        $category_path = $category_name[1];
+        yield self::clear( PUBLIC_PATH . DS . $category_path);
 
         $friend = [];
         foreach ($configs['friend'] as $key => $value) {
@@ -277,8 +320,8 @@ class Publish
 
         $num = intval($configs['site']['pagenum']);
 
-        $categories = Category::select([]);
-        $singles = Single::select([]);
+        $categories =  ( yield Category::select([]) );
+        $singles =  ( yield Single::select([]) );
         $single = current($singles);
 
         $counts = [];
@@ -310,19 +353,19 @@ class Publish
         $state['categories'] = $categories;
         $state['counts'] = $counts;
         $view->assign('state',$state);
-        yield $view->publish($configs['site']['theme'] . '/categories', PUBLIC_PATH . DS . "categories.html");
+        yield $view->publish($configs['site']['theme'] . '/categories', PUBLIC_PATH . DS . "categories" . $configs['link']['suffix']);
         
         foreach ($categories as $key => $value) {
             $where = ['_id'=>$value['posts']];
-            $posts = Post::select($where);
+            $posts = ( yield Post::select($where) );
             
             $pages = ceil( count($posts) / $num );
 
-            $source = PUBLIC_PATH . DS . 'category' . DS . $value['_id'] . DS . 'page' . DS . ':_id.html';
-
+            $source = PUBLIC_PATH . DS . $category_path . DS . $value['_id'] . DS . ':_id' . $configs['link']['suffix'];
+            
             for ( $page = 1 ; $page <= $pages; $page++) { 
-                $link = '/category/'.$value['_id'].'/page/:page'. $configs['link']['suffix'];
-                $posts = Post::select($where,$page,$num,$link);
+                $link = '/' . $category_path . '/' . $value['_id'] . '/:page' . $configs['link']['suffix'];
+                $posts = ( yield Post::select($where,$page,$num,$link) );
 
                 $description = $configs['site']['subtitle'] . $value['title'] . '分类';
                 
@@ -345,7 +388,10 @@ class Publish
                 $view->assign('state',$state);
 
                 if ( $page == 1 ) {
-                    yield $view->publish($configs['site']['theme'] . '/category', PUBLIC_PATH. DS . 'category' . DS . $value['_id'] . DS . "index.html");
+                    yield $view->publish($configs['site']['theme'] . '/category', PUBLIC_PATH. DS . $category_path . DS . $value['_id'] . DS . "index" . $configs['link']['suffix']);
+                    if ( $pages == 1 ) {
+                        break;
+                    }
                 }
                 $file =  str_replace (':_id',$page,$source);   
                 yield $view->publish($configs['site']['theme'] . '/category',$file);
@@ -358,11 +404,19 @@ class Publish
 
     public static function posts()
     {
-        yield self::assets();
-        yield self::clear(PUBLIC_PATH . DS . 'posts');
         
         $configs = ( yield Config::all() );
+        yield self::assets();
 
+        $posts_name = str_replace ('/:_id','', $configs['link']['posts']);
+        $posts_name = explode ('/', $posts_name);
+
+        if ( !isset($posts_name[1]) || empty($posts_name[1]) ) {
+            return;
+        }
+        $posts_path = $posts_name[1];
+        yield self::clear( PUBLIC_PATH . DS . $posts_path);
+        
         $friend = [];
         foreach ($configs['friend'] as $key => $value) {
             $friend[] = [
@@ -383,7 +437,7 @@ class Publish
         $counts['posts'] = ( yield Post::count([]) );
         $counts['categories'] = ( yield Category::count([]) );
 
-        $source = PUBLIC_PATH . str_replace ('/',DS, $configs['link']['posts']) . ".html";
+        $source = PUBLIC_PATH . str_replace ('/',DS, $configs['link']['posts']) . $configs['link']['suffix'];
         
         $opt = [
             'view_suffix'   =>	'html',
@@ -428,7 +482,7 @@ class Publish
 
     public static function notFound()
     {
-        $configs = Config::all();
+        $configs = ( yield Config::all() );
 
         $friend = [];
         foreach ($configs['friend'] as $key => $value) {
@@ -438,8 +492,8 @@ class Publish
             ];
         }
 
-        $categories = Category::select([]);
-        $singles = Single::select([]);
+        $categories = ( yield Category::select([]) );
+        $singles = ( yield Single::select([]) );
 
         $opt = [
             'view_suffix'   =>	'html',
@@ -463,12 +517,12 @@ class Publish
         $state['singles'] = $singles;
         $state['categories'] = $categories;
         $view->assign('state',$state);
-        yield $view->publish($configs['site']['theme'] . '/404', PUBLIC_PATH . DS . "404.html");
+        yield $view->publish($configs['site']['theme'] . '/404', PUBLIC_PATH . DS . "404" . $configs['link']['suffix']);
     }
 
     public static function search()
     {
-        $posts = Post::select([]);
+        $posts = ( yield Post::select([]) );
 
         $search = [];
         foreach($posts as $key=>$value ) {
@@ -485,7 +539,7 @@ class Publish
 
             $search[] = $data;
         }
-        return file_put_contents(PUBLIC_PATH . DS . "search.json",json_encode($search));
+        yield file_put_contents(PUBLIC_PATH . DS . "search.json",json_encode($search));
     }
 
     public static function sidebar($data){
@@ -514,13 +568,13 @@ class Publish
 
     public static function assets()
     {
-        $configs = Config::all();
+        $configs = ( yield Config::all() );
 
         $assets = PUBLIC_PATH . DS . 'assets';
-        self::clear($assets);
+        yield self::clear($assets);
 
         $themes = THEME_PATH . DS . $configs['site']['theme'] . DS . 'assets';
-        self::copys($themes,$assets);
+        yield self::copys($themes,$assets);
 
         return ;
     }
@@ -537,10 +591,10 @@ class Publish
             $dest_file = $dest . DS . $val;
 
             if(is_dir($source_file)){
-                mkdir($dest_file, 0755, true);
-                self::copys($source_file, $dest_file);
+                yield mkdir($dest_file, 0755, true);
+                yield self::copys($source_file, $dest_file);
             }else{
-                copy($source_file, $dest_file);
+                yield copy($source_file, $dest_file);
             }
 
         }
@@ -550,25 +604,29 @@ class Publish
     public static function clear($path,$filter = [])
     {
         if(!is_dir($path)){
-           return false;
+           return;
         }
+
+        $filter[] = ".git";
         $filter[] = ".";
         $filter[] = "..";
         $sources = scandir($path);
+
         foreach($sources as $val){
+            
             if( in_array($val,$filter) ){
                 continue;
             }
             $source = $path . DS . $val;
             if(is_dir($source)){
                 $source .= DS;
-                self::clear($source);
-                @rmdir($source);
+                yield self::clear($source);
+                yield @rmdir($source);
             }else{
-                unlink($source);
+                yield unlink($source);
             }
         }
-        return true;
+        return;
     }
 
 }
