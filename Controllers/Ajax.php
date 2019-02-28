@@ -68,7 +68,7 @@ class Ajax
             case 'index':
                 yield Publish::index();
                 break;
-            case 'single':
+            case 'singles':
                 yield Publish::single();
                 break;
             case 'assets':
