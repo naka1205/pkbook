@@ -398,13 +398,8 @@ class Publish
 
             $post = new Post($_id);
             $state = [];
-            
-            $page_id = '';
-            if ( $post['comment'] == true ) {
-                $page_id = $post['_id'];
-            }
 
-            $state['page_id'] = $page_id;
+            $state['page_id'] = $_id;
             $state['link'] = $configs['link'];
             $state['site'] = $configs['site'];
             $state['contact'] = $configs['contact'];

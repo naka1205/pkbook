@@ -5,7 +5,7 @@
         {volist name="state.categories" id="vo" key="k"}
         <li class="header">{$vo.title}</li>
             {volist name=":posts(['_id'=>$vo['posts']])" id="val"}
-            <li class="chapter " data-level="{$k}.{$i}" data-path="{$val.link}"><a href="{$val.link}">{$val.title}</a></li>
+            <li class="chapter {if $state['page_id'] == $val['_id'] } active {/if}" data-level="{$k}.{$i}" data-path="{$val.link}"><a href="{$val.link}">{$val.title}</a></li>
             {/volist}
         <li class="divider"></li>
         {/volist}
