@@ -36,6 +36,7 @@ class Ajax
         $data['comment'] = isset($data['comment']) && $data['comment'] == 1 ? true : false;
 
         $post = new Post($_id);
+        $data['createtime'] = isset($post['createtime']) ? $post['createtime'] : time();
         $bool = $post->save($data) ? true : false;
 
         $ctx->status = 200;
